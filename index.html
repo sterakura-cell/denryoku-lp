@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>動力電気代 無料診断｜工事不要・初期費用0円で削減可能性を確認</title>
+  <meta name="description" content="工場・倉庫・施設・業務用設備をお使いの法人様向け。工事不要・初期費用なしで、動力電気料金の無料診断ができます。契約は診断結果を見てからでOK。" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <!-- OGP（SNS・LINEで共有したときの表示）。og:url と og:image は公開ドメインに合わせて編集してください -->
+  <meta property="og:title" content="動力電気代 無料診断｜工事不要・初期費用0円" />
+  <meta property="og:description" content="工場・倉庫・施設・業務用設備をお使いの法人様向け。明細を送るだけで動力電気料金の無料診断。契約は診断結果を見てからでOK。" />
+  <meta property="og:type" content="website" />
+  <meta name="robots" content="index, follow" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ SVGアイコン・スプライト（線画／currentColor） ============ -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+      <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.2l-6 6a2.1 2.1 0 0 0 3 3l6-6a4 4 0 0 0 5.2-5.4l-2.6 2.6-2.2-2.2 2.6-2.6z"/></symbol>
+      <symbol id="i-yen" viewBox="0 0 24 24"><path d="M8 4l4 6 4-6M12 10v10M8 13.5h8M8 16.5h8"/></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+      <symbol id="i-trend-up" viewBox="0 0 24 24"><path d="M3 17 9.5 10.5l4 4L21 7"/><path d="M15 7h6v6"/></symbol>
+      <symbol id="i-trend-down" viewBox="0 0 24 24"><path d="M3 7 9.5 13.5l4-4L21 17"/><path d="M15 17h6v-6"/></symbol>
+      <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.6 2.3-2.6 3.6"/><path d="M12 17.5h.01"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 5.7V11c0 4.5 3.1 7.6 7 9 3.9-1.4 7-4.5 7-9V5.7z"/><path d="m9 11.5 2 2 4-4"/></symbol>
+      <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></symbol>
+      <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 3v18l2-1.3L9 21l2-1.3L13 21l2-1.3L17 21l2-1.3V3l-2 1.3L15 3l-2 1.3L11 3 9 4.3 7 3z"/><path d="M9 8h6M9 12h6"/></symbol>
+      <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21h18M4 21V9l5 3.5V9l5 3.5V9l5 3.5V21"/><path d="M8 21v-4h3v4M7 5l.6-2h1.8L10 5"/></symbol>
+      <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8.5 12 3 3 8.5v7L12 21l9-5.5z"/><path d="M3 8.5 12 14l9-5.5M12 14v7"/></symbol>
+      <symbol id="i-food" viewBox="0 0 24 24"><path d="M6 3v5M8 3v5M10 3v5M6 8h4M8 8v13"/><ellipse cx="16" cy="6.5" rx="2.3" ry="3.5"/><path d="M16 10v11"/></symbol>
+      <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1M18.7 18.7l-2.1-2.1M7.4 7.4 5.3 5.3"/></symbol>
+      <symbol id="i-recycle" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.6-5.7L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-13.6 5.7L4 15"/><path d="M4 20v-5h5"/></symbol>
+      <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M4.5 7l15 10M19.5 7l-15 10M12 2l-2.5 2.5M12 2l2.5 2.5M12 22l-2.5-2.5M12 22l2.5-2.5"/></symbol>
+      <symbol id="i-wind" viewBox="0 0 24 24"><path d="M3 8h11a2.5 2.5 0 1 0-2.5-2.5M3 16h14a2.5 2.5 0 1 1-2.5 2.5M3 12h7a2.5 2.5 0 1 0-2.5-2.5"/></symbol>
+      <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 18a9 9 0 1 1 16 0"/><path d="M12 14.5 16 9"/><circle cx="12" cy="14.5" r="1.3"/></symbol>
+      <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c2 3.5-1.5 5-1.5 7.5a3.5 3.5 0 0 0 7 0c0-1.5-1-3-1-3 .5 4-2 5-2 5 .8-2-.5-3.5-.5-3.5C12 7 14 6 12 3z"/><path d="M9 12.5C8 14 7.5 15.4 7.5 17a4.5 4.5 0 0 0 9 0"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol>
+      <symbol id="i-handshake" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M15.5 5.2a3.2 3.2 0 0 1 0 5.6M20.5 20a5.5 5.5 0 0 0-4-5.3"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12.5 5 5 11-11"/></symbol>
+      <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></symbol>
+      <symbol id="i-clipboard" viewBox="0 0 24 24"><path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><path d="M9 4a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 4v1H9z"/><path d="M9 11h6M9 15h4"/></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6 3h3l1.5 5-2 1.5a12 12 0 0 0 6 6l1.5-2 5 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ============ 1. 固定ヘッダー ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a href="#top" class="brand">
+        <span class="brand-icon"><svg class="ico"><use href="#i-zap"/></svg></span>
+        <span class="brand-text">動力電気代<strong>無料診断</strong></span>
+      </a>
+      <nav class="gnav" aria-label="グローバルナビ">
+        <a href="#features">特徴</a>
+        <a href="#simulator">シミュレーター</a>
+        <a href="#form">診断フォーム</a>
+      </nav>
+      <a href="#form" class="btn btn-cta header-cta">無料診断</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ 2. ファーストビュー ============ -->
+    <section class="hero">
+      <!-- 装飾背景（SVG・低負荷） -->
+      <svg class="hero-deco" viewBox="0 0 600 600" aria-hidden="true" preserveAspectRatio="xMaxYMin slice">
+        <defs>
+          <radialGradient id="deco-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1f8be0" stop-opacity=".22"/>
+            <stop offset="100%" stop-color="#1f8be0" stop-opacity="0"/>
+          </radialGradient>
+          <pattern id="deco-dots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="2" fill="#1f6fe0" fill-opacity=".14"/>
+          </pattern>
+        </defs>
+        <circle cx="470" cy="120" r="240" fill="url(#deco-glow)"/>
+        <rect x="380" y="300" width="220" height="220" fill="url(#deco-dots)"/>
+      </svg>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">工場・倉庫・施設・業務用設備をお使いの法人様向け</p>
+          <h1 class="hero-title">
+            動力電気代、見直すだけで<br />
+            <span class="hl">年間コストを削減できる可能性</span>があります
+          </h1>
+          <p class="hero-sub">
+            工事不要・初期費用なしで、動力電気料金の無料診断ができます。
+            現在と同じように電気をお使いいただけます。
+          </p>
+
+          <ul class="hero-badges">
+            <li><span class="badge-ico"><svg class="ico"><use href="#i-wrench"/></svg></span>工事不要</li>
+            <li><span class="badge-ico"><svg class="ico"><use href="#i-yen"/></svg></span>初期費用0円</li>
+            <li><span class="badge-ico"><svg class="ico"><use href="#i-file"/></svg></span>明細だけで無料診断</li>
+          </ul>
+
+          <div class="hero-cta">
+            <a href="#form" class="btn btn-cta btn-lg">無料で削減可能性を確認する</a>
+            <p class="hero-tel-note">
+              入力が難しい方・お急ぎの方はお電話ください<br />
+              <a href="tel:09036987711" class="tel-link" id="heroTel"><svg class="ico tel-ico"><use href="#i-phone"/></svg>090-3698-7711</a>
+            </p>
+          </div>
+          <p class="hero-reassure"><svg class="ico"><use href="#i-check-circle"/></svg>契約は<strong>診断結果を見てから</strong>でOK。無理な営業はありません。</p>
+        </div>
+
+        <!-- 簡易シミュレーターカード -->
+        <aside class="hero-sim card" aria-label="かんたん削減シミュレーター">
+          <h2 class="sim-card-title"><svg class="ico"><use href="#i-chart"/></svg>かんたん削減シミュレーター</h2>
+          <label class="sim-field">
+            <span>月額の動力電気代（円）</span>
+            <input type="number" id="heroSimInput" inputmode="numeric" placeholder="例：300000" min="0" step="10000" />
+          </label>
+          <div class="sim-result" id="heroSimResult" hidden>
+            <div class="sim-row">
+              <span class="sim-label">年間電気代</span>
+              <span class="sim-value" id="heroYear">—</span>
+            </div>
+            <div class="sim-row accent">
+              <span class="sim-label">15％削減時の年間削減見込み</span>
+              <span class="sim-value" id="heroCut15">—</span>
+            </div>
+            <div class="sim-row accent strong">
+              <span class="sim-label">20％削減時の年間削減見込み</span>
+              <span class="sim-value" id="heroCut20">—</span>
+            </div>
+            <div class="sim-rank" id="heroRank"></div>
+          </div>
+          <p class="sim-note">
+            概算です。実際の削減額は契約内容・使用状況・電気料金明細の確認後に変動します。削減を保証するものではありません。
+          </p>
+          <a href="#form" class="btn btn-outline btn-block">明細を送って正式に診断する</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ 3. お悩みセクション ============ -->
+    <section class="section section-light" id="problems">
+      <div class="container">
+        <h2 class="section-title">このようなお悩みはありませんか？</h2>
+        <div class="grid grid-3">
+          <div class="card problem-card"><span class="p-ico"><svg class="ico"><use href="#i-trend-up"/></svg></span>毎月の動力電気代が高い</div>
+          <div class="card problem-card"><span class="p-ico"><svg class="ico"><use href="#i-help"/></svg></span>電気代を下げたいが、見直し方が分からない</div>
+          <div class="card problem-card"><span class="p-ico"><svg class="ico"><use href="#i-shield"/></svg></span>電力会社の切替が不安</div>
+          <div class="card problem-card"><span class="p-ico"><svg class="ico"><use href="#i-ban"/></svg></span>工事や初期費用は避けたい</div>
+          <div class="card problem-card"><span class="p-ico"><svg class="ico"><use href="#i-trend-down"/></svg></span>固定費を少しでも削減したい</div>
+          <div class="card problem-card"><span class="p-ico"><svg class="ico"><use href="#i-receipt"/></svg></span>明細を見ても適正価格か分からない</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. 対象事業者セクション ============ -->
+    <section class="section" id="target">
+      <div class="container">
+        <h2 class="section-title">動力を使う法人様におすすめです</h2>
+        <p class="section-lead">下記のような設備をお使いの事業者様は、削減できる可能性があります。</p>
+        <div class="grid grid-target">
+          <div class="card target-card"><span class="t-ico"><svg class="ico"><use href="#i-factory"/></svg></span>工場</div>
+          <div class="card target-card"><span class="t-ico"><svg class="ico"><use href="#i-box"/></svg></span>倉庫・物流施設</div>
+          <div class="card target-card"><span class="t-ico"><svg class="ico"><use href="#i-food"/></svg></span>食品工場</div>
+          <div class="card target-card"><span class="t-ico"><svg class="ico"><use href="#i-gear"/></svg></span>製造業</div>
+          <div class="card target-card"><span class="t-ico"><svg class="ico"><use href="#i-recycle"/></svg></span>リサイクル工場</div>
+          <div class="card target-card"><span class="t-ico"><svg class="ico"><use href="#i-snow"/></svg></span>冷蔵・冷凍設備</div>
+          <div class="card target-card"><span class="t-ico"><svg class="ico"><use href="#i-wind"/></svg></span>業務用空調</div>
+          <div class="card target-card"><span class="t-ico"><svg class="ico"><use href="#i-gauge"/></svg></span>コンプレッサー・ポンプ</div>
+          <div class="card target-card"><span class="t-ico"><svg class="ico"><use href="#i-flame"/></svg></span>業務用厨房機器</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. 安心ポイント ============ -->
+    <section class="section section-navy" id="features">
+      <div class="container">
+        <h2 class="section-title light">まずは無料診断だけ。<br class="sp-only" />契約は結果を見てからで大丈夫です。</h2>
+        <div class="grid grid-3 reassure-grid">
+          <div class="card reassure-card">
+            <span class="r-ico"><svg class="ico"><use href="#i-wrench"/></svg></span>
+            <h3>工事不要</h3>
+            <p>設備の工事は原則として必要ありません。</p>
+          </div>
+          <div class="card reassure-card">
+            <span class="r-ico"><svg class="ico"><use href="#i-yen"/></svg></span>
+            <h3>初期費用不要</h3>
+            <p>診断も切替も、初期費用は原則かかりません。</p>
+          </div>
+          <div class="card reassure-card">
+            <span class="r-ico"><svg class="ico"><use href="#i-check-circle"/></svg></span>
+            <h3>電気品質は変わらない</h3>
+            <p>これまでと同じ電気を、同じように使えます。</p>
+          </div>
+        </div>
+        <div class="grid grid-3 sub-reassure">
+          <div class="mini-card"><svg class="ico"><use href="#i-check"/></svg>現在と同じように電気を使える</div>
+          <div class="mini-card"><svg class="ico"><use href="#i-check"/></svg>明細をもとに無料診断</div>
+          <div class="mini-card"><svg class="ico"><use href="#i-check"/></svg>希望者のみ打合せ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. 削減シミュレーター ============ -->
+    <section class="section section-light" id="simulator">
+      <div class="container">
+        <h2 class="section-title">動力電気代 削減シミュレーター</h2>
+        <p class="section-lead">月額の動力電気代を入力すると、年間の削減見込みと見込み度ランクを確認できます。</p>
+
+        <div class="sim-wrap card">
+          <label class="sim-field big">
+            <span>月額の動力電気代（円）</span>
+            <input type="number" id="simInput" inputmode="numeric" placeholder="例：300000" min="0" step="10000" />
+          </label>
+
+          <div class="sim-grid" id="simGrid" hidden>
+            <div class="sim-stat">
+              <span class="stat-label">年間電気代</span>
+              <span class="stat-num" id="simYear">—</span>
+            </div>
+            <div class="sim-stat accent-green">
+              <span class="stat-label">15％削減時の年間削減見込み</span>
+              <span class="stat-num" id="simCut15">—</span>
+            </div>
+            <div class="sim-stat accent-orange">
+              <span class="stat-label">20％削減時の年間削減見込み</span>
+              <span class="stat-num" id="simCut20">—</span>
+            </div>
+          </div>
+
+          <div class="sim-rank-box" id="simRankBox" hidden>
+            <div class="rank-badge" id="simRankBadge">—</div>
+            <p class="rank-advice" id="simRankAdvice"></p>
+          </div>
+
+          <p class="sim-note">
+            ※ 実際の削減額は契約内容・使用状況・電気料金明細の確認後に変動します。削減を保証するものではありません。
+          </p>
+          <a href="#form" class="btn btn-cta btn-block">この内容で無料診断を申し込む</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6.5 削減イメージ（概算） ============ -->
+    <section class="section" id="savings">
+      <div class="container">
+        <h2 class="section-title">削減イメージ（概算）</h2>
+        <p class="section-lead">月額の動力電気代が大きいほど、年間の削減見込みも大きくなります。下記は診断前のイメージです。</p>
+
+        <div class="savings-wrap">
+          <!-- 棒グラフ（月額30万円・年間360万円の例） -->
+          <div class="card chart-card">
+            <p class="chart-caption">月額 30万円（年間 360万円）の場合のイメージ</p>
+            <svg class="bar-chart" viewBox="0 0 440 270" role="img"
+                 aria-label="年間電気代の削減イメージ。現状360万円、15%削減後306万円、20%削減後288万円。">
+              <line x1="36" y1="222" x2="424" y2="222" class="bar-axis"/>
+              <!-- 現状 -->
+              <g>
+                <rect x="70" y="62" width="74" height="160" rx="6" class="bar-now"/>
+                <text x="107" y="50" class="bar-val">¥3,600,000</text>
+                <text x="107" y="244" class="bar-lab">現状</text>
+              </g>
+              <!-- 15%削減後 -->
+              <g>
+                <rect x="190" y="86" width="74" height="136" rx="6" class="bar-cut15"/>
+                <text x="227" y="74" class="bar-val">¥3,060,000</text>
+                <text x="227" y="244" class="bar-lab">15%削減後</text>
+                <text x="227" y="110" class="bar-save">−54万/年</text>
+              </g>
+              <!-- 20%削減後 -->
+              <g>
+                <rect x="310" y="98" width="74" height="124" rx="6" class="bar-cut20"/>
+                <text x="347" y="86" class="bar-val">¥2,880,000</text>
+                <text x="347" y="244" class="bar-lab">20%削減後</text>
+                <text x="347" y="122" class="bar-save">−72万/年</text>
+              </g>
+            </svg>
+            <p class="chart-note">※ 概算イメージです。削減を保証するものではありません。</p>
+          </div>
+
+          <!-- 概算テーブル -->
+          <div class="card table-card">
+            <table class="savings-table">
+              <thead>
+                <tr>
+                  <th>月額動力</th>
+                  <th>年間電気代</th>
+                  <th class="th-green">15%削減</th>
+                  <th class="th-orange">20%削減</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>10万円</td><td>120万円</td><td class="td-green">18万円/年</td><td class="td-orange">24万円/年</td></tr>
+                <tr><td>30万円</td><td>360万円</td><td class="td-green">54万円/年</td><td class="td-orange">72万円/年</td></tr>
+                <tr><td>50万円</td><td>600万円</td><td class="td-green">90万円/年</td><td class="td-orange">120万円/年</td></tr>
+                <tr><td>100万円</td><td>1,200万円</td><td class="td-green">180万円/年</td><td class="td-orange">240万円/年</td></tr>
+              </tbody>
+            </table>
+            <p class="chart-note">※ 実際の削減額は契約内容・使用状況・エリア等により異なります。</p>
+            <a href="#form" class="btn btn-cta btn-block">自社の削減見込みを無料診断する</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. 診断の流れ ============ -->
+    <section class="section section-light" id="flow">
+      <div class="container">
+        <h2 class="section-title">無料診断の流れ</h2>
+        <ol class="steps">
+          <li class="step-card"><span class="step-no">1</span><span class="step-ico"><svg class="ico"><use href="#i-file"/></svg></span><h3>電気料金明細を共有</h3><p>フォームから写真・PDFをアップロード。</p></li>
+          <li class="step-card"><span class="step-no">2</span><span class="step-ico"><svg class="ico"><use href="#i-search"/></svg></span><h3>無料診断</h3><p>明細をもとに削減可能性を確認します。</p></li>
+          <li class="step-card"><span class="step-no">3</span><span class="step-ico"><svg class="ico"><use href="#i-chart"/></svg></span><h3>削減見込みをご案内</h3><p>結果を分かりやすくお伝えします。</p></li>
+          <li class="step-card"><span class="step-no">4</span><span class="step-ico"><svg class="ico"><use href="#i-handshake"/></svg></span><h3>希望者のみ打合せ</h3><p>ご希望の方だけ詳細をご相談。</p></li>
+          <li class="step-card"><span class="step-no">5</span><span class="step-ico"><svg class="ico"><use href="#i-check-circle"/></svg></span><h3>納得した場合のみ検討</h3><p>内容にご納得いただけた場合のみ。</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ 8. 無料診断フォーム ============ -->
+    <section class="section section-form" id="form">
+      <div class="container container-narrow">
+        <div class="form-card card">
+          <h2 class="form-title"><svg class="ico"><use href="#i-clipboard"/></svg>無料診断のお申し込み</h2>
+          <p class="form-desc">
+            正確な診断には、動力契約の電気料金明細（写真・PDF）があるとスムーズです。今すぐのご用意が難しい場合は、お申し込み後にお送りいただいても構いません。
+          </p>
+
+          <!-- 送信完了メッセージ -->
+          <div class="form-success" id="formSuccess" hidden>
+            <span class="success-ico"><svg class="ico"><use href="#i-check"/></svg></span>
+            <p>
+              無料診断のお申し込みありがとうございます。入力内容と電気料金明細を確認し、削減可能性がある場合は担当よりご連絡いたします。正確な診断には電気料金明細の確認が必要です。
+            </p>
+          </div>
+
+          <!--
+            フォーム送信は仮実装です。
+            Googleフォーム / Formspree / HubSpot / GAS への接続方法は README.md を参照してください。
+            接続時は <form> の action / method を差し替えるだけで動くよう、name属性を整えています。
+          -->
+          <!-- action は script.js の FORMSPREE_ENDPOINT から自動設定されます -->
+          <form id="diagnoseForm" class="diag-form" novalidate
+                action="#" method="POST" enctype="multipart/form-data">
+
+            <!-- 紹介元コード（URLパラメータ ref で自動セット） -->
+            <input type="hidden" id="referralSource" name="referral_source" value="terakura" />
+            <!-- 問い合わせ元LP URL（送信時に自動セット） -->
+            <input type="hidden" id="landingUrl" name="landing_url" value="" />
+            <!-- 自動計算値（送信時にJSがセット：管理シート・案件共有に転記しやすく） -->
+            <input type="hidden" id="calcRank"   name="calc_rank"   value="" />
+            <input type="hidden" id="calcAnnual" name="annual_cost" value="" />
+            <input type="hidden" id="calcCut15"  name="cut15"       value="" />
+            <input type="hidden" id="calcCut20"  name="cut20"       value="" />
+            <!-- Formspree用：メール件名と自動返信を制御（任意） -->
+            <input type="hidden" name="_subject" value="【動力電気代診断】新規お申し込み" />
+
+            <div class="form-grid">
+              <label class="field required">
+                <span class="field-label">会社名</span>
+                <input type="text" name="company" autocomplete="organization" required />
+              </label>
+              <label class="field required">
+                <span class="field-label">担当者名</span>
+                <input type="text" name="contact_name" autocomplete="name" required />
+              </label>
+              <label class="field required">
+                <span class="field-label">電話番号</span>
+                <input type="tel" name="phone" autocomplete="tel" inputmode="tel" required />
+              </label>
+              <label class="field required">
+                <span class="field-label">メールアドレス</span>
+                <input type="email" name="email" autocomplete="email" inputmode="email" required />
+              </label>
+              <label class="field required">
+                <span class="field-label">所在地</span>
+                <input type="text" name="address" autocomplete="address-level1" placeholder="例：東京都〇〇区" required />
+              </label>
+              <label class="field required">
+                <span class="field-label">業種</span>
+                <select name="industry" required>
+                  <option value="">選択してください</option>
+                  <option>工場・製造業</option>
+                  <option>倉庫・物流施設</option>
+                  <option>食品工場</option>
+                  <option>リサイクル工場</option>
+                  <option>冷蔵・冷凍設備</option>
+                  <option>飲食・業務用厨房</option>
+                  <option>施設・その他</option>
+                </select>
+              </label>
+            </div>
+
+            <!-- 月額動力電気代（入力で即ランク判定） -->
+            <label class="field required full">
+              <span class="field-label">月額の動力電気代（円）</span>
+              <input type="number" id="formAmount" name="monthly_cost" inputmode="numeric"
+                     placeholder="例：300000" min="0" step="10000" required />
+            </label>
+
+            <!-- 入力中ランク表示 -->
+            <div class="form-rank" id="formRank" hidden>
+              <div class="form-rank-badge" id="formRankBadge">—</div>
+              <p class="form-rank-advice" id="formRankAdvice"></p>
+            </div>
+
+            <!-- 明細アップロード（特に目立たせる） -->
+            <div class="upload-field">
+              <span class="field-label upload-label">
+                <span class="upload-ico"><svg class="ico"><use href="#i-upload"/></svg></span> 電気料金明細のアップロード
+                <em class="must recommend">任意・推奨</em>
+              </span>
+              <p class="upload-hint">直近の動力契約の明細（写真・PDF）。今この場で添付いただくと診断がスムーズです。難しい場合は申し込み後にお送りいただいても構いません（12ヶ月分あるとより正確に診断できます）。</p>
+              <input type="file" id="billFile" name="bill_file"
+                     accept="image/*,.pdf" capture="environment" multiple />
+              <p class="upload-state" id="uploadState">未選択（お申し込み後の送付でもOKです）</p>
+            </div>
+
+            <label class="field required full">
+              <span class="field-label">無料診断後のご希望</span>
+              <select name="after_diagnosis" required>
+                <option value="">選択してください</option>
+                <option value="打合せ希望">打合せを希望する</option>
+                <option value="結果だけ">まず診断結果だけ見たい</option>
+              </select>
+            </label>
+
+            <details class="optional-block">
+              <summary>任意項目（分かる範囲でご記入ください）</summary>
+              <div class="form-grid">
+                <label class="field">
+                  <span class="field-label">動力を使っていますか？</span>
+                  <select name="uses_power">
+                    <option value="">未選択</option>
+                    <option>はい</option>
+                    <option>不明</option>
+                    <option>いいえ</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span class="field-label">キュービクルの有無</span>
+                  <select name="cubicle">
+                    <option value="">未選択</option>
+                    <option>あり</option>
+                    <option>なし</option>
+                    <option>不明</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span class="field-label">現在の電力会社</span>
+                  <input type="text" name="current_provider" />
+                </label>
+              </div>
+              <label class="field full">
+                <span class="field-label">備考</span>
+                <textarea name="note" rows="3"></textarea>
+              </label>
+            </details>
+
+            <p class="form-privacy">
+              ご入力いただいた情報は無料診断およびご連絡のみに使用します。
+              <strong>契約は診断結果を見てからでOK</strong>です。
+            </p>
+
+            <button type="submit" class="btn btn-cta btn-block btn-xl" id="submitBtn">
+              無料診断を申し込む（無料）
+            </button>
+            <p class="form-tel-note">
+              入力が難しい方・お急ぎの方はお電話ください：
+              <a href="tel:09036987711" class="tel-link" id="formTel">090-3698-7711</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 9. FAQ ============ -->
+    <section class="section" id="faq">
+      <div class="container container-narrow">
+        <h2 class="section-title">よくあるご質問</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>電気の品質は変わりますか？</summary>
+            <div class="faq-body">変わりません。現在と同じように電気をご使用いただけます。</div>
+          </details>
+          <details class="faq-item">
+            <summary>工事や初期費用は必要ですか？</summary>
+            <div class="faq-body">原則として工事や初期費用は不要です。</div>
+          </details>
+          <details class="faq-item">
+            <summary>必ず安くなりますか？</summary>
+            <div class="faq-body">契約内容や使用状況によって異なるため、削減を保証するものではありません。まずは明細をもとに無料診断します。</div>
+          </details>
+          <details class="faq-item">
+            <summary>電話だけでも相談できますか？</summary>
+            <div class="faq-body">可能です。ただし、正確な診断には電気料金明細が必要です。入力が可能な方はフォームからのお申し込みをおすすめします。</div>
+          </details>
+          <details class="faq-item">
+            <summary>契約しないといけませんか？</summary>
+            <div class="faq-body">いいえ。診断結果を見てからご判断いただけます。</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 10. 最終CTA ============ -->
+    <section class="section section-final-cta">
+      <div class="container">
+        <h2 class="final-title">まずは無料で、削減できる可能性を確認しませんか？</h2>
+        <a href="#form" class="btn btn-cta btn-xl final-btn">無料診断フォームへ進む</a>
+        <p class="final-sub">
+          入力が難しい方・お急ぎの方はお電話ください：
+          <a href="tel:09036987711" class="tel-link light" id="finalTel">090-3698-7711</a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ 11. フッター ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-company">東京新電力株式会社</p>
+      <p class="footer-agent">正規代理店：エコクリエートホールディングス株式会社</p>
+      <p class="footer-contact">
+        担当：寺倉　/　TEL：<a href="tel:09036987711" class="tel-link light" id="footerTel">090-3698-7711</a>
+      </p>
+      <p class="footer-note">
+        ※ 本ページは動力電気代の無料診断のご案内です。削減を保証するものではありません。
+      </p>
+    </div>
+  </footer>
+
+  <!-- ============ スマホ下部固定CTA ============ -->
+  <div class="sticky-cta" id="stickyCta">
+    <a href="#form" class="sticky-btn sticky-form"><svg class="ico"><use href="#i-clipboard"/></svg>無料診断</a>
+    <a href="tel:09036987711" class="sticky-btn sticky-tel" id="stickyTel"><svg class="ico"><use href="#i-phone"/></svg>電話相談</a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
