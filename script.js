@@ -22,7 +22,7 @@
      ■ Formspree（メールで受け取る場合）
        https://formspree.io で作成した「https://formspree.io/f/xxxxxxx」を貼り付け。
      ---------------------------------------------------------- */
-  var GAS_ENDPOINT       = ""; // 例: "https://script.google.com/macros/s/XXXX/exec"
+  var GAS_ENDPOINT       = "https://script.google.com/macros/s/AKfycbxL8mk2H8M2JW06vfXJDjteJJStyz5ssGi4WQCduGSi3G1BdT4q5tRZSO-UDMqpjo0/exec";
   var FORMSPREE_ENDPOINT = ""; // 例: "https://formspree.io/f/xxxxxxx"
 
   // Formspree使用時のみ有効：ファイル添付を送信先が受け付けるか。
