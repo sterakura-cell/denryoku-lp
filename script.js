@@ -11,18 +11,24 @@
   "use strict";
 
   /* ----------------------------------------------------------
-     0. フォーム送信先（Formspree）
+     0. フォーム送信先の設定
      ----------------------------------------------------------
-     ▼ここにFormspreeのエンドポイントを設定すると本番送信になります。
-       1. https://formspree.io でフォームを作成
-       2. 発行された「https://formspree.io/f/xxxxxxx」をそのまま貼り付け
-     空のままだと「仮実装（完了画面のみ・送信されない）」で動作します。
+     送信先は「GAS優先 →（無ければ）Formspree →（無ければ）仮実装」の順で動きます。
+
+     ■ Google Apps Script（推奨・スプレッドシート直結）
+       GASをウェブアプリとしてデプロイして得た「.../exec」URLを下記に貼り付け。
+       明細ファイルもDriveに自動保存されます。設定手順は GAS_SETUP.md を参照。
+
+     ■ Formspree（メールで受け取る場合）
+       https://formspree.io で作成した「https://formspree.io/f/xxxxxxx」を貼り付け。
      ---------------------------------------------------------- */
+  var GAS_ENDPOINT       = ""; // 例: "https://script.google.com/macros/s/XXXX/exec"
   var FORMSPREE_ENDPOINT = ""; // 例: "https://formspree.io/f/xxxxxxx"
 
-  // ファイル添付を送信先が受け付けるか。
-  //   false … 明細ファイルは送らず「明細あり/なし」のメモだけ送る（Formspree無料プラン向け・推奨）
-  //   true  … 明細ファイルも一緒に送る（Formspree有料プラン / GAS / 自前バックエンド）
+  // Formspree使用時のみ有効：ファイル添付を送信先が受け付けるか。
+  //   false … 明細ファイルは送らず「明細あり/なし」のメモだけ送る（Formspree無料プラン向け）
+  //   true  … 明細ファイルも一緒に送る（Formspree有料プラン）
+  //   ※ GAS使用時は常に明細ファイルをDriveへ保存します（この値は無視）。
   var FORM_SUPPORTS_FILE = false;
 
   /* ----------------------------------------------------------
@@ -223,30 +229,67 @@
       success.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+    function setBusy(b) {
+      if (!btn) return;
+      btn.disabled = b;
+      btn.textContent = b ? "送信中…" : "無料診断を申し込む（無料）";
+    }
+    function fail(msg) {
+      alert("送信に失敗しました。お手数ですが、お電話でお問い合わせください。\n（" + (msg || "") + "）");
+      setBusy(false);
+    }
 
-      // 簡易バリデーション（必須項目）
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-      fillCalcFields();
+    // テキスト項目をオブジェクトに集約（ファイル・ボタンは除外）
+    function collectFields() {
+      var obj = {};
+      Array.prototype.forEach.call(form.elements, function (el) {
+        if (!el.name || el.type === "file" || el.type === "submit" || el.type === "button") return;
+        obj[el.name] = el.value;
+      });
+      return obj;
+    }
 
-      // --- 仮実装モード：エンドポイント未設定なら送信せず完了画面のみ ---
-      if (!FORMSPREE_ENDPOINT) {
-        var preview = {};
-        new FormData(form).forEach(function (v, k) {
-          preview[k] = (v instanceof File) ? v.name : v;
+    // 明細ファイルをbase64で読み込む（GAS送信用）
+    function readFilesB64() {
+      var input = document.getElementById("billFile");
+      var files = (input && input.files) ? Array.prototype.slice.call(input.files) : [];
+      return Promise.all(files.map(function (f) {
+        return new Promise(function (resolve, reject) {
+          var r = new FileReader();
+          r.onload = function () {
+            resolve({
+              name: f.name,
+              mimeType: f.type || "application/octet-stream",
+              dataBase64: String(r.result).split(",")[1] || ""
+            });
+          };
+          r.onerror = function () { reject(new Error("ファイル読込エラー")); };
+          r.readAsDataURL(f);
         });
-        console.log("[無料診断フォーム/仮実装] 送信予定データ:", preview);
-        showSuccess();
-        return;
-      }
+      }));
+    }
 
-      // --- 本番モード：Formspreeへ非同期送信（画面遷移なし） ---
-      // 送信用FormDataを組み立て。ファイル非対応の送信先では明細ファイルを外し、
-      // 代わりに「明細の有無・ファイル名」をテキストとして送る（リード取りこぼし防止）。
+    // --- Google Apps Script へ送信（明細はDriveへ・スプレッドシート追記） ---
+    function submitToGAS() {
+      setBusy(true);
+      readFilesB64().then(function (files) {
+        var payload = JSON.stringify({ fields: collectFields(), files: files });
+        // no-cors + text/plain：プリフライト無しで確実に届く（応答は読まない＝楽観的に成功表示）
+        return fetch(GAS_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: payload
+        });
+      }).then(function () {
+        showSuccess();
+      }).catch(function (err) {
+        fail(err.message);
+      });
+    }
+
+    // --- Formspree へ送信（メール受信） ---
+    function submitToFormspree() {
       var payload = new FormData(form);
       var fileInput = document.getElementById("billFile");
       if (!FORM_SUPPORTS_FILE) {
@@ -257,26 +300,44 @@
           : "";
         payload.set("bill_status", hasFile ? "明細あり（フォーム上で選択／折り返しで受領）：" + names : "明細なし（折り返しで依頼）");
       }
-
-      if (btn) { btn.disabled = true; btn.textContent = "送信中…"; }
+      setBusy(true);
       fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
         body: payload,
         headers: { "Accept": "application/json" }
       })
         .then(function (res) {
-          if (res.ok) {
-            showSuccess();
-          } else {
+          if (res.ok) { showSuccess(); }
+          else {
             return res.json().then(function (j) {
               throw new Error((j && j.errors && j.errors[0] && j.errors[0].message) || "送信に失敗しました");
             });
           }
         })
-        .catch(function (err) {
-          alert("送信に失敗しました。お手数ですが、お電話でお問い合わせください。\n（" + err.message + "）");
-          if (btn) { btn.disabled = false; btn.textContent = "無料診断を申し込む（無料）"; }
-        });
+        .catch(function (err) { fail(err.message); });
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // 簡易バリデーション（必須項目）
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      fillCalcFields();
+
+      // 送信先の優先順位：GAS → Formspree →（未設定なら）仮実装
+      if (GAS_ENDPOINT)       { submitToGAS();       return; }
+      if (FORMSPREE_ENDPOINT) { submitToFormspree(); return; }
+
+      // --- 仮実装モード：送信せず完了画面のみ ---
+      var preview = {};
+      new FormData(form).forEach(function (v, k) {
+        preview[k] = (v instanceof File) ? v.name : v;
+      });
+      console.log("[無料診断フォーム/仮実装] 送信予定データ:", preview);
+      showSuccess();
     });
   }
 
