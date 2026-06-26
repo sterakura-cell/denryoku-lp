@@ -57,19 +57,17 @@ var FORMSPREE_ENDPOINT = "https://formspree.io/f/xxxxxxx";
 
 このフォルダ（`新電力　エナリス`）の中身を公開します。`.claude/` は自動で除外されます。
 
-```bash
-# このフォルダで実行
-git init
-git add .
-git commit -m "動力電気代 無料診断LP"
-git branch -M main
+> git init と初回コミットは実施済みです。GitHubで空のPublicリポジトリ（例：`denryoku-lp`）を
+> 作成したら、このフォルダで以下を実行します。
 
-# GitHubで空のリポジトリ（例：denryoku-lp）を作成してから↓
-git remote add origin https://github.com/<あなたのアカウント>/denryoku-lp.git
+```bash
+git remote add origin https://github.com/sterakura-cell/denryoku-lp.git
 git push -u origin main
 ```
 
 > GitHubのリポジトリは **Public** にしてください（GitHub Pages無料枠の条件）。
+> 新規リポジトリ作成時、README/.gitignore/license は **追加しない**（チェックを外す）でください
+> （こちらに既にコミットがあるため）。
 
 ---
 
@@ -84,38 +82,29 @@ git push -u origin main
 
 ## STEP 5. 独自ドメインを割り当てる
 
-### 5-1. CNAMEファイルを用意
+### 5-1. CNAMEファイル（設定済み）
 
-リポジトリ直下に `CNAME` という名前のファイルを作り、**使うドメインだけ**を1行書きます。
-（例：`lp.example.com` や `denryoku.example.com` のようなサブドメイン推奨）
+リポジトリ直下に `CNAME` ファイルを作成済みです（中身：`ripuro.soter-info.com`）。
+このままpushすればOKです。
 
-```
-lp.example.com
-```
+### 5-2. DNSを設定（Squarespace の管理画面で）
 
-→ コミットして push。
+soter-info.com は Google Domains → 現 **Squarespace** 管理です。
+Squarespace にログイン → 対象ドメイン → **DNS設定（DNS Settings）** で、次の1件を追加します。
 
-### 5-2. DNSを設定（ドメイン管理画面で）
-
-**サブドメインで公開する場合（推奨・簡単）：**
-
-| 種類 | ホスト名 | 値 |
+| 種類(Type) | ホスト(Host) | 値(Data / Content) |
 |------|----------|-----|
-| CNAME | lp（使うサブドメイン） | `<あなたのアカウント>.github.io` |
+| CNAME | `ripuro` | `sterakura-cell.github.io` |
 
-**ルートドメイン（example.com そのもの）で公開する場合：**
-
-| 種類 | ホスト名 | 値 |
-|------|----------|-----|
-| A | @ | 185.199.108.153 |
-| A | @ | 185.199.109.153 |
-| A | @ | 185.199.110.153 |
-| A | @ | 185.199.111.153 |
+※ 値の末尾に `.` が自動で付く場合がありますが問題ありません。
+※ 既に `ripuro` の別レコードがあれば削除してから追加してください。
 
 ### 5-3. GitHub側でドメイン指定
 
-Settings → Pages → **Custom domain** にドメインを入力して Save。
+Settings → Pages → **Custom domain** に `ripuro.soter-info.com` を入力して Save。
 **「Enforce HTTPS」にチェック**（証明書発行に数分〜数十分かかることがあります）。
+
+公開URL：**https://ripuro.soter-info.com/**
 
 DNSの反映は数分〜最大48時間。たいていは数十分で見られるようになります。
 
@@ -133,8 +122,8 @@ DNSの反映は数分〜最大48時間。たいていは数十分で見られる
 
 ## 配布URL（公開後）
 
-- 寺倉担当用：`https://（独自ドメイン）/?ref=terakura`
-- 父担当用　：`https://（独自ドメイン）/?ref=father`
+- 寺倉担当用：`https://ripuro.soter-info.com/?ref=terakura`
+- 父担当用　：`https://ripuro.soter-info.com/?ref=father`
 
 この2つを使い分けて案内すれば、どちらの紹介元・電話番号経由かが管理シートで判別できます。
 （運用手順・管理シート項目・東京新電力への案件共有フォーマットは README.md を参照）
