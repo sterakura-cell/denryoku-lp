@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>パートナー専用｜請求書アップロード（電気代見直し）</title>
+<style>
+  :root{
+    --navy:#0f2c54; --blue:#1f6fe0; --blue-dark:#1558bf; --light:#e8f1fd; --light2:#f4f8ff;
+    --green:#1aa179; --green-l:#e6f6f0; --orange:#f08a24; --orange-l:#fdf1e3;
+    --g900:#1c2733; --g700:#43505e; --g500:#6b7888; --g300:#cfd7e1; --g100:#eef2f6; --bg:#f6f9fc;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; color:var(--g900); background:var(--bg); line-height:1.65; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:600px; margin:0 auto; padding:0 0 48px;}
+  .hero{background:linear-gradient(160deg,#123963,#0a1f3d); color:#fff; padding:24px 22px 22px;}
+  .badge{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:4px 12px; margin-bottom:12px;}
+  .hero h1{font-size:21px; font-weight:900; line-height:1.4;}
+  .hero p{margin-top:9px; font-size:13px; color:#dce8fa;}
+  .card{background:#fff; margin:16px; border-radius:16px; box-shadow:0 4px 18px rgba(15,44,84,.08); padding:20px 18px;}
+  .steps{display:flex; gap:8px; margin:14px 16px 0;}
+  .stepc{flex:1; background:#fff; border:1px solid #dcebfd; border-radius:12px; padding:10px 8px; text-align:center;}
+  .stepc b{display:block; color:var(--blue-dark); font-size:13px; font-weight:800;}
+  .stepc span{font-size:11px; color:var(--g700);}
+  label{display:block; font-size:13px; font-weight:700; color:var(--navy); margin:16px 0 6px;}
+  label .req{color:#d9534f; font-size:11px; margin-left:6px;}
+  label .opt{color:var(--g500); font-size:11px; font-weight:500; margin-left:6px;}
+  input[type=text], input[type=tel], input[type=email], input[type=number], select, textarea{
+    width:100%; padding:11px 12px; font-size:15px; border:1.5px solid var(--g300); border-radius:10px; font-family:inherit; color:var(--g900); background:#fff;}
+  input:focus, select:focus, textarea:focus{outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(31,111,224,.12);}
+  textarea{min-height:72px; resize:vertical;}
+  .hint{font-size:11.5px; color:var(--g500); margin-top:5px;}
+  .filebox{border:2px dashed #bcd8f7; background:var(--light2); border-radius:12px; padding:18px 14px; text-align:center; margin-top:6px;}
+  .filebox label{display:inline-block; background:var(--grad,linear-gradient(135deg,#1f8be0,#1558bf)); color:#fff; padding:10px 18px; border-radius:10px; cursor:pointer; font-size:14px; margin:0;}
+  .filebox input{display:none;}
+  .filebox .ic{font-size:26px; color:var(--blue);}
+  #fileState{font-size:12.5px; color:var(--green); margin-top:10px; font-weight:700; word-break:break-all;}
+  .calc{background:var(--orange-l); border:1px solid #f6d6ad; border-radius:12px; padding:12px 14px; margin-top:10px; font-size:13px; color:var(--g700);}
+  .calc b{color:#d9730a; font-size:16px;}
+  .submit{width:100%; margin-top:22px; padding:15px; font-size:16px; font-weight:800; color:#fff; background:linear-gradient(135deg,#1f8be0,#1558bf); border:none; border-radius:12px; cursor:pointer;}
+  .submit:disabled{opacity:.6; cursor:default;}
+  .note-sec{font-size:11.5px; color:var(--g500); margin:14px 16px 0; line-height:1.6;}
+  .success{display:none; text-align:center; padding:36px 22px;}
+  .success .chk{width:64px; height:64px; border-radius:50%; background:var(--green-l); color:var(--green); font-size:34px; line-height:64px; margin:0 auto 14px;}
+  .success h2{color:var(--navy); font-size:20px;}
+  .success p{color:var(--g700); font-size:14px; margin-top:10px;}
+  .reward{background:var(--green-l); border:1px solid #bfe8da; border-radius:12px; padding:12px 14px; margin-top:14px; font-size:12.5px; color:#137a59;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="badge">パートナー専用ページ</span>
+    <h1>顧問先の請求書を<br>アップロードするだけ</h1>
+    <p>顧問先さま（高圧受電の施設）の電気の請求書＝<b>直近12ヶ月分</b>を送信してください。エナリスが無料で試算します。安くならなければ切替不要・費用ゼロです。</p>
+  </header>
+
+  <div class="steps">
+    <div class="stepc"><b>1</b><span>請求書を送る</span></div>
+    <div class="stepc"><b>2</b><span>無料試算</span></div>
+    <div class="stepc"><b>3</b><span>継続報酬</span></div>
+  </div>
+
+  <form id="pform" class="card" novalidate>
+    <label>紹介者（税理士・事務所名）<span class="req">必須</span></label>
+    <input type="text" name="partner_name" required placeholder="例）山田税理士事務所">
+
+    <label>顧問先・施設名<span class="req">必須</span></label>
+    <input type="text" name="company" required placeholder="例）株式会社○○製作所">
+
+    <label>業種<span class="opt">任意</span></label>
+    <select name="industry">
+      <option value="">選択してください</option>
+      <option>工場</option><option>ホテル・旅館</option><option>病院・クリニック</option>
+      <option>物流倉庫</option><option>オフィス・テナントビル</option><option>商業施設</option>
+      <option>24時間営業店舗</option><option>その他</option>
+    </select>
+
+    <label>月額の電気代（円）<span class="opt">任意・分かれば</span></label>
+    <input type="number" name="monthly_cost" id="amount" inputmode="numeric" placeholder="例）1500000">
+    <div class="hint">分かる範囲でOK。試算の優先度判断に使います。</div>
+    <div class="calc" id="calcBox" hidden></div>
+
+    <label>請求書ファイル（直近12ヶ月分）<span class="opt">推奨</span></label>
+    <div class="filebox">
+      <div class="ic">📄</div>
+      <div style="margin:8px 0 12px; font-size:12.5px; color:var(--g700);">画像・PDFどちらでもOK（複数選択できます）</div>
+      <label>ファイルを選択<input type="file" id="billFile" name="bill_file" multiple accept="image/*,application/pdf"></label>
+      <div id="fileState"></div>
+    </div>
+    <div class="hint">電力会社のWeb明細から12ヶ月分まとめてダウンロードできます。今すぐ揃わない場合は、後日メール（contact@soter-info.com）送付でもOK。</div>
+
+    <label>ご連絡先（顧問先またはご担当）<span class="opt">任意</span></label>
+    <input type="tel" name="phone" placeholder="電話番号">
+    <input type="email" name="email" placeholder="メールアドレス" style="margin-top:8px;">
+
+    <label>備考<span class="opt">任意</span></label>
+    <textarea name="note" placeholder="現在の電力会社、複数拠点、その他ご共有事項など"></textarea>
+
+    <button type="submit" class="submit" id="submitBtn">この内容で送信する</button>
+  </form>
+
+  <div class="note-sec">
+    ※ 送信いただいた請求書はエナリスでの無料試算のみに使用します。　※ 契約先はエナリス（KDDIグループ・J-POWER出資）。電気の品質・安定性は変わりません。　※ 切替が成立した場合、電気使用料の約0.5%（導入料率）を継続報酬として分配します。
+  </div>
+
+  <div class="success card" id="success">
+    <div class="chk">✓</div>
+    <h2>送信が完了しました</h2>
+    <p>ありがとうございます。内容を確認し、エナリスで無料試算のうえ担当よりご連絡します。</p>
+    <div class="reward">この紹介が切替成立になれば、電気使用料の0.5%が毎月の継続報酬として入ります。</div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxL8mk2H8M2JW06vfXJDjteJJStyz5ssGi4WQCduGSi3G1BdT4q5tRZSO-UDMqpjo0/exec";
+
+  var form = document.getElementById("pform");
+  var btn = document.getElementById("submitBtn");
+  var fileInput = document.getElementById("billFile");
+  var fileState = document.getElementById("fileState");
+  var amount = document.getElementById("amount");
+  var calcBox = document.getElementById("calcBox");
+
+  function yen(n){ return "¥" + Math.round(n).toLocaleString("ja-JP"); }
+  function rankOf(m){ return m>=500000?"S":m>=200000?"A":m>=100000?"B":"C"; }
+
+  amount.addEventListener("input", function(){
+    var m = parseFloat(amount.value)||0;
+    if(m<=0){ calcBox.hidden=true; return; }
+    var y=m*12;
+    calcBox.hidden=false;
+    calcBox.innerHTML = "年間 約"+yen(y)+"／削減見込み <b>"+yen(y*0.15)+"〜"+yen(y*0.20)+"</b>（15〜20%）　見込み度ランク："+rankOf(m);
+  });
+
+  fileInput.addEventListener("change", function(){
+    if(fileInput.files && fileInput.files.length){
+      var names = Array.prototype.map.call(fileInput.files, function(f){return f.name;});
+      fileState.textContent = "✓ "+fileInput.files.length+"件選択中：" + names.join("、");
+    } else { fileState.textContent=""; }
+  });
+
+  function collectFields(){
+    var m = parseFloat(amount.value)||0;
+    var y = m*12;
+    return {
+      referral_source: "【パートナー】" + (form.partner_name.value||""),
+      landing_url: window.location.href,
+      company: form.company.value||"",
+      contact_name: form.partner_name.value||"",
+      phone: form.phone.value||"",
+      email: form.email.value||"",
+      industry: form.industry.value||"",
+      monthly_cost: m||"",
+      annual_cost: m? y : "",
+      cut15: m? Math.round(y*0.15) : "",
+      cut20: m? Math.round(y*0.20) : "",
+      calc_rank: m? rankOf(m) : "",
+      note: form.note.value||"",
+      after_diagnosis: "パートナー紹介"
+    };
+  }
+
+  function readFilesB64(){
+    var files = fileInput.files ? Array.prototype.slice.call(fileInput.files) : [];
+    return Promise.all(files.map(function(f){
+      return new Promise(function(resolve,reject){
+        var r=new FileReader();
+        r.onload=function(){ resolve({ name:f.name, mimeType:f.type||"application/octet-stream", dataBase64:String(r.result).split(",")[1]||"" }); };
+        r.onerror=function(){ reject(new Error("ファイル読込エラー")); };
+        r.readAsDataURL(f);
+      });
+    }));
+  }
+
+  function showSuccess(){
+    document.getElementById("success").style.display="block";
+    form.style.display="none";
+    document.querySelector(".steps").style.display="none";
+    document.getElementById("success").scrollIntoView({behavior:"smooth", block:"center"});
+  }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if(!form.partner_name.value.trim() || !form.company.value.trim()){
+      alert("「紹介者」と「顧問先・施設名」は必須です。");
+      return;
+    }
+    btn.disabled=true; btn.textContent="送信中…";
+    readFilesB64().then(function(files){
+      return fetch(GAS_ENDPOINT, {
+        method:"POST", mode:"no-cors",
+        headers:{ "Content-Type":"text/plain;charset=utf-8" },
+        body: JSON.stringify({ fields: collectFields(), files: files })
+      });
+    }).then(function(){ showSuccess(); })
+      .catch(function(err){
+        alert("送信に失敗しました。お手数ですが contact@soter-info.com へ請求書をメール送付ください。\n("+err.message+")");
+        btn.disabled=false; btn.textContent="この内容で送信する";
+      });
+  });
+})();
+</script>
+</body>
+</html>
