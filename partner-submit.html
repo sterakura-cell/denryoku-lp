@@ -157,6 +157,7 @@
     var m = parseFloat(amount.value)||0;
     var y = m*12;
     return {
+      submit_source: "partner",
       referral_source: "【パートナー】" + (form.partner_name.value||""),
       landing_url: window.location.href,
       company: form.company.value||"",

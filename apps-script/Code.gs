@@ -17,6 +17,11 @@ var NOTIFY_EMAIL = "";
 var SHEET_NAME  = "問い合わせ";
 var FOLDER_NAME = "動力電気代_明細";
 
+// パートナー紹介（partner-submit.html 経由）専用の保存先。
+//   LP（顧客の直接申込）と物理的に分けて管理しやすくする。
+var PARTNER_SHEET_NAME  = "パートナー紹介";
+var PARTNER_FOLDER_NAME = "パートナー紹介_明細";
+
 // 明細フォルダを作る親フォルダのID（このフォルダの中に「動力電気代_明細」を作成）。
 //   ＝ Driveの「②新電力　エナリス　20％」フォルダ。
 //   空にするとマイドライブ直下に作成されます。
@@ -46,11 +51,20 @@ function doPost(e) {
     var f      = data.fields || {};
     var files  = data.files  || [];
 
-    // 1) 明細ファイルをドライブへ保存 → リンク文字列
-    var billLinks = saveFiles_(files, f.company);
+    // 0) パートナー紹介かどうか判定（フォームの submit_source、または紹介元コードの【パートナー】で判別）
+    var isPartner  = (f.submit_source === "partner") || /^【パートナー】/.test(f.referral_source || "");
+    var sheetName  = isPartner ? PARTNER_SHEET_NAME  : SHEET_NAME;
+    var folderName = isPartner ? PARTNER_FOLDER_NAME : FOLDER_NAME;
+    // パートナー分はファイル名の頭に「事務所名_顧問先名」を付けて、誰の紹介か一目で分かるようにする。
+    var namePrefix = isPartner
+      ? ((f.referral_source || "").replace(/^【パートナー】/, "") + "_" + (f.company || ""))
+      : (f.company || "");
 
-    // 2) スプレッドシートに追記
-    var sheet = getSheet_();
+    // 1) 明細ファイルをドライブへ保存 → リンク文字列
+    var billLinks = saveFiles_(files, namePrefix, folderName);
+
+    // 2) スプレッドシートに追記（パートナー分は専用タブへ）
+    var sheet = getSheet_(sheetName);
     var row = [
       new Date(),
       f.referral_source || "",
@@ -89,11 +103,12 @@ function doPost(e) {
 
 /* ---- 補助関数 ---- */
 
-function getSheet_() {
+function getSheet_(sheetName) {
+  var name = sheetName || SHEET_NAME;
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getSheetByName(SHEET_NAME);
+  var sheet = ss.getSheetByName(name);
   if (!sheet) {
-    sheet = ss.insertSheet(SHEET_NAME);
+    sheet = ss.insertSheet(name);
   }
   // ヘッダーが無ければ作成
   if (sheet.getLastRow() === 0) {
@@ -104,16 +119,16 @@ function getSheet_() {
   return sheet;
 }
 
-function saveFiles_(files, company) {
+function saveFiles_(files, prefix, folderName) {
   if (!files || !files.length) return "";
-  var folder = getFolder_();
+  var folder = getFolder_(folderName);
   var links = [];
   var stamp = Utilities.formatDate(new Date(), "Asia/Tokyo", "yyyyMMdd_HHmmss");
   for (var i = 0; i < files.length; i++) {
     var ff = files[i];
     if (!ff || !ff.dataBase64) continue;
     var bytes = Utilities.base64Decode(ff.dataBase64);
-    var safeCompany = (company || "明細").replace(/[\\\/:*?"<>|]/g, "_").slice(0, 20);
+    var safeCompany = (prefix || "明細").replace(/[\\\/:*?"<>|]/g, "_").slice(0, 40);
     var name = safeCompany + "_" + stamp + "_" + (i + 1) + "_" + (ff.name || "file");
     var blob = Utilities.newBlob(bytes, ff.mimeType || "application/octet-stream", name);
     var file = folder.createFile(blob);
@@ -125,25 +140,27 @@ function saveFiles_(files, company) {
   return links.join("\n");
 }
 
-function getFolder_() {
+function getFolder_(folderName) {
   // 親フォルダ（②新電力 エナリス 20%）の中に明細フォルダを用意する。
+  var name = folderName || FOLDER_NAME;
   var base = null;
   if (PARENT_FOLDER_ID) {
     try { base = DriveApp.getFolderById(PARENT_FOLDER_ID); } catch (e) { base = null; }
   }
   if (base) {
-    var inParent = base.getFoldersByName(FOLDER_NAME);
-    return inParent.hasNext() ? inParent.next() : base.createFolder(FOLDER_NAME);
+    var inParent = base.getFoldersByName(name);
+    return inParent.hasNext() ? inParent.next() : base.createFolder(name);
   }
   // 親フォルダが使えない場合はマイドライブ直下にフォールバック。
-  var it = DriveApp.getFoldersByName(FOLDER_NAME);
-  return it.hasNext() ? it.next() : DriveApp.createFolder(FOLDER_NAME);
+  var it = DriveApp.getFoldersByName(name);
+  return it.hasNext() ? it.next() : DriveApp.createFolder(name);
 }
 
 function notify_(f, billLinks) {
   if (!NOTIFY_EMAIL) return;
   var rank = f.calc_rank || "－";
-  var subject = "【動力電気代診断】" + (f.company || "新規") + "様／月額" +
+  var isPartner = (f.submit_source === "partner") || /^【パートナー】/.test(f.referral_source || "");
+  var subject = (isPartner ? "【パートナー紹介】" : "【動力電気代診断】") + (f.company || "新規") + "様／月額" +
                 (f.monthly_cost || "?") + "円／ランク" + rank;
   var body =
     "新しい無料診断のお申し込みがありました。\n\n" +
