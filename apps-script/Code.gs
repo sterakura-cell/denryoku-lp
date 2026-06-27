@@ -17,6 +17,11 @@ var NOTIFY_EMAIL = "";
 var SHEET_NAME  = "問い合わせ";
 var FOLDER_NAME = "動力電気代_明細";
 
+// 明細フォルダを作る親フォルダのID（このフォルダの中に「動力電気代_明細」を作成）。
+//   ＝ Driveの「②新電力　エナリス　20％」フォルダ。
+//   空にするとマイドライブ直下に作成されます。
+var PARENT_FOLDER_ID = "1K7Ben6C04jJ-5pgqZk0TdfzQNS3GjYPv";
+
 // スプレッドシートの列（この順で1行になります）
 var HEADERS = [
   "受付日", "紹介元コード", "問い合わせ元LP URL",
@@ -121,6 +126,16 @@ function saveFiles_(files, company) {
 }
 
 function getFolder_() {
+  // 親フォルダ（②新電力 エナリス 20%）の中に明細フォルダを用意する。
+  var base = null;
+  if (PARENT_FOLDER_ID) {
+    try { base = DriveApp.getFolderById(PARENT_FOLDER_ID); } catch (e) { base = null; }
+  }
+  if (base) {
+    var inParent = base.getFoldersByName(FOLDER_NAME);
+    return inParent.hasNext() ? inParent.next() : base.createFolder(FOLDER_NAME);
+  }
+  // 親フォルダが使えない場合はマイドライブ直下にフォールバック。
   var it = DriveApp.getFoldersByName(FOLDER_NAME);
   return it.hasNext() ? it.next() : DriveApp.createFolder(FOLDER_NAME);
 }
