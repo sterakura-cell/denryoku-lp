@@ -14,15 +14,16 @@
 var NOTIFY_EMAIL = "";
 
 // シート名・ドライブの保存フォルダ名（変更可）
+//   LP直接申込 と パートナー紹介 が一目で分かるよう、①②のペア名で整理。
 var SHEET_NAME  = "問い合わせ";
-var FOLDER_NAME = "動力電気代_明細";
+var FOLDER_NAME = "① LP直接申込_明細";
 
-// パートナー紹介（partner-submit.html 経由）専用の保存先。
+// パートナー紹介（partner-submit.html 経由＝税理士・管理会社からの紹介）専用の保存先。
 //   LP（顧客の直接申込）と物理的に分けて管理しやすくする。
 var PARTNER_SHEET_NAME  = "パートナー紹介";
-var PARTNER_FOLDER_NAME = "パートナー紹介_明細";
+var PARTNER_FOLDER_NAME = "② パートナー紹介_明細";
 
-// 明細フォルダを作る親フォルダのID（このフォルダの中に「動力電気代_明細」を作成）。
+// 明細フォルダを作る親フォルダのID（このフォルダの中に「① LP直接申込_明細」「② パートナー紹介_明細」を作成）。
 //   ＝ Driveの「②新電力　エナリス　20％」フォルダ。
 //   空にするとマイドライブ直下に作成されます。
 var PARENT_FOLDER_ID = "1K7Ben6C04jJ-5pgqZk0TdfzQNS3GjYPv";
