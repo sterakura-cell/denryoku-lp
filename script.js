@@ -79,11 +79,11 @@
     return "¥" + Math.round(n).toLocaleString("ja-JP");
   }
 
-  // ランク判定：S=月50万以上 / A=20万以上 / B=10万以上 / C=10万未満
+  // ランク判定（パチンコホール基準）：S=月100万以上 / A=50万以上 / B=20万以上 / C=20万未満
   function rankOf(monthly) {
-    if (monthly >= 500000) return "S";
-    if (monthly >= 200000) return "A";
-    if (monthly >= 100000) return "B";
+    if (monthly >= 1000000) return "S";
+    if (monthly >= 500000) return "A";
+    if (monthly >= 200000) return "B";
     return "C";
   }
 

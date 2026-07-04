@@ -12,3 +12,8 @@ desktop.ini
 # 依存・ログ
 node_modules/
 npm-debug.log*
+
+# 営業資料は絶対に公開リポジトリ（GitHub Pages）へ入れない
+パチンコ営業_使う/
+税理士パートナー_今は使わない/
+*.xlsx
