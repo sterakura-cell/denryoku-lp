@@ -11,7 +11,7 @@
 
 // ▼ここだけ設定（任意）。新着通知メールを受け取りたいアドレスを入れると通知が届きます。
 //   空のままなら通知メールは送りません（スプレッドシートには必ず記録されます）。
-var NOTIFY_EMAIL = "";
+var NOTIFY_EMAIL = "contact@soter-info.com";
 
 // シート名・ドライブの保存フォルダ名（変更可）
 //   LP直接申込 と パートナー紹介 が一目で分かるよう、①②のペア名で整理。
@@ -161,7 +161,7 @@ function notify_(f, billLinks) {
   if (!NOTIFY_EMAIL) return;
   var rank = f.calc_rank || "－";
   var isPartner = (f.submit_source === "partner") || /^【パートナー】/.test(f.referral_source || "");
-  var subject = (isPartner ? "【パートナー紹介】" : "【動力電気代診断】") + (f.company || "新規") + "様／月額" +
+  var subject = (isPartner ? "【パートナー紹介】" : "【パチンコ電気代診断】") + (f.company || "新規") + "様／月額" +
                 (f.monthly_cost || "?") + "円／ランク" + rank;
   var body =
     "新しい無料診断のお申し込みがありました。\n\n" +
@@ -171,10 +171,10 @@ function notify_(f, billLinks) {
     "メール：" + (f.email || "") + "\n" +
     "所在地：" + (f.address || "") + "\n" +
     "業種：" + (f.industry || "") + "\n" +
-    "月額動力電気代：" + (f.monthly_cost || "") + "\n" +
+    "月額電気代：" + (f.monthly_cost || "") + "\n" +
     "年間電気代：" + (f.annual_cost || "") + "\n" +
-    "15%削減見込み：" + (f.cut15 || "") + "\n" +
-    "20%削減見込み：" + (f.cut20 || "") + "\n" +
+    "20%削減見込み：" + (f.cut15 || "") + "\n" +
+    "25%削減見込み：" + (f.cut20 || "") + "\n" +
     "見込み度ランク：" + rank + "\n" +
     "打合せ希望：" + (f.after_diagnosis || "") + "\n" +
     "現在の電力会社：" + (f.current_provider || "") + "\n" +
