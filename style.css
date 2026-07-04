@@ -357,6 +357,21 @@ img { max-width: 100%; }
 }
 #honbu .mini-card .ico { color: var(--green); }
 
+/* 金額プリセットチップ（シミュレーター・フォーム共通） */
+.sim-chips {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px;
+}
+.chip {
+  border: 1px solid var(--gray-300); background: #fff; color: var(--navy);
+  border-radius: 999px; padding: 6px 12px;
+  font-size: .82rem; font-weight: 700; cursor: pointer;
+  transition: border-color .12s, color .12s, background .12s;
+}
+.chip:hover { border-color: var(--blue); color: var(--blue); }
+.chip.on {
+  background: var(--blue); border-color: var(--blue); color: #fff;
+}
+
 /* 6. シミュレーター */
 .sim-wrap { max-width: 720px; margin: 0 auto; padding: 28px 22px; }
 .sim-grid { display: grid; gap: 14px; margin: 22px 0 18px; }

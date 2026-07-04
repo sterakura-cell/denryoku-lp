@@ -119,8 +119,16 @@
           <h2 class="sim-card-title"><svg class="ico"><use href="#i-chart"/></svg>かんたん削減シミュレーター</h2>
           <label class="sim-field">
             <span>月額の電気代（円・1店舗あたり）</span>
-            <input type="number" id="heroSimInput" inputmode="numeric" placeholder="例：1000000" min="0" step="10000" />
+            <input type="number" id="heroSimInput" inputmode="numeric" placeholder="例：1000000（100万円）" min="0" step="10000" />
           </label>
+          <div class="sim-chips" data-target="heroSimInput" aria-label="金額をワンタップで入力">
+            <button type="button" class="chip" data-v="500000">50万</button>
+            <button type="button" class="chip" data-v="1000000">100万</button>
+            <button type="button" class="chip" data-v="2000000">200万</button>
+            <button type="button" class="chip" data-v="3000000">300万</button>
+            <button type="button" class="chip" data-v="5000000">500万</button>
+            <button type="button" class="chip" data-v="10000000">1,000万</button>
+          </div>
           <div class="sim-result" id="heroSimResult" hidden>
             <div class="sim-row">
               <span class="sim-label">年間電気代</span>
@@ -243,8 +251,16 @@
         <div class="sim-wrap card">
           <label class="sim-field big">
             <span>月額の電気代（円・1店舗あたり）</span>
-            <input type="number" id="simInput" inputmode="numeric" placeholder="例：1000000" min="0" step="10000" />
+            <input type="number" id="simInput" inputmode="numeric" placeholder="例：1000000（100万円）" min="0" step="10000" />
           </label>
+          <div class="sim-chips" data-target="simInput" aria-label="金額をワンタップで入力">
+            <button type="button" class="chip" data-v="500000">50万</button>
+            <button type="button" class="chip" data-v="1000000">100万</button>
+            <button type="button" class="chip" data-v="2000000">200万</button>
+            <button type="button" class="chip" data-v="3000000">300万</button>
+            <button type="button" class="chip" data-v="5000000">500万</button>
+            <button type="button" class="chip" data-v="10000000">1,000万（本部合算）</button>
+          </div>
 
           <div class="sim-grid" id="simGrid" hidden>
             <div class="sim-stat">
@@ -327,6 +343,7 @@
                 <tr><td>100万円<small>（中型店）</small></td><td>1,200万円</td><td class="td-green">240万円/年</td><td class="td-orange">300万円/年</td></tr>
                 <tr><td>200万円<small>（大型店）</small></td><td>2,400万円</td><td class="td-green">480万円/年</td><td class="td-orange">600万円/年</td></tr>
                 <tr><td>300万円<small>（超大型・複数店）</small></td><td>3,600万円</td><td class="td-green">720万円/年</td><td class="td-orange">900万円/年</td></tr>
+                <tr><td>1,000万円<small>（本部・全店合算）</small></td><td>1.2億円</td><td class="td-green">2,400万円/年</td><td class="td-orange">3,000万円/年</td></tr>
               </tbody>
             </table>
             <p class="chart-note">※ 実際の削減額は契約内容・使用状況・エリア等により異なります。</p>
@@ -425,8 +442,16 @@
             <label class="field required full">
               <span class="field-label">月額の電気代（円・1店舗あたり）</span>
               <input type="number" id="formAmount" name="monthly_cost" inputmode="numeric"
-                     placeholder="例：1000000" min="0" step="10000" required />
+                     placeholder="例：1000000（100万円）" min="0" step="10000" required />
             </label>
+            <div class="sim-chips" data-target="formAmount" aria-label="金額をワンタップで入力">
+              <button type="button" class="chip" data-v="500000">50万</button>
+              <button type="button" class="chip" data-v="1000000">100万</button>
+              <button type="button" class="chip" data-v="2000000">200万</button>
+              <button type="button" class="chip" data-v="3000000">300万</button>
+              <button type="button" class="chip" data-v="5000000">500万</button>
+              <button type="button" class="chip" data-v="10000000">1,000万</button>
+            </div>
 
             <!-- 入力中ランク表示 -->
             <div class="form-rank" id="formRank" hidden>

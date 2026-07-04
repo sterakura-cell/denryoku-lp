@@ -103,9 +103,14 @@
     var result = document.getElementById("heroSimResult");
     if (!input || !result) return;
 
+    var heroTimer = null;
     input.addEventListener("input", function () {
+      clearTimeout(heroTimer);
+      heroTimer = setTimeout(update, 350);   // 入力が止まってから計算（打鍵途中の中途半端な数字を出さない）
+    });
+    function update() {
       var m = parseFloat(input.value);
-      if (!m || m <= 0) { result.hidden = true; return; }
+      if (!m || m < 10000) { result.hidden = true; return; }   // 1万円未満は入力途中とみなす
       result.hidden = false;
 
       var year = m * 12;
@@ -119,7 +124,7 @@
       rankEl.className = "sim-rank rank-tone-" + r;
       rankEl.style.background = rankBg(r);
       rankEl.style.color = "#fff";
-    });
+    }
   }
 
   function rankBg(r) {
@@ -138,9 +143,14 @@
     var rankBox  = document.getElementById("simRankBox");
     if (!input) return;
 
+    var simTimer = null;
     input.addEventListener("input", function () {
+      clearTimeout(simTimer);
+      simTimer = setTimeout(update, 350);
+    });
+    function update() {
       var m = parseFloat(input.value);
-      if (!m || m <= 0) { grid.hidden = true; rankBox.hidden = true; return; }
+      if (!m || m < 10000) { grid.hidden = true; rankBox.hidden = true; return; }
       grid.hidden = false; rankBox.hidden = false;
 
       var year = m * 12;
@@ -152,7 +162,7 @@
       rankBox.className = "sim-rank-box rank-" + r;
       document.getElementById("simRankBadge").textContent = r;
       document.getElementById("simRankAdvice").textContent = RANK_ADVICE[r];
-    });
+    }
   }
 
   /* ----------------------------------------------------------
@@ -163,9 +173,14 @@
     var rankBox = document.getElementById("formRank");
     if (!input || !rankBox) return;
 
+    var frTimer = null;
     input.addEventListener("input", function () {
+      clearTimeout(frTimer);
+      frTimer = setTimeout(update, 350);
+    });
+    function update() {
       var m = parseFloat(input.value);
-      if (!m || m <= 0) { rankBox.hidden = true; return; }
+      if (!m || m < 10000) { rankBox.hidden = true; return; }
       rankBox.hidden = false;
 
       var r = rankOf(m);
@@ -173,6 +188,25 @@
       document.getElementById("formRankBadge").textContent = r;
       document.getElementById("formRankAdvice").textContent =
         "見込み度ランク " + r + "：" + RANK_ADVICE[r];
+    }
+  }
+
+  /* ----------------------------------------------------------
+     4.5 金額プリセットチップ（ワンタップ入力）
+     ---------------------------------------------------------- */
+  function bindChips() {
+    var boxes = document.querySelectorAll(".sim-chips");
+    Array.prototype.forEach.call(boxes, function (box) {
+      var target = document.getElementById(box.getAttribute("data-target"));
+      if (!target) return;
+      Array.prototype.forEach.call(box.querySelectorAll(".chip"), function (btn) {
+        btn.addEventListener("click", function () {
+          target.value = btn.getAttribute("data-v");
+          Array.prototype.forEach.call(box.querySelectorAll(".chip"), function (c) { c.classList.remove("on"); });
+          btn.classList.add("on");
+          target.dispatchEvent(new Event("input"));
+        });
+      });
     });
   }
 
@@ -349,6 +383,7 @@
     bindHeroSim();
     bindMainSim();
     bindFormRank();
+    bindChips();
     bindUpload();
     bindFormSubmit();
   }
