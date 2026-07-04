@@ -348,6 +348,15 @@ img { max-width: 100%; }
 }
 .mini-card .ico { width: 1.1rem; height: 1.1rem; color: #7fe0c0; stroke-width: 2.4; }
 
+/* 5.5 本部様向け（明るい背景用のミニカード上書き） */
+#honbu .reassure-card { background: var(--bg-soft); box-shadow: var(--shadow-sm); }
+#honbu .mini-card {
+  background: var(--light-blue2);
+  border: 1px solid var(--gray-300);
+  color: var(--navy);
+}
+#honbu .mini-card .ico { color: var(--green); }
+
 /* 6. シミュレーター */
 .sim-wrap { max-width: 720px; margin: 0 auto; padding: 28px 22px; }
 .sim-grid { display: grid; gap: 14px; margin: 22px 0 18px; }
@@ -571,7 +580,7 @@ img { max-width: 100%; }
 .sticky-btn .ico { width: 1.15rem; height: 1.15rem; }
 .sticky-btn:active { transform: scale(.97); }
 .sticky-form { flex: 2; background: var(--grad-cta); color: #fff; box-shadow: 0 6px 16px rgba(31,111,224,.4); }
-.sticky-tel  { flex: 1; background: #fff; color: var(--navy); border: 1.5px solid var(--gray-300); }
+.sticky-tel  { flex: 1; background: #fff; color: var(--navy); border: 1.5px solid var(--gray-300); white-space: nowrap; font-size: .88rem; }
 
 /* ============ レスポンシブ（タブレット〜PC） ============ */
 @media (min-width: 720px) {
