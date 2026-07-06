@@ -41,7 +41,7 @@ var HEADERS = [
 /* デプロイ確認用（ブラウザでexec URLを開くと表示されます） */
 function doGet() {
   return ContentService
-    .createTextOutput("パチンコ電気代LP 受信エンドポイントは稼働中です。(v5)")
+    .createTextOutput("パチンコ電気代LP 受信エンドポイントは稼働中です。(v6)")
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
@@ -95,6 +95,9 @@ function doPost(e) {
 
     // 3) （任意）メール通知
     notify_(f, billLinks);
+
+    // 4) 申込者への自動返信（受付確認）
+    autoReply_(f);
 
     return json_({ result: "success" });
   } catch (err) {
@@ -186,6 +189,49 @@ function notify_(f, billLinks) {
   // noReply:true …差出人を no-reply@ドメイン にする（Google Workspace）。
   //   自分のアカウントから自分宛てに送ると Gmail が受信トレイに表示しないため、これで回避する。
   MailApp.sendEmail({ to: NOTIFY_EMAIL, subject: subject, body: body, noReply: true });
+}
+
+// 申込者への自動返信（受付確認）。失敗しても受付処理は止めない。
+function autoReply_(f) {
+  var to = (f.email || "").trim();
+  if (!to || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) return;
+  var isPartner = (f.submit_source === "partner") || /^【パートナー】/.test(f.referral_source || "");
+  if (isPartner) return; // パートナー経由は寺倉さんから直接連絡するため自動返信しない
+  var subject = "【受付完了】電気代 無料診断のお申し込みありがとうございます（エコクリエイトHD）";
+  var body =
+    (f.contact_name ? f.contact_name + " 様\n\n" : "") +
+    "この度は電気代の無料診断にお申し込みいただき、誠にありがとうございます。\n" +
+    "以下の内容で受け付けました。担当の寺倉より、2営業日以内にご連絡いたします。\n\n" +
+    "■ お申し込み内容\n" +
+    "会社名：" + (f.company || "") + "\n" +
+    "月額電気代：" + (f.monthly_cost || "") + " 円\n" +
+    "店舗・運営形態：" + (f.industry || "") + "\n\n" +
+    "■ 診断をスムーズに進めるために\n" +
+    "直近12ヶ月分の電気料金明細（写真・PDF）をお持ちでしたら、\n" +
+    "こちらから追加でお送りいただけます（スマホ可）：\n" +
+    "https://ripuro.soter-info.com/#form\n\n" +
+    "お急ぎの場合は下記まで直接ご連絡ください。\n" +
+    "──────────\n" +
+    "株式会社エコクリエイトホールディングス\n" +
+    "〒160-0004 東京都新宿区四谷4-13-31 四谷ランドビル102\n" +
+    "担当：寺倉（てらくら）\n" +
+    "TEL：090-3698-7711 ／ Mail：contact@soter-info.com\n" +
+    "※ 本メールは自動送信です。ご返信は contact@soter-info.com へお願いいたします。\n" +
+    "──────────";
+  try {
+    MailApp.sendEmail({ to: to, subject: subject, body: body, noReply: true, replyTo: "contact@soter-info.com" });
+  } catch (e) { /* 自動返信の失敗は無視（受付自体は成立済み） */ }
+}
+
+// 月次バックアップ：このスプレッドシートの複製を「_バックアップ」フォルダへ保存。
+// 初回のみ設定：エディタ左の時計アイコン「トリガー」→「トリガーを追加」→
+//   関数 monthlyBackup ／時間主導型／月タイマー／1日 を選んで保存。
+function monthlyBackup() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var file = DriveApp.getFileById(ss.getId());
+  var stamp = Utilities.formatDate(new Date(), "Asia/Tokyo", "yyyy-MM-dd");
+  var parent = getFolder_("_バックアップ（問い合わせ一覧）");
+  file.makeCopy(ss.getName() + "_バックアップ_" + stamp, parent);
 }
 
 function toNum_(v) {
