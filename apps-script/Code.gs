@@ -41,7 +41,7 @@ var HEADERS = [
 /* デプロイ確認用（ブラウザでexec URLを開くと表示されます） */
 function doGet() {
   return ContentService
-    .createTextOutput("動力電気代LP 受信エンドポイントは稼働中です。")
+    .createTextOutput("パチンコ電気代LP 受信エンドポイントは稼働中です。(v5)")
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
@@ -183,7 +183,9 @@ function notify_(f, billLinks) {
     "明細：" + (billLinks || "なし") + "\n\n" +
     "紹介元コード：" + (f.referral_source || "") + "\n" +
     "問い合わせ元LP：" + (f.landing_url || "") + "\n";
-  MailApp.sendEmail(NOTIFY_EMAIL, subject, body);
+  // noReply:true …差出人を no-reply@ドメイン にする（Google Workspace）。
+  //   自分のアカウントから自分宛てに送ると Gmail が受信トレイに表示しないため、これで回避する。
+  MailApp.sendEmail({ to: NOTIFY_EMAIL, subject: subject, body: body, noReply: true });
 }
 
 function toNum_(v) {
