@@ -41,7 +41,7 @@ var HEADERS = [
 /* デプロイ確認用（ブラウザでexec URLを開くと表示されます） */
 function doGet() {
   return ContentService
-    .createTextOutput("パチンコ電気代LP 受信エンドポイントは稼働中です。(v6)")
+    .createTextOutput("パチンコ電気代LP 受信エンドポイントは稼働中です。(v7)")
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
@@ -177,7 +177,7 @@ function notify_(f, billLinks) {
     "月額電気代：" + (f.monthly_cost || "") + "\n" +
     "年間電気代：" + (f.annual_cost || "") + "\n" +
     "20%削減見込み：" + (f.cut15 || "") + "\n" +
-    "25%削減見込み：" + (f.cut20 || "") + "\n" +
+    "40%削減見込み：" + (f.cut20 || "") + "\n" +
     "見込み度ランク：" + rank + "\n" +
     "打合せ希望：" + (f.after_diagnosis || "") + "\n" +
     "現在の電力会社：" + (f.current_provider || "") + "\n" +

@@ -118,7 +118,7 @@
       var year = m * 12;
       document.getElementById("heroYear").textContent  = yen(year);
       document.getElementById("heroCut15").textContent = yen(year * 0.20);
-      document.getElementById("heroCut20").textContent = yen(year * 0.25);
+      document.getElementById("heroCut20").textContent = yen(year * 0.40);
 
       var r = rankOf(m);
       var rankEl = document.getElementById("heroRank");
@@ -159,7 +159,7 @@
       var year = m * 12;
       document.getElementById("simYear").textContent  = yen(year);
       document.getElementById("simCut15").textContent = yen(year * 0.20);
-      document.getElementById("simCut20").textContent = yen(year * 0.25);
+      document.getElementById("simCut20").textContent = yen(year * 0.40);
 
       var r = rankOf(m);
       rankBox.className = "sim-rank-box rank-" + r;
@@ -249,14 +249,14 @@
     // Formspreeエンドポイントが設定されていれば action に反映
     if (FORMSPREE_ENDPOINT) form.setAttribute("action", FORMSPREE_ENDPOINT);
 
-    // 送信前に自動計算値（ランク・年間・20%/25%）を隠しフィールドへセット
+    // 送信前に自動計算値（ランク・年間・20%/40%）を隠しフィールドへセット
     function fillCalcFields() {
       var m = parseFloat((form.monthly_cost && form.monthly_cost.value) || "") || 0;
       var year = m * 12;
       setVal("calcRank",   m > 0 ? rankOf(m) : "対象外");
       setVal("calcAnnual", m > 0 ? year : "");
       setVal("calcCut15",  m > 0 ? Math.round(year * 0.20) : "");
-      setVal("calcCut20",  m > 0 ? Math.round(year * 0.25) : "");
+      setVal("calcCut20",  m > 0 ? Math.round(year * 0.40) : "");
     }
     function setVal(id, v) { var el = document.getElementById(id); if (el) el.value = v; }
 
