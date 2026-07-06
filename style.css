@@ -401,7 +401,9 @@ img { max-width: 100%; }
 }
 .rank-advice, .form-rank-advice { margin: 0; font-size: .9rem; font-weight: 600; color: var(--gray-900); }
 
-/* ランク別カラー（JSで rank-S / rank-A / rank-B / rank-C を付与） */
+/* ランク別カラー（JSで rank-SS / rank-S / rank-A / rank-B / rank-C を付与） */
+.rank-SS .rank-badge, .rank-SS.form-rank .form-rank-badge { background: linear-gradient(135deg,#d4380d,#a8071a); }
+.rank-SS { border-color:#f5b9a3; background:#fdeae3; }
 .rank-S .rank-badge, .rank-S.form-rank .form-rank-badge { background: linear-gradient(135deg,#f0982a,#e0671b); }
 .rank-A .rank-badge, .rank-A.form-rank .form-rank-badge { background: linear-gradient(135deg,#1f8be0,#1558bf); }
 .rank-B .rank-badge, .rank-B.form-rank .form-rank-badge { background: linear-gradient(135deg,#1aa179,#14805f); }

@@ -79,8 +79,9 @@
     return "¥" + Math.round(n).toLocaleString("ja-JP");
   }
 
-  // ランク判定（パチンコホール基準）：S=月100万以上 / A=50万以上 / B=20万以上 / C=20万未満
+  // ランク判定（パチンコホール基準）：SS=月300万以上（大型・本部合算） / S=100万以上 / A=50万以上 / B=20万以上 / C=20万未満
   function rankOf(monthly) {
+    if (monthly >= 3000000) return "SS";
     if (monthly >= 1000000) return "S";
     if (monthly >= 500000) return "A";
     if (monthly >= 200000) return "B";
@@ -88,6 +89,7 @@
   }
 
   var RANK_ADVICE = {
+    SS: "最優先の診断対象です（大型店・本部クラス）。明細をご共有いただければ、担当より最優先でご連絡いたします。",
     S: "優先診断対象です。明細をご共有いただくことで、担当より優先的にご連絡いたします。",
     A: "削減できる可能性が高い対象です。明細をご共有いただくと、担当よりご連絡いたします。",
     B: "診断対象です。明細をもとに削減できる可能性を確認いたします。",
@@ -129,6 +131,7 @@
 
   function rankBg(r) {
     switch (r) {
+      case "SS": return "linear-gradient(135deg,#d4380d,#a8071a)";
       case "S": return "linear-gradient(135deg,#f0982a,#e0671b)";
       case "A": return "linear-gradient(135deg,#1f8be0,#1558bf)";
       case "B": return "linear-gradient(135deg,#1aa179,#14805f)";
