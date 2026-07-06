@@ -70,6 +70,37 @@
     // hidden input：問い合わせ元LPの完全URL（どのLP経由かを記録）
     var urlInput = document.getElementById("landingUrl");
     if (urlInput) urlInput.value = window.location.href;
+
+    // hidden input：営業先コード（?src=会社コード）。申込がどの会社への営業由来かを計測
+    var srcInput = document.getElementById("campaignSrc");
+    if (srcInput) srcInput.value = getSrc();
+  }
+
+  /* ----------------------------------------------------------
+     1.5 訪問トラッキング（クリック率の計測）
+     ----------------------------------------------------------
+     ?src=会社コード 付きでLPが開かれたら、GASへ「訪問」ビーコンを1回送る。
+     GAS側が「アクセスログ」シートに日時・srcを記録 → 送信URLのクリック数が分かる。
+     no-cors の画像ビーコンなのでCORSもプリフライトも発生しない。 */
+  function getSrc() {
+    var params = new URLSearchParams(window.location.search);
+    return (params.get("src") || "").toLowerCase().trim().slice(0, 40);
+  }
+
+  function trackVisit() {
+    var src = getSrc();
+    if (!src) return;                       // src無し（直接流入等）は記録しない
+    if (!GAS_ENDPOINT) return;
+    try {
+      // sessionStorageで同一セッションの二重カウントを防止
+      var key = "visit_" + src;
+      if (window.sessionStorage && sessionStorage.getItem(key)) return;
+      if (window.sessionStorage) sessionStorage.setItem(key, "1");
+      var img = new Image();
+      var ref = document.referrer ? encodeURIComponent(document.referrer.slice(0, 120)) : "";
+      img.src = GAS_ENDPOINT + "?beacon=1&src=" + encodeURIComponent(src) +
+                "&t=" + Date.now() + (ref ? "&ref=" + ref : "");
+    } catch (e) { /* 計測失敗はLP表示に影響させない */ }
   }
 
   /* ----------------------------------------------------------
@@ -383,6 +414,7 @@
      ---------------------------------------------------------- */
   function init() {
     applyRef();
+    trackVisit();
     bindHeroSim();
     bindMainSim();
     bindFormRank();

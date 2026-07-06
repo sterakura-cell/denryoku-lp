@@ -29,20 +29,56 @@ var PARTNER_FOLDER_NAME = "② パートナー紹介_明細";
 var PARENT_FOLDER_ID = "1K7Ben6C04jJ-5pgqZk0TdfzQNS3GjYPv";
 
 // スプレッドシートの列（この順で1行になります）
+//   末尾に「営業先コード」を追加。?src=会社コード 付きで来た申込がどの会社への営業由来かを記録。
 var HEADERS = [
   "受付日", "紹介元コード", "問い合わせ元LP URL",
   "会社名", "担当者名", "電話番号", "メールアドレス", "所在地", "業種",
   "月額動力電気代", "年間電気代", "15%削減見込み", "20%削減見込み",
   "明細", "打合せ希望", "見込み度ランク",
   "動力使用", "キュービクル", "現在の電力会社", "備考",
-  "対応状況", "次回対応日", "メモ"
+  "対応状況", "次回対応日", "メモ", "営業先コード"
 ];
 
-/* デプロイ確認用（ブラウザでexec URLを開くと表示されます） */
-function doGet() {
+// 訪問ログ（クリック率計測）シートの名前と列。
+var VISIT_SHEET_NAME = "アクセスログ";
+var VISIT_HEADERS = ["日時", "営業先コード", "リファラ", "UserAgent"];
+
+/* デプロイ確認用＋訪問ビーコン受信（ブラウザでexec URLを開くと表示されます） */
+function doGet(e) {
+  // ?beacon=1&src=会社コード … LP訪問を「アクセスログ」シートに1行記録して透明1x1を返す
+  if (e && e.parameter && e.parameter.beacon) {
+    try {
+      var src = (e.parameter.src || "").toString().slice(0, 40);
+      if (src) {
+        var sh = getVisitSheet_();
+        sh.appendRow([
+          new Date(),
+          src,
+          (e.parameter.ref || "").toString().slice(0, 200),
+          (e.parameter.ua || "").toString().slice(0, 200)
+        ]);
+      }
+    } catch (err) { /* 計測失敗は握りつぶす（LP表示に影響させない） */ }
+    // 1x1透明GIF
+    return ContentService
+      .createTextOutput("")
+      .setMimeType(ContentService.MimeType.TEXT);
+  }
   return ContentService
-    .createTextOutput("パチンコ電気代LP 受信エンドポイントは稼働中です。(v7)")
+    .createTextOutput("パチンコ電気代LP 受信エンドポイントは稼働中です。(v8)")
     .setMimeType(ContentService.MimeType.TEXT);
+}
+
+function getVisitSheet_() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(VISIT_SHEET_NAME);
+  if (!sh) {
+    sh = ss.insertSheet(VISIT_SHEET_NAME);
+    sh.appendRow(VISIT_HEADERS);
+    sh.getRange(1, 1, 1, VISIT_HEADERS.length).setFontWeight("bold");
+    sh.setFrozenRows(1);
+  }
+  return sh;
 }
 
 /* フォーム受信 */
@@ -89,7 +125,8 @@ function doPost(e) {
       f.note || "",
       "未対応",   // 対応状況の初期値
       "",         // 次回対応日
-      ""          // メモ
+      "",         // メモ
+      f.campaign_src || ""   // 営業先コード（?src=）
     ];
     sheet.appendRow(row);
 
