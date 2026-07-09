@@ -87,9 +87,24 @@
     return (params.get("src") || "").toLowerCase().trim().slice(0, 40);
   }
 
+  /* srcが無い訪問も流入元（リファラ）で自動分類して記録する。
+     insta-ref/youtube-ref等=リファラ判定、direct=リファラ無しの直接流入。
+     SNS投稿には明示タグ（?src=insta 等）を推奨（アプリ内ブラウザはリファラを落とすため）。 */
+  function classifyReferrer() {
+    var r = (document.referrer || "").toLowerCase();
+    if (!r) return "direct";
+    if (r.indexOf("instagram.") >= 0) return "insta-ref";
+    if (r.indexOf("youtube.") >= 0 || r.indexOf("youtu.be") >= 0) return "youtube-ref";
+    if (r.indexOf("tiktok.") >= 0) return "tiktok-ref";
+    if (r.indexOf("google.") >= 0 || r.indexOf("bing.") >= 0 || r.indexOf("yahoo") >= 0) return "search";
+    if (r.indexOf("t.co") >= 0 || r.indexOf("twitter.") >= 0 || r.indexOf("x.com") >= 0) return "x-ref";
+    if (r.indexOf("facebook.") >= 0 || r.indexOf("fb.") >= 0) return "fb-ref";
+    if (r.indexOf("line.me") >= 0 || r.indexOf("line-apps") >= 0) return "line-ref";
+    return "other-ref";
+  }
+
   function trackVisit() {
-    var src = getSrc();
-    if (!src) return;                       // src無し（直接流入等）は記録しない
+    var src = getSrc() || classifyReferrer(); // src無しでも流入元コードで必ず記録
     if (!GAS_ENDPOINT) return;
     try {
       // sessionStorageで同一セッションの二重カウントを防止
