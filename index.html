@@ -19,6 +19,52 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://ripuro.soter-info.com/ogp.png" />
   <meta name="robots" content="index, follow" />
+  <!-- 構造化データ（Google検索のリッチリザルト対応） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://ripuro.soter-info.com/#org",
+        "name": "株式会社エコクリエイトホールディングス",
+        "url": "https://ripuro.soter-info.com/",
+        "telephone": "+81-90-3698-7711",
+        "email": "contact@soter-info.com",
+        "address": {
+          "@type": "PostalAddress",
+          "postalCode": "160-0004",
+          "addressRegion": "東京都",
+          "addressLocality": "新宿区",
+          "streetAddress": "四谷4-13-31 四谷ランドビル102"
+        },
+        "description": "株式会社エナリス（KDDIグループ・J-POWER出資）の正規代理店。パチンコホール向け電気代削減の無料診断を提供。"
+      },
+      {
+        "@type": "Service",
+        "name": "パチンコホール向け 電気代削減 無料診断",
+        "provider": { "@id": "https://ripuro.soter-info.com/#org" },
+        "areaServed": "JP",
+        "serviceType": "法人向け電力切替コンサルティング",
+        "description": "電力会社の切替のみで電気代を約20%（好条件では30〜40%）削減。工事不要・設備そのまま。直近12ヶ月分の請求書だけで無料試算。安くならなければ切替不要。",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY", "description": "診断・試算は無料" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "電気の品質や停電リスクは変わりますか？", "acceptedAnswer": { "@type": "Answer", "text": "変わりません。送配電は引き続き地域の電力会社が担うため、電気の品質・安定性・停電リスクは今まで通りです。営業中のホールでも安心して切り替えられます。" } },
+          { "@type": "Question", "name": "契約先はどこになりますか？", "acceptedAnswer": { "@type": "Answer", "text": "契約元はエナリス（ENERES／KDDIグループ・J-POWER出資、電力供給実績26,000拠点超）です。エコクリエイトホールディングスはその正規代理店として、診断・お取次ぎを行います。" } },
+          { "@type": "Question", "name": "手続きは大変ですか？", "acceptedAnswer": { "@type": "Answer", "text": "御社の作業は「直近12ヶ月分の電気料金明細を共有する」だけです。試算・契約手続き・切替後の対応はすべて当社・エナリスが対応します。" } },
+          { "@type": "Question", "name": "複数店をまとめて診断できますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。運営会社（本部）様は全店まとめて試算し、削減効果を一覧でお出しできます。1店舗分の明細からでも始められます。" } },
+          { "@type": "Question", "name": "必ず安くなりますか？", "acceptedAnswer": { "@type": "Answer", "text": "必ずではありません。まず無料診断で実際の請求書をもとに削減額を試算します。安くならなければ切り替え不要ですので、リスクなくご確認いただけます。" } },
+          { "@type": "Question", "name": "工事や初期費用は必要ですか？", "acceptedAnswer": { "@type": "Answer", "text": "原則として工事や初期費用は不要です。" } },
+          { "@type": "Question", "name": "契約しないといけませんか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。診断結果を見てからご判断いただけます。無理な営業はいたしません。" } },
+          { "@type": "Question", "name": "切替までどのくらいかかりますか？", "acceptedAnswer": { "@type": "Answer", "text": "明細のご共有から数日〜1週間程度で診断結果をお戻しします。切替を希望される場合は、エナリスとの手続き後、通常1〜2ヶ月程度が目安です。切替日も営業への影響はなく、店舗側の作業はありません。" } }
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>

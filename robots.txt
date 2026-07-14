@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /partner-submit.html
+
+Sitemap: https://ripuro.soter-info.com/sitemap.xml
