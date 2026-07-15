@@ -466,6 +466,11 @@
             正確な診断には、電気料金明細（写真・PDF）があるとスムーズです。<strong>直近12ヶ月分</strong>あるとより正確に診断できます。今すぐのご用意が難しい場合は、お申し込み後にお送りいただいても構いません。複数店舗・複数物件をお持ちの場合は、代表1件の明細からでもOKです。
           </p>
 
+          <div class="form-trust-strip" aria-label="無料診断の安心材料">
+            <div><strong>請求書が今なくてもOK</strong><span>まず月額だけで仮相談できます</span></div>
+            <div><strong>電話相談OK</strong><span>入力が面倒な場合はそのまま電話で大丈夫です</span></div>
+            <div><strong>契約は結果を見てから</strong><span>安くならなければ切替不要です</span></div>
+          </div>
           <!-- 送信完了メッセージ -->
           <div class="form-success" id="formSuccess" hidden>
             <span class="success-ico"><svg class="ico"><use href="#i-check"/></svg></span>
@@ -528,6 +533,8 @@
                   <option>商業ビル・オフィスビル</option>
                   <option>空室・テナント撤退がある物件</option>
                   <option>工場・製造業</option>
+                  <option>ホテル・旅館</option>
+                  <option>食品工場・冷蔵倉庫</option>
                   <option>スロット専門店</option>
                   <option>その他アミューズメント施設</option>
                   <option>その他高圧電力を使う施設</option>
@@ -537,7 +544,7 @@
 
             <!-- 月額電気代（入力で即ランク判定） -->
             <label class="field required full">
-              <span class="field-label">月額の電気代（円・1店舗/1物件あたり）</span>
+              <span class="field-label">月額の電気代（円・1店舗/1物件/1施設あたり）</span>
               <input type="number" id="formAmount" name="monthly_cost" inputmode="numeric"
                      placeholder="例：1000000（100万円）" min="0" step="10000" required />
             </label>
@@ -562,7 +569,7 @@
                 <span class="upload-ico"><svg class="ico"><use href="#i-upload"/></svg></span> 電気料金明細のアップロード
                 <em class="must recommend">任意・推奨</em>
               </span>
-              <p class="upload-hint">直近の電気料金明細（写真・PDF）。今この場で添付いただくと診断がスムーズです。難しい場合は申し込み後にお送りいただいても構いません（<strong>12ヶ月分</strong>あるとより正確に診断できます）。</p>
+              <p class="upload-hint">直近の電気料金明細（写真・PDF）。今この場で添付いただくと診断がスムーズです。難しい場合は申し込み後のメール送付でも構いません。まず月額だけで仮相談も可能です（<strong>12ヶ月分</strong>あるとより正確に診断できます）。</p>
               <input type="file" id="billFile" name="bill_file"
                      accept="image/*,.pdf" capture="environment" multiple />
               <p class="upload-state" id="uploadState">未選択（お申し込み後の送付でもOKです）</p>
@@ -574,6 +581,8 @@
                 <option value="">選択してください</option>
                 <option value="打合せ希望">打合せを希望する</option>
                 <option value="結果だけ">まず診断結果だけ見たい</option>
+                <option value="請求書は後送">請求書は後で送りたい</option>
+                <option value="電話相談">入力前に電話で相談したい</option>
               </select>
             </label>
 
@@ -716,6 +725,8 @@
         <a href="pachinko-denkidai-checklist.html" class="tel-link light">削減チェックリスト</a> ／
         <a href="building-denkidai.html" class="tel-link light">ビル向けLP</a> ／
         <a href="factory-denkidai.html" class="tel-link light">工場向けLP</a> ／
+        <a href="hotel-denkidai.html" class="tel-link light">ホテル向けLP</a> ／
+        <a href="cold-storage-denkidai.html" class="tel-link light">冷蔵倉庫向けLP</a> ／
         <a href="building-tenant-taikyo-denkidai.html" class="tel-link light">ビル固定費</a> ／
         <a href="pachinko-denkidai-zukai.html" class="tel-link light">図解版</a>
       </p>

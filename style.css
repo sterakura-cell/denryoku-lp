@@ -528,6 +528,29 @@ img { max-width: 100%; }
 }
 .form-title .ico { width: 1.4rem; height: 1.4rem; color: var(--blue); }
 .form-desc { text-align: center; font-size: .9rem; color: var(--gray-700); margin: 0 0 22px; }
+.form-trust-strip {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 20px;
+}
+.form-trust-strip div {
+  background: var(--light-blue);
+  border: 1px solid #bcd8f7;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.form-trust-strip strong {
+  display: block;
+  color: var(--navy);
+  font-size: .9rem;
+  line-height: 1.4;
+}
+.form-trust-strip span {
+  display: block;
+  color: var(--gray-700);
+  font-size: .78rem;
+  margin-top: 3px;
+}
 
 .form-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
 .field { display: block; }
@@ -664,6 +687,7 @@ img { max-width: 100%; }
   .grid-3 { grid-template-columns: repeat(3, 1fr); }
   .grid-target { grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .form-grid { grid-template-columns: 1fr 1fr; }
+  .form-trust-strip { grid-template-columns: repeat(3, 1fr); }
   .savings-wrap { grid-template-columns: 1fr 1fr; align-items: start; gap: 22px; }
   .fixed-cost-grid { grid-template-columns: repeat(3, 1fr); }
   .fixed-cost-actions { flex-direction: row; justify-content: center; }
