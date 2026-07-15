@@ -41,7 +41,7 @@ var HEADERS = [
 
 // 訪問ログ（クリック率計測）シートの名前と列。
 var VISIT_SHEET_NAME = "アクセスログ";
-var VISIT_HEADERS = ["日時", "営業先コード", "リファラ", "UserAgent"];
+var VISIT_HEADERS = ["日時", "ページ", "ページURL", "営業先コード", "リファラ", "UserAgent"];
 
 /* デプロイ確認用＋訪問ビーコン受信（ブラウザでexec URLを開くと表示されます） */
 function doGet(e) {
@@ -53,6 +53,8 @@ function doGet(e) {
         var sh = getVisitSheet_();
         sh.appendRow([
           new Date(),
+          (e.parameter.page || "lp").toString().slice(0, 80),
+          (e.parameter.url || "").toString().slice(0, 300),
           src,
           (e.parameter.ref || "").toString().slice(0, 200),
           (e.parameter.ua || "").toString().slice(0, 200)
@@ -77,10 +79,28 @@ function getVisitSheet_() {
     sh.appendRow(VISIT_HEADERS);
     sh.getRange(1, 1, 1, VISIT_HEADERS.length).setFontWeight("bold");
     sh.setFrozenRows(1);
+    return sh;
   }
+
+  if (sh.getLastRow() === 0) {
+    sh.appendRow(VISIT_HEADERS);
+  } else {
+    var lastCol = Math.max(sh.getLastColumn(), 1);
+    var existing = sh.getRange(1, 1, 1, lastCol).getValues()[0];
+
+    // 旧形式: [日時, 営業先コード, リファラ, UserAgent]
+    // 既存データを壊さず、日時の後ろに「ページ」「ページURL」を差し込む。
+    if (existing[0] === "日時" && existing[1] === "営業先コード" && existing.indexOf("ページ") < 0) {
+      sh.insertColumnsAfter(1, 2);
+    }
+
+    sh.getRange(1, 1, 1, VISIT_HEADERS.length).setValues([VISIT_HEADERS]);
+  }
+
+  sh.getRange(1, 1, 1, VISIT_HEADERS.length).setFontWeight("bold");
+  sh.setFrozenRows(1);
   return sh;
 }
-
 /* フォーム受信 */
 function doPost(e) {
   try {

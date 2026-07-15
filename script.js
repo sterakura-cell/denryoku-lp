@@ -103,18 +103,34 @@
     return "other-ref";
   }
 
+  function getPageKey() {
+    var path = (window.location.pathname || "/").replace(/\/+$/, "") || "/";
+    if (path === "/") return "lp";
+    return path.replace(/^\//, "").replace(/\.html$/i, "") || "lp";
+  }
+
   function trackVisit() {
     var src = getSrc() || classifyReferrer(); // src無しでも流入元コードで必ず記録
     if (!GAS_ENDPOINT) return;
     try {
-      // sessionStorageで同一セッションの二重カウントを防止
-      var key = "visit_" + src;
+      var pageKey = getPageKey();
+      var pageUrl = window.location.href.slice(0, 300);
+      var pageTitle = (document.title || pageKey).slice(0, 120);
+
+      // sessionStorageで同一セッション・同一ページの二重カウントを防止
+      var key = "visit_" + src + "_" + pageKey;
       if (window.sessionStorage && sessionStorage.getItem(key)) return;
       if (window.sessionStorage) sessionStorage.setItem(key, "1");
       var img = new Image();
       var ref = document.referrer ? encodeURIComponent(document.referrer.slice(0, 120)) : "";
+      var ua = navigator.userAgent ? encodeURIComponent(navigator.userAgent.slice(0, 180)) : "";
       img.src = GAS_ENDPOINT + "?beacon=1&src=" + encodeURIComponent(src) +
-                "&t=" + Date.now() + (ref ? "&ref=" + ref : "");
+                "&page=" + encodeURIComponent(pageKey) +
+                "&url=" + encodeURIComponent(pageUrl) +
+                "&title=" + encodeURIComponent(pageTitle) +
+                "&t=" + Date.now() +
+                (ref ? "&ref=" + ref : "") +
+                (ua ? "&ua=" + ua : "");
     } catch (e) { /* 計測失敗はLP表示に影響させない */ }
   }
 
