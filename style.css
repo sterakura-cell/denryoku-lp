@@ -230,7 +230,7 @@ img { max-width: 100%; }
   padding: 10px 14px;
   margin: 8px 0 0;
 }
-.hero-reassure .ico { width: 1.15rem; height: 1.15rem; color: var(--green); margin-top: 2px; }
+.hero-reassure .ico { flex:none; width: 1.15rem; height: 1.15rem; color: var(--green); margin-top: 2px; }
 .hero-reassure strong { color: var(--green); }
 
 /* 簡易シミュレーターカード */
@@ -356,6 +356,64 @@ img { max-width: 100%; }
   color: var(--navy);
 }
 #honbu .mini-card .ico { color: var(--green); }
+
+/* 3.5 資金繰り・固定費訴求 */
+.section-fixed-cost {
+  background: linear-gradient(180deg,#fff 0%,#f7fafc 100%);
+}
+.section-kicker {
+  display: table;
+  margin: 0 auto 10px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #fff7e8;
+  color: #9a6b00;
+  border: 1px solid #f0d9a8;
+  font-size: .82rem;
+  font-weight: 800;
+}
+.fixed-cost-grid {
+  display: grid;
+  gap: 14px;
+  margin: 24px 0 22px;
+}
+.fixed-cost-card {
+  position: relative;
+  padding: 22px 18px 20px;
+  border-radius: var(--radius-lg);
+  background: #fff;
+  border: 1px solid var(--gray-100);
+  box-shadow: var(--shadow-sm);
+}
+.fixed-no {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--grad-cta);
+  color: #fff;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.fixed-cost-card h3 {
+  margin: 0 0 8px;
+  color: var(--navy);
+  font-size: 1.05rem;
+}
+.fixed-cost-card p {
+  margin: 0;
+  color: var(--gray-700);
+  font-size: .9rem;
+}
+.fixed-cost-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  max-width: 560px;
+  margin: 0 auto;
+}
 
 /* 金額プリセットチップ（シミュレーター・フォーム共通） */
 .sim-chips {
@@ -606,12 +664,28 @@ img { max-width: 100%; }
   .grid-target { grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .form-grid { grid-template-columns: 1fr 1fr; }
   .savings-wrap { grid-template-columns: 1fr 1fr; align-items: start; gap: 22px; }
+  .fixed-cost-grid { grid-template-columns: repeat(3, 1fr); }
+  .fixed-cost-actions { flex-direction: row; justify-content: center; }
+  .fixed-cost-actions .btn { min-width: 240px; }
   .hero-title { font-size: 2.15rem; }
   .section-title { font-size: 1.85rem; }
   .steps { grid-template-columns: repeat(5, 1fr); }
   .step-card { padding: 44px 16px 18px; text-align: center; }
   .step-no { left: 50%; transform: translateX(-50%); top: 14px; }
   .step-card h3 { display: block; margin-left: 0; }
+}
+
+@media (max-width: 480px) {
+  .hero-reassure {
+    display: block;
+    line-height: 1.75;
+    padding: 12px 14px;
+  }
+  .hero-reassure .ico {
+    display: inline-block;
+    vertical-align: -3px;
+    margin: 0 6px 0 0;
+  }
 }
 
 @media (min-width: 980px) {
