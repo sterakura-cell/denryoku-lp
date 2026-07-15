@@ -3,7 +3,7 @@
 
   // Google Analytics 4 measurement ID.
   // Replace the empty string with the issued ID, for example: "G-ABC123XXXX".
-  var GA_MEASUREMENT_ID = "G-M3PZ94WBOH";
+  var GA_MEASUREMENT_ID = "G-M3PZ94WB0H";
 
   if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID.indexOf("G-") !== 0) return;
 
