@@ -109,9 +109,9 @@
     .more a{color:var(--navy);font-weight:900}
     .foot{background:#eef2f6;border-top:1px solid var(--line);padding:24px 16px;font-size:12px;color:var(--mute);text-align:center;line-height:1.8}
     @media(max-width:760px){
-      .wrap{padding:12px 14px 52px}.hero{padding:32px 20px 26px}.hero-grid{grid-template-columns:1fr}.hero .big{font-size:56px}.hero .l2{font-size:18px}.cards3{grid-template-columns:1fr 1fr 1fr;gap:8px}.card{padding:16px 8px}.card .t{font-size:14px}.steps{grid-template-columns:1fr}.step{min-height:auto}.money{grid-template-columns:1fr;gap:8px}.money .diff{justify-self:center}.yesno{grid-template-columns:1fr}.sec h2{font-size:20px;align-items:flex-start}.cta .t{font-size:21px}
+      html,body{overflow-x:hidden}.wrap{width:auto;max-width:none;overflow:hidden;margin-left:14px;margin-right:28px;padding:12px 0 52px}.hero{width:100%;max-width:100%;min-width:0;padding:28px 18px 24px}.hero-grid{grid-template-columns:minmax(0,1fr)}.hero-grid>*{min-width:0}.hero .big{font-size:clamp(40px,12.5vw,52px);line-height:1.08;overflow-wrap:anywhere}.hero .l1,.hero .l2,.hero-panel .note{max-width:100%;overflow-wrap:anywhere;word-break:break-all}.hero .l2{font-size:17px}.hero .tags{gap:8px;display:grid;grid-template-columns:1fr}.hero .tag{white-space:normal;text-align:center;line-height:1.35;min-width:0}.hero-panel{min-width:0;padding:18px}.hero-panel .save{font-size:clamp(28px,8vw,34px)}.hero-panel .save span{display:block;margin-top:4px}.cards3{grid-template-columns:1fr;gap:10px}.card{padding:16px 10px}.card .t{font-size:14px}.steps{grid-template-columns:1fr}.step{min-height:auto}.money{grid-template-columns:1fr;gap:8px}.money .diff{justify-self:center}.yesno{grid-template-columns:1fr}.sec h2{font-size:20px;align-items:flex-start}.cta .t{font-size:21px}
     }
-    @media(max-width:420px){.hero .big{font-size:48px}.hero-panel .save{font-size:30px}.cards3{grid-template-columns:1fr}.cta a.btn{width:100%;min-width:0}.money .bar{width:92px}}
+    @media(max-width:420px){.hero .big{font-size:40px}.cta a.btn{width:100%;min-width:0}.money .bar{width:92px}}
   </style>
 </head>
 <body>
