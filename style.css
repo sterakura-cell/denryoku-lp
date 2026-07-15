@@ -599,6 +599,7 @@ img { max-width: 100%; }
   background: var(--green-light); border: 1.5px solid var(--green);
   border-radius: var(--radius); padding: 20px; margin-bottom: 20px;
 }
+.form-success[hidden] { display: none !important; }
 .success-ico {
   flex: none; display: grid; place-items: center;
   width: 38px; height: 38px; border-radius: 50%;

@@ -463,7 +463,7 @@
         <div class="form-card card">
           <h2 class="form-title"><svg class="ico"><use href="#i-clipboard"/></svg>無料診断のお申し込み</h2>
           <p class="form-desc">
-            正確な診断には、電気料金明細（写真・PDF）があるとスムーズです。<strong>直近12ヶ月分</strong>あるとより正確に診断できます。今すぐのご用意が難しい場合は、お申し込み後にお送りいただいても構いません。複数店をお持ちの本部様は代表店の明細からでもOKです。
+            正確な診断には、電気料金明細（写真・PDF）があるとスムーズです。<strong>直近12ヶ月分</strong>あるとより正確に診断できます。今すぐのご用意が難しい場合は、お申し込み後にお送りいただいても構いません。複数店舗・複数物件をお持ちの場合は、代表1件の明細からでもOKです。
           </p>
 
           <!-- 送信完了メッセージ -->
@@ -495,7 +495,7 @@
             <input type="hidden" id="calcCut15"  name="cut15"       value="" />
             <input type="hidden" id="calcCut20"  name="cut20"       value="" />
             <!-- Formspree用：メール件名と自動返信を制御（任意） -->
-            <input type="hidden" name="_subject" value="【パチンコ電気代診断】新規お申し込み" />
+            <input type="hidden" name="_subject" value="【電気代無料診断】新規お申し込み" />
 
             <div class="form-grid">
               <label class="field required">
@@ -519,20 +519,24 @@
                 <input type="text" name="address" autocomplete="address-level1" placeholder="例：東京都〇〇区" required />
               </label>
               <label class="field required">
-                <span class="field-label">店舗・運営形態</span>
+                <span class="field-label">店舗・物件の種類</span>
                 <select name="industry" required>
                   <option value="">選択してください</option>
                   <option>パチンコホール（1店舗）</option>
                   <option>パチンコ運営会社（複数店・本部）</option>
+                  <option>ビルオーナー・不動産管理会社</option>
+                  <option>商業ビル・オフィスビル</option>
+                  <option>空室・テナント撤退がある物件</option>
                   <option>スロット専門店</option>
                   <option>その他アミューズメント施設</option>
+                  <option>その他高圧電力を使う施設</option>
                 </select>
               </label>
             </div>
 
             <!-- 月額電気代（入力で即ランク判定） -->
             <label class="field required full">
-              <span class="field-label">月額の電気代（円・1店舗あたり）</span>
+              <span class="field-label">月額の電気代（円・1店舗/1物件あたり）</span>
               <input type="number" id="formAmount" name="monthly_cost" inputmode="numeric"
                      placeholder="例：1000000（100万円）" min="0" step="10000" required />
             </label>
@@ -709,6 +713,7 @@
         <a href="pachinko-tousan-news-koteihi.html" class="tel-link light">倒産ニュースと固定費</a> ／
         <a href="kouatsu-kihonryokin-takai.html" class="tel-link light">基本料金が高い理由</a> ／
         <a href="pachinko-denkidai-checklist.html" class="tel-link light">削減チェックリスト</a> ／
+        <a href="building-denkidai.html" class="tel-link light">ビル向けLP</a> ／
         <a href="building-tenant-taikyo-denkidai.html" class="tel-link light">ビル固定費</a> ／
         <a href="pachinko-denkidai-zukai.html" class="tel-link light">図解版</a>
       </p>
