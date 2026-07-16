@@ -393,6 +393,7 @@
       setVal("calcAnnual", m > 0 ? year : "");
       setVal("calcCut15",  m > 0 ? Math.round(year * 0.20) : "");
       setVal("calcCut20",  m > 0 ? Math.round(year * 0.40) : "");
+      setVal("calcCut40",  m > 0 ? Math.round(year * 0.40) : "");
     }
     function setVal(id, v) { var el = document.getElementById(id); if (el) el.value = v; }
 
