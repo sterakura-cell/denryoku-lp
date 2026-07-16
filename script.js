@@ -370,7 +370,7 @@
       var e = parseFloat(electric.value || "") || 0;
       var p = parseFloat((profit && profit.value) || "") || 0;
       if (!e) {
-        result.innerHTML = '<p class="headline">月額電気代を入れると、年間削減見込みを表示します。</p><div class="big">-</div>';
+        result.innerHTML = '<p class="headline">まず「月額電気代」を入れると、年間でどれくらい効くか表示します。</p><div class="big">-</div><ul class="impact-list"><li>請求書の合計金額をそのまま入れてください。</li><li>月商や利益は分かる範囲で大丈夫です。</li><li>50万・100万などのボタンでも入力できます。</li></ul>';
         return;
       }
       var annual = e * 12;
@@ -382,7 +382,7 @@
       var items = [
         "現在の年間電気代は約" + yen(annual) + "（" + yenMan(annual) + "）です。",
         "条件が良い場合は、年間" + yenMan(cut40) + "規模の改善余地が出ることもあります。",
-        "請求書を添付すると、基本料金・最大デマンド・単価から精査できます。"
+        "請求書を添付すると、毎月の固定費・一番電気を使ったタイミング・単価から精査できます。"
       ];
       if (salesRate) items.unshift("月商に対する電気代比率は約" + salesRate + "%です。");
       if (profitBoost) items.unshift("20%削減時の月間効果は、現在利益の約" + profitBoost + "%に相当します。");
@@ -397,6 +397,7 @@
         el._impactTimer = setTimeout(render, 350);
       });
     });
+    render();
   }
 
   function bindChips() {
