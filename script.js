@@ -332,6 +332,48 @@
   /* ----------------------------------------------------------
      4.5 金額プリセットチップ（ワンタップ入力）
      ---------------------------------------------------------- */
+  function bindImpactSim() {
+    var sales = document.getElementById("impactSales");
+    var electric = document.getElementById("impactElectric");
+    var profit = document.getElementById("impactProfit");
+    var btn = document.getElementById("impactBtn");
+    var result = document.getElementById("impactResult");
+    if (!sales || !electric || !btn || !result) return;
+
+    function render() {
+      var s = parseFloat(sales.value || "") || 0;
+      var e = parseFloat(electric.value || "") || 0;
+      var p = parseFloat((profit && profit.value) || "") || 0;
+      if (!e) {
+        result.innerHTML = '<p class="headline">月額電気代を入れると、年間削減見込みを表示します。</p><div class="big">-</div>';
+        return;
+      }
+      var annual = e * 12;
+      var cut20 = Math.round(annual * 0.2);
+      var cut40 = Math.round(annual * 0.4);
+      var salesRate = s ? (e / s * 100).toFixed(1) : null;
+      var profitBoost = p ? Math.round(cut20 / 12 / p * 100) : null;
+      var headline = "20%削減できた場合、年間" + yen(cut20) + "の固定費改善余地";
+      var items = [
+        "現在の年間電気代は約" + yen(annual) + "です。",
+        "条件が良い場合は、年間" + yen(cut40) + "規模の改善余地が出ることもあります。",
+        "請求書を添付すると、基本料金・最大デマンド・単価から精査できます。"
+      ];
+      if (salesRate) items.unshift("月商に対する電気代比率は約" + salesRate + "%です。");
+      if (profitBoost) items.unshift("20%削減時の月間効果は、現在利益の約" + profitBoost + "%に相当します。");
+      result.innerHTML = '<p class="headline">' + headline + '</p><div class="big">' + yen(cut20) + '</div><ul class="impact-list">' + items.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>";
+    }
+
+    btn.addEventListener("click", render);
+    [sales, electric, profit].forEach(function (el) {
+      if (!el) return;
+      el.addEventListener("input", function () {
+        clearTimeout(el._impactTimer);
+        el._impactTimer = setTimeout(render, 350);
+      });
+    });
+  }
+
   function bindChips() {
     var boxes = document.querySelectorAll(".sim-chips");
     Array.prototype.forEach.call(boxes, function (box) {
@@ -547,6 +589,7 @@
     bindHeroSim();
     bindMainSim();
     bindFormRank();
+    bindImpactSim();
     bindChips();
     bindUpload();
     bindFormSubmit();
