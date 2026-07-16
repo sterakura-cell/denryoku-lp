@@ -214,6 +214,31 @@
     return "¥" + Math.round(n).toLocaleString("ja-JP");
   }
 
+  function yenMan(n) {
+    n = Math.round(Number(n) || 0);
+    if (!n) return "未入力";
+    var man = n / 10000;
+    if (man >= 10000) return (man / 10000).toFixed(man % 10000 === 0 ? 0 : 1) + "億円";
+    return man.toLocaleString("ja-JP", { maximumFractionDigits: 1 }) + "万円";
+  }
+
+  function bindMoneyReads() {
+    var reads = document.querySelectorAll("[data-money-for]");
+    Array.prototype.forEach.call(reads, function (read) {
+      var id = read.getAttribute("data-money-for");
+      var input = document.getElementById(id);
+      var span = read.querySelector("span");
+      if (!input || !span) return;
+      function update() {
+        var v = parseFloat(input.value || "") || 0;
+        span.textContent = v ? yen(v) + "（" + yenMan(v) + "）" : "未入力";
+      }
+      input.addEventListener("input", update);
+      input.addEventListener("change", update);
+      update();
+    });
+  }
+
   // ランク判定（パチンコホール基準）：SS=月300万以上（大型・本部合算） / S=100万以上 / A=50万以上 / B=20万以上 / C=20万未満
   function rankOf(monthly) {
     if (monthly >= 3000000) return "SS";
@@ -353,15 +378,15 @@
       var cut40 = Math.round(annual * 0.4);
       var salesRate = s ? (e / s * 100).toFixed(1) : null;
       var profitBoost = p ? Math.round(cut20 / 12 / p * 100) : null;
-      var headline = "20%削減できた場合、年間" + yen(cut20) + "の固定費改善余地";
+      var headline = "20%削減できた場合、年間" + yenMan(cut20) + "の固定費改善余地";
       var items = [
-        "現在の年間電気代は約" + yen(annual) + "です。",
-        "条件が良い場合は、年間" + yen(cut40) + "規模の改善余地が出ることもあります。",
+        "現在の年間電気代は約" + yen(annual) + "（" + yenMan(annual) + "）です。",
+        "条件が良い場合は、年間" + yenMan(cut40) + "規模の改善余地が出ることもあります。",
         "請求書を添付すると、基本料金・最大デマンド・単価から精査できます。"
       ];
       if (salesRate) items.unshift("月商に対する電気代比率は約" + salesRate + "%です。");
       if (profitBoost) items.unshift("20%削減時の月間効果は、現在利益の約" + profitBoost + "%に相当します。");
-      result.innerHTML = '<p class="headline">' + headline + '</p><div class="big">' + yen(cut20) + '</div><ul class="impact-list">' + items.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>";
+      result.innerHTML = '<p class="headline">' + headline + '</p><div class="big">' + yenMan(cut20) + '<small>' + yen(cut20) + '</small></div><ul class="impact-list">' + items.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>";
     }
 
     btn.addEventListener("click", render);
@@ -588,6 +613,7 @@
     trackVisit();
     bindHeroSim();
     bindMainSim();
+    bindMoneyReads();
     bindFormRank();
     bindImpactSim();
     bindChips();
