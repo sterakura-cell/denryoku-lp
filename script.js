@@ -397,7 +397,29 @@
     }
     function setVal(id, v) { var el = document.getElementById(id); if (el) el.value = v; }
 
+    function trackLeadEvent() {
+      if (form.dataset.leadTracked === "1") return;
+      form.dataset.leadTracked = "1";
+      if (typeof window.gtag !== "function") return;
+      var attr = ATTRIBUTION || readAttribution();
+      var amount = parseFloat((form.monthly_cost && form.monthly_cost.value) || "") || 0;
+      window.gtag("event", "generate_lead", {
+        event_category: "form",
+        event_label: "diagnose_form",
+        form_name: form.getAttribute("id") || "diagnoseForm",
+        lp_type: (form.lp_type && form.lp_type.value) || "",
+        industry: (form.industry && form.industry.value) || "",
+        monthly_cost: amount || undefined,
+        lead_rank: amount > 0 ? rankOf(amount) : "",
+        utm_source: attr.utm_source || "",
+        utm_medium: attr.utm_medium || "",
+        utm_campaign: attr.utm_campaign || "",
+        utm_content: attr.utm_content || ""
+      });
+    }
+
     function showSuccess() {
+      trackLeadEvent();
       success.hidden = false;
       form.style.display = "none";
       success.scrollIntoView({ behavior: "smooth", block: "center" });
