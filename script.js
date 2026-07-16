@@ -73,7 +73,7 @@
 
     // hidden input：営業先コード（?src=会社コード）。申込がどの会社への営業由来かを計測
     var srcInput = document.getElementById("campaignSrc");
-    if (srcInput) srcInput.value = getSrc();
+    if (srcInput) srcInput.value = (ATTRIBUTION && ATTRIBUTION.campaign_src) || getSrc();
   }
 
   /* ----------------------------------------------------------
@@ -85,6 +85,10 @@
   function getSrc() {
     var params = new URLSearchParams(window.location.search);
     return (params.get("src") || "").toLowerCase().trim().slice(0, 40);
+  }
+
+  function cleanParam(value, max) {
+    return (value || "").toString().trim().slice(0, max || 120);
   }
 
   /* srcが無い訪問も流入元（リファラ）で自動分類して記録する。
@@ -103,6 +107,69 @@
     return "other-ref";
   }
 
+  function readAttribution() {
+    var params = new URLSearchParams(window.location.search);
+    var explicitSource = params.get("utm_source") || getSrc();
+    var source = cleanParam(explicitSource || classifyReferrer(), 80);
+    return {
+      utm_source: source,
+      utm_medium: cleanParam(params.get("utm_medium") || "", 80),
+      utm_campaign: cleanParam(params.get("utm_campaign") || params.get("campaign") || "", 120),
+      utm_content: cleanParam(params.get("utm_content") || "", 120),
+      utm_term: cleanParam(params.get("utm_term") || "", 120),
+      campaign_src: cleanParam(getSrc() || source, 80),
+      landing_url: window.location.href.slice(0, 500),
+      landing_path: (window.location.pathname || "/").slice(0, 160),
+      referrer: (document.referrer || "").slice(0, 500)
+    };
+  }
+
+  function storeAttribution() {
+    var current = readAttribution();
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var hasExplicit = !!(params.get("utm_source") || getSrc());
+      var key = "denki_attribution";
+      if (hasExplicit || !localStorage.getItem(key)) {
+        localStorage.setItem(key, JSON.stringify(current));
+      }
+      return JSON.parse(localStorage.getItem(key) || "{}");
+    } catch (e) {
+      return current;
+    }
+  }
+
+  var ATTRIBUTION = storeAttribution();
+
+  function ensureHidden(form, name) {
+    var el = form.querySelector('[name="' + name + '"]');
+    if (!el) {
+      el = document.createElement("input");
+      el.type = "hidden";
+      el.name = name;
+      form.appendChild(el);
+    }
+    return el;
+  }
+
+  function fillAttributionFields(form) {
+    if (!form) return;
+    var data = ATTRIBUTION || readAttribution();
+    [
+      "utm_source",
+      "utm_medium",
+      "utm_campaign",
+      "utm_content",
+      "utm_term",
+      "campaign_src",
+      "landing_url",
+      "landing_path",
+      "referrer"
+    ].forEach(function (name) {
+      ensureHidden(form, name).value = data[name] || "";
+    });
+  }
+
   function getPageKey() {
     var path = (window.location.pathname || "/").replace(/\/+$/, "") || "/";
     if (path === "/") return "lp";
@@ -110,7 +177,8 @@
   }
 
   function trackVisit() {
-    var src = getSrc() || classifyReferrer(); // src無しでも流入元コードで必ず記録
+    var attr = ATTRIBUTION || readAttribution();
+    var src = attr.campaign_src || attr.utm_source || getSrc() || classifyReferrer(); // src無しでも流入元コードで必ず記録
     if (!GAS_ENDPOINT) return;
     try {
       var pageKey = getPageKey();
@@ -125,6 +193,11 @@
       var ref = document.referrer ? encodeURIComponent(document.referrer.slice(0, 120)) : "";
       var ua = navigator.userAgent ? encodeURIComponent(navigator.userAgent.slice(0, 180)) : "";
       img.src = GAS_ENDPOINT + "?beacon=1&src=" + encodeURIComponent(src) +
+                "&utm_source=" + encodeURIComponent(attr.utm_source || "") +
+                "&utm_medium=" + encodeURIComponent(attr.utm_medium || "") +
+                "&utm_campaign=" + encodeURIComponent(attr.utm_campaign || "") +
+                "&utm_content=" + encodeURIComponent(attr.utm_content || "") +
+                "&utm_term=" + encodeURIComponent(attr.utm_term || "") +
                 "&page=" + encodeURIComponent(pageKey) +
                 "&url=" + encodeURIComponent(pageUrl) +
                 "&title=" + encodeURIComponent(pageTitle) +
@@ -307,6 +380,7 @@
     var success = document.getElementById("formSuccess");
     var btn     = document.getElementById("submitBtn");
     if (!form) return;
+    fillAttributionFields(form);
 
     // Formspreeエンドポイントが設定されていれば action に反映
     if (FORMSPREE_ENDPOINT) form.setAttribute("action", FORMSPREE_ENDPOINT);
@@ -424,6 +498,7 @@
         form.reportValidity();
         return;
       }
+      fillAttributionFields(form);
       fillCalcFields();
 
       // 送信先の優先順位：GAS → Formspree →（未設定なら）仮実装
