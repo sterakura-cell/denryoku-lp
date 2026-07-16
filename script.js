@@ -403,7 +403,7 @@
       if (typeof window.gtag !== "function") return;
       var attr = ATTRIBUTION || readAttribution();
       var amount = parseFloat((form.monthly_cost && form.monthly_cost.value) || "") || 0;
-      window.gtag("event", "generate_lead", {
+      window.gtag("event", "qualify_lead", {
         event_category: "form",
         event_label: "diagnose_form",
         form_name: form.getAttribute("id") || "diagnoseForm",
