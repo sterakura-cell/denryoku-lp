@@ -609,6 +609,50 @@
   /* ----------------------------------------------------------
      7. 初期化
      ---------------------------------------------------------- */
+  function injectGroupTrail() {
+    if (document.querySelector(".soter-group-trail")) return;
+
+    if (!document.getElementById("soter-group-trail-style")) {
+      var style = document.createElement("style");
+      style.id = "soter-group-trail-style";
+      style.textContent =
+        ".soter-group-trail{background:#111b2b;color:#fff;padding:22px 20px;border-top:1px solid rgba(255,255,255,.12)}" +
+        ".soter-group-trail__inner{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:24px}" +
+        ".soter-group-trail__label{font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.55);white-space:nowrap}" +
+        ".soter-group-trail__links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:18px}" +
+        ".soter-group-trail a{color:#fff;font-size:11px;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px}" +
+        "@media(max-width:640px){.soter-group-trail{padding:24px 20px 92px}.soter-group-trail__inner{align-items:flex-start;flex-direction:column}.soter-group-trail__links{justify-content:flex-start;flex-direction:column;gap:13px}}";
+      document.head.appendChild(style);
+    }
+
+    var trail = document.createElement("aside");
+    trail.className = "soter-group-trail";
+    trail.setAttribute("aria-label", "Soterグループの関連サービス");
+    trail.innerHTML =
+      '<div class="soter-group-trail__inner">' +
+        '<span class="soter-group-trail__label">SOTER GROUP</span>' +
+        '<div class="soter-group-trail__links">' +
+          '<a data-group-destination="portal" href="https://soter-info.com/?utm_source=ripuro.soter-info.com&utm_medium=referral&utm_campaign=group_navigation&utm_content=footer">Soter Inc. 総合案内</a>' +
+          '<a data-group-destination="business" href="https://shindan.soter-info.com/?utm_source=ripuro.soter-info.com&utm_medium=referral&utm_campaign=group_navigation&utm_content=footer_business">法人施設向け 動力電気代無料診断</a>' +
+        '</div>' +
+      '</div>';
+
+    var footer = document.querySelector(".site-footer");
+    if (footer && footer.parentNode) footer.parentNode.insertBefore(trail, footer);
+    else document.body.appendChild(trail);
+
+    trail.addEventListener("click", function (event) {
+      var target = event.target;
+      if (!target || typeof target.closest !== "function") return;
+      var link = target.closest("a[data-group-destination]");
+      if (!link || typeof window.gtag !== "function") return;
+      window.gtag("event", "group_navigation_click", {
+        destination: link.getAttribute("data-group-destination"),
+        source_page: window.location.pathname
+      });
+    });
+  }
+
   function init() {
     applyRef();
     trackVisit();
@@ -620,6 +664,7 @@
     bindChips();
     bindUpload();
     bindFormSubmit();
+    injectGroupTrail();
   }
 
   if (document.readyState === "loading") {
