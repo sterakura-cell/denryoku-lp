@@ -182,6 +182,11 @@
     return path.replace(/^\//, "").replace(/\.html$/i, "") || "lp";
   }
 
+  function trackGaEvent(name, params) {
+    if (typeof window.gtag !== "function") return;
+    window.gtag("event", name, params || {});
+  }
+
   function trackVisit() {
     var attr = ATTRIBUTION || readAttribution();
     var src = attr.campaign_src || attr.utm_source || getSrc() || classifyReferrer(); // src無しでも流入元コードで必ず記録
@@ -331,6 +336,16 @@
       rankBox.className = "sim-rank-box rank-" + r;
       document.getElementById("simRankBadge").textContent = r;
       document.getElementById("simRankAdvice").textContent = RANK_ADVICE[r];
+      if (input.dataset.lastTrackedAmount !== String(m)) {
+        input.dataset.lastTrackedAmount = String(m);
+        trackGaEvent("simulator_complete", {
+          calculator_type: "monthly_bill",
+          monthly_cost: m,
+          annual_cost: year,
+          lead_rank: r,
+          page_path: window.location.pathname
+        });
+      }
     }
   }
 
@@ -412,7 +427,18 @@
       result.innerHTML = '<p class="headline">' + headline + '</p><div class="big">' + yenMan(cut20) + '<small>' + yen(cut20) + '</small></div><ul class="impact-list">' + items.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>";
     }
 
-    btn.addEventListener("click", render);
+    btn.addEventListener("click", function () {
+      render();
+      var amount = parseFloat(electric.value || "") || 0;
+      if (amount) {
+        trackGaEvent("simulator_complete", {
+          calculator_type: "business_impact",
+          monthly_cost: amount,
+          annual_cost: amount * 12,
+          page_path: window.location.pathname
+        });
+      }
+    });
     [sales, electric, profit].forEach(function (el) {
       if (!el) return;
       el.addEventListener("input", function () {
@@ -473,6 +499,15 @@
     if (!form) return;
     fillAttributionFields(form);
 
+    form.addEventListener("input", function () {
+      if (form.dataset.formStarted === "1") return;
+      form.dataset.formStarted = "1";
+      trackGaEvent("form_start", {
+        form_name: form.getAttribute("id") || "diagnoseForm",
+        page_path: window.location.pathname
+      });
+    });
+
     // Formspreeエンドポイントが設定されていれば action に反映
     if (FORMSPREE_ENDPOINT) form.setAttribute("action", FORMSPREE_ENDPOINT);
 
@@ -493,7 +528,7 @@
       if (typeof window.gtag !== "function") return;
       var attr = ATTRIBUTION || readAttribution();
       var amount = parseFloat((form.monthly_cost && form.monthly_cost.value) || "") || 0;
-      window.gtag("event", "qualify_lead", {
+      var leadParams = {
         event_category: "form",
         event_label: "diagnose_form",
         form_name: form.getAttribute("id") || "diagnoseForm",
@@ -505,7 +540,10 @@
         utm_medium: attr.utm_medium || "",
         utm_campaign: attr.utm_campaign || "",
         utm_content: attr.utm_content || ""
-      });
+      };
+      window.gtag("event", "qualify_lead", leadParams);
+      window.gtag("event", "lead_submit", leadParams);
+      window.gtag("event", "generate_lead", leadParams);
     }
 
     function showSuccess() {
@@ -744,6 +782,19 @@
     });
   }
 
+  function bindContactTracking() {
+    document.addEventListener("click", function (event) {
+      var target = event.target;
+      if (!target || typeof target.closest !== "function") return;
+      var phone = target.closest('a[href^="tel:"]');
+      if (!phone) return;
+      trackGaEvent("phone_click", {
+        cta_location: phone.id || phone.className || "phone_link",
+        page_path: window.location.pathname
+      });
+    });
+  }
+
   function init() {
     applyRef();
     trackVisit();
@@ -757,6 +808,7 @@
     bindChips();
     bindUpload();
     bindFormSubmit();
+    bindContactTracking();
     injectGroupTrail();
   }
 
