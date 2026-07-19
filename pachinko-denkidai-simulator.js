@@ -62,11 +62,10 @@
     var renewableLevy = kwh ? kwh * 4.18 : 0;
 
     var accuracy = 55;
-    if (machines) accuracy += 10;
-    if (kwh) accuracy += 20;
-    if (contract) accuracy += 15;
+    if (kwh) accuracy += 25;
+    if (contract) accuracy += 20;
     accuracy = Math.min(100, accuracy);
-    var accuracyLabel = accuracy >= 90 ? "詳細" : accuracy >= 70 ? "標準" : "簡易";
+    var accuracyLabel = accuracy >= 90 ? "とても詳しい" : accuracy >= 70 ? "ふつう" : "かんたん";
 
     put("ps-accuracy-label", accuracyLabel);
     put("ps-accuracy-score", accuracy + " / 100");
@@ -75,23 +74,23 @@
     put("ps-annual-sub", stores > 1 ? stores + "店舗合計・月" + compactYen(groupMonthly) : "月" + compactYen(monthly));
     put("ps-daily", compactYen(monthly / days));
     put("ps-saving", compactYen(annualSaving));
-    put("ps-saving-sub", rate + "%削減を仮定・月" + compactYen(monthlySaving));
+    put("ps-saving-sub", rate + "%安くなるとした場合・1か月" + compactYen(monthlySaving));
     put("ps-three-year", compactYen(threeYear));
     put("ps-sales-equivalent", compactYen(salesEquivalent));
-    put("ps-margin-sub", "月間・営業利益率" + margin + "%で換算");
-    put("ps-per-machine", perMachine ? yen(perMachine) : "台数未入力");
+    put("ps-margin-sub", "1か月分・利益の割合" + margin + "%で計算");
+    put("ps-per-machine", perMachine ? yen(perMachine) : "台数を入れると表示");
 
     var indicators = [
       "全店舗の月額合計：" + yen(groupMonthly),
       "1店舗の年間電気代：" + yen(monthly * 12)
     ];
     if (kwh) {
-      indicators.push("請求実効単価：" + effectiveRate.toFixed(1) + "円/kWh（請求総額÷使用量）");
-      indicators.push("2026年度の再エネ賦課金相当：月" + yen(renewableLevy) + "（4.18円/kWh）");
+      indicators.push("電気1kWhあたり、実際に払っている金額：" + effectiveRate.toFixed(1) + "円");
+      indicators.push("再生可能エネルギーを支えるために加わるお金：月" + yen(renewableLevy) + "（2026年度）");
     } else {
-      indicators.push("月間使用量を追加すると、実効単価と再エネ賦課金相当を表示できます。");
+      indicators.push("請求書の『使用電力量』を入れると、電気1kWhあたりの金額なども分かります。");
     }
-    if (loadFactor) indicators.push("概算負荷率：" + loadFactor.toFixed(1) + "%");
+    if (loadFactor) indicators.push("契約した電気をどれくらい使えているか：およそ" + loadFactor.toFixed(1) + "%");
     document.getElementById("ps-indicators").innerHTML = indicators.map(function (item) { return "<li>" + item + "</li>"; }).join("");
 
     var breakdown = [
@@ -101,15 +100,15 @@
     ];
     document.getElementById("ps-breakdown").innerHTML = breakdown.map(function (item) {
       return '<div class="sim-breakdown-row"><span>' + item[0] + '</span><i style="width:' + item[1] + '%"></i><b>' + compactYen(monthly * item[1] / 100) + '</b></div>';
-    }).join("") + '<p class="sim-disclaimer">記事内の用途別比率を中間値で仮置きした参考配分です。</p>';
+    }).join("") + '<p class="sim-disclaimer">一般的な割合を使った目安です。お店によって変わります。</p>';
 
     var advice = [];
-    if (loadFactor && loadFactor < 30) advice.push("負荷率が低めです。最大デマンドと契約電力に過大な余地がないか確認します。");
-    if (loadFactor && loadFactor >= 30) advice.push("使用量が安定している可能性があります。電力量単価と調整項目を含む年間総額の比較が重要です。");
-    if (!loadFactor) advice.push("使用量と契約電力を入力すると、基本料金側と従量料金側のどちらを優先確認するか絞れます。");
-    if (stores > 1) advice.push(stores + "店舗分を同じ条件でそろえ、本部単位で契約更新月と単価を一覧化します。");
-    if (monthly >= 1000000) advice.push("月額100万円以上のため、1%の差でも年間" + compactYen(monthly * stores * 12 * 0.01) + "動きます。率より年間総額で比較します。");
-    advice.push("正式試算では直近12ヶ月の請求書を使い、季節差・燃料費等調整・解約条件まで確認します。");
+    if (loadFactor && loadFactor < 30) advice.push("契約している電気が大きすぎないか、請求書を見て確認する価値があります。");
+    if (loadFactor && loadFactor >= 30) advice.push("よく電気を使うお店です。1か月だけでなく、1年分の合計で電力会社を比べましょう。");
+    if (!loadFactor) advice.push("請求書の『使用電力量』と『契約電力』を入れると、もう少し詳しく分かります。");
+    if (stores > 1) advice.push(stores + "店舗分の請求書を集め、電力会社との契約が終わる月を一覧にしましょう。");
+    if (monthly >= 1000000) advice.push("1か月100万円以上なので、たった1%の差でも1年で" + compactYen(monthly * stores * 12 * 0.01) + "変わります。");
+    advice.push("正確に比べるには、直近1年分の請求書を使います。途中でかかる追加料金や解約金も確認しましょう。");
     document.getElementById("ps-advice").innerHTML = advice.map(function (item) { return "<li>" + item + "</li>"; }).join("");
 
     lastResult = {
@@ -169,9 +168,9 @@
       "パチンコ店 電気代シミュレーション（概算）",
       "月額電気代：" + yen(lastResult.monthly) + " × " + lastResult.stores + "店舗",
       "現在の年間電気代：" + yen(lastResult.annual),
-      lastResult.rate + "%削減を仮定した年間改善余地：" + yen(lastResult.annualSaving),
-      "3年間の改善余地：" + yen(lastResult.threeYear),
-      "正式比較には直近12ヶ月分の請求書が必要です。",
+      lastResult.rate + "%安くなるとした場合、1年で減る目安：" + yen(lastResult.annualSaving),
+      "同じ状態が3年続いた場合の目安：" + yen(lastResult.threeYear),
+      "正確に比べるには、直近1年分の請求書が必要です。",
       "https://ripuro.soter-info.com/pachinko-denkidai.html#simulator"
     ].join("\n");
     navigator.clipboard.writeText(text).then(function () {

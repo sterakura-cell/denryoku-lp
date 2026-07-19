@@ -127,8 +127,8 @@
 
   <section class="pro-sim" id="simulator" aria-labelledby="simulator-title">
     <p class="sim-kicker">PACHINKO ENERGY IMPACT SIMULATOR 2026</p>
-    <h2 id="simulator-title">パチンコ店の電気代・削減インパクトを詳細試算</h2>
-    <p class="sim-lead">請求書の合計金額だけでも試算できます。使用量・契約電力まで入れると、請求実効単価や負荷率も確認できます。</p>
+    <h2 id="simulator-title">パチンコ店の電気代をかんたん計算</h2>
+    <p class="sim-lead">まずは請求書の合計金額だけで計算できます。分かる項目だけ追加すると、さらに詳しく確認できます。</p>
     <div class="sim-presets" aria-label="月額電気代の入力例">
       <button type="button" data-sim-preset="600000">小型店 60万円</button>
       <button type="button" data-sim-preset="1000000" class="on">中型店 100万円</button>
@@ -137,49 +137,49 @@
     </div>
     <form id="pachinko-sim-form">
       <div class="sim-field-grid">
-        <label class="sim-field"><span>月額電気代・1店舗あたり（円）</span><input id="ps-monthly" type="number" inputmode="numeric" min="10000" step="10000" value="1000000" required /><small>請求書の税込合計を入力</small></label>
-        <label class="sim-field"><span>試算する店舗数</span><input id="ps-stores" type="number" inputmode="numeric" min="1" max="100" step="1" value="1" /><small>本部一括なら合計店舗数</small></label>
-        <label class="sim-field"><span>月の営業日数</span><input id="ps-days" type="number" inputmode="numeric" min="1" max="31" step="1" value="30" /></label>
-        <label class="sim-field"><span>1店舗あたり設置台数</span><input id="ps-machines" type="number" inputmode="numeric" min="1" max="3000" step="10" value="400" /></label>
+        <label class="sim-field"><span>1店舗の1か月の電気代（円）</span><input id="ps-monthly" type="number" inputmode="numeric" min="10000" step="10000" value="1000000" required /><small>請求書の「今回のお支払い金額」を入力</small></label>
+        <label class="sim-field"><span>お店はいくつありますか？</span><input id="ps-stores" type="number" inputmode="numeric" min="1" max="100" step="1" value="1" /><small>1店舗だけなら「1」のままでOK</small></label>
+        <label class="sim-field"><span>1か月に何日営業しますか？</span><input id="ps-days" type="number" inputmode="numeric" min="1" max="31" step="1" value="30" /><small>だいたいの日数でOK</small></label>
+        <label class="sim-field"><span>今あるパチンコ・スロットの台数（任意）</span><input id="ps-machines" type="number" inputmode="numeric" min="1" max="3000" step="10" placeholder="例：400" /><small>入替や休止で変わるため、分かる時だけおおよその台数を入力</small></label>
       </div>
       <details class="sim-advanced">
-        <summary>請求書の詳細を追加して精度を上げる</summary>
+        <summary>もっと詳しく計算する（分かる人だけ）</summary>
         <div class="sim-field-grid">
-          <label class="sim-field"><span>月間使用量（kWh）</span><input id="ps-kwh" type="number" inputmode="numeric" min="0" step="1000" placeholder="例：30000" /><small>請求書の「使用電力量」</small></label>
-          <label class="sim-field"><span>契約電力（kW）</span><input id="ps-contract" type="number" inputmode="numeric" min="0" step="1" placeholder="例：180" /><small>請求書の「契約電力」</small></label>
-          <label class="sim-field"><span>営業利益率（%）</span><input id="ps-margin" type="number" inputmode="decimal" min="1" max="100" step="0.5" value="10" /><small>削減額と同じ利益を売上で作る場合の換算に使用</small></label>
+          <label class="sim-field"><span>この1か月に使った電気（kWh）</span><input id="ps-kwh" type="number" inputmode="numeric" min="0" step="1000" placeholder="例：30000" /><small>請求書の「使用電力量」に書いてあります</small></label>
+          <label class="sim-field"><span>契約している電気の大きさ（kW）</span><input id="ps-contract" type="number" inputmode="numeric" min="0" step="1" placeholder="例：180" /><small>請求書の「契約電力」に書いてあります</small></label>
+          <label class="sim-field"><span>売上のうち利益になる割合（%）</span><input id="ps-margin" type="number" inputmode="decimal" min="1" max="100" step="0.5" value="10" /><small>分からなければ「10」のままでOK</small></label>
         </div>
       </details>
       <div class="sim-range">
-        <div class="sim-range-top"><span>比較する削減率（仮定）</span><output id="ps-rate-output">20%</output></div>
-        <input id="ps-rate" type="range" min="5" max="30" step="1" value="20" aria-label="比較する削減率" />
+        <div class="sim-range-top"><span>何％安くなるとして計算しますか？（目安）</span><output id="ps-rate-output">20%</output></div>
+        <input id="ps-rate" type="range" min="5" max="30" step="1" value="20" aria-label="安くなる割合の目安" />
       </div>
-      <button class="sim-run" type="submit">削減インパクトを計算する</button>
+      <button class="sim-run" type="submit">電気代がどれくらい変わるか計算</button>
     </form>
     <div class="sim-results" id="ps-results" aria-live="polite">
-      <div class="sim-accuracy"><span>試算精度：<b id="ps-accuracy-label">標準</b></span><div class="sim-accuracy-meter"><i id="ps-accuracy-bar" style="width:70%"></i></div><span id="ps-accuracy-score">70 / 100</span></div>
+      <div class="sim-accuracy"><span>入力のくわしさ：<b id="ps-accuracy-label">かんたん</b></span><div class="sim-accuracy-meter"><i id="ps-accuracy-bar" style="width:55%"></i></div><span id="ps-accuracy-score">55 / 100</span></div>
       <div class="sim-stat-grid">
         <div class="sim-stat"><span>現在の年間電気代</span><strong id="ps-annual">—</strong><small id="ps-annual-sub">—</small></div>
         <div class="sim-stat"><span>1日あたり</span><strong id="ps-daily">—</strong><small>1店舗あたり</small></div>
-        <div class="sim-stat accent"><span>年間の改善余地</span><strong id="ps-saving">—</strong><small id="ps-saving-sub">設定した削減率で試算</small></div>
-        <div class="sim-stat"><span>3年間の改善余地</span><strong id="ps-three-year">—</strong><small>同条件が続く仮定</small></div>
-        <div class="sim-stat"><span>同じ利益を作る売上</span><strong id="ps-sales-equivalent">—</strong><small id="ps-margin-sub">営業利益率で換算</small></div>
-        <div class="sim-stat"><span>1台あたり月額</span><strong id="ps-per-machine">—</strong><small>電気代÷設置台数</small></div>
+        <div class="sim-stat accent"><span>1年で減らせるかもしれない金額</span><strong id="ps-saving">—</strong><small id="ps-saving-sub">選んだ割合で計算した目安</small></div>
+        <div class="sim-stat"><span>3年分の合計目安</span><strong id="ps-three-year">—</strong><small>同じ状態が3年続いた場合</small></div>
+        <div class="sim-stat"><span>この節約額と同じ利益を売上で作るなら</span><strong id="ps-sales-equivalent">—</strong><small id="ps-margin-sub">利益の割合を使って計算</small></div>
+        <div class="sim-stat"><span>1台あたりの電気代目安</span><strong id="ps-per-machine">—</strong><small>入力した時点の台数で割った参考値</small></div>
       </div>
       <div class="sim-detail-grid">
-        <div class="sim-panel"><h3>請求書から分かる追加指標</h3><ul id="ps-indicators"></ul></div>
-        <div class="sim-panel"><h3>現在の電気代の参考配分</h3><div id="ps-breakdown"></div></div>
+        <div class="sim-panel"><h3>請求書から分かること</h3><ul id="ps-indicators"></ul></div>
+        <div class="sim-panel"><h3>何に電気代がかかっている？（目安）</h3><div id="ps-breakdown"></div></div>
       </div>
-      <div class="sim-panel" style="margin-top:12px"><h3>次に確認したいポイント</h3><ul id="ps-advice"></ul></div>
-      <div class="sim-actions"><button type="button" id="ps-copy">結果をコピー</button><button type="button" id="ps-print">印刷・PDF保存</button><a href="./#form" id="ps-cta">請求書12ヶ月分で正式試算へ →</a></div>
-      <p class="sim-disclaimer">※入力値と設定した削減率による概算です。契約条件・燃料費等調整・市場価格・使用状況により実際の金額は異なり、削減を保証するものではありません。正式な比較は直近12ヶ月分の請求書を用いて行います。</p>
+      <div class="sim-panel" style="margin-top:12px"><h3>次にやること</h3><ul id="ps-advice"></ul></div>
+      <div class="sim-actions"><button type="button" id="ps-copy">結果をコピー</button><button type="button" id="ps-print">印刷・PDF保存</button><a href="./#form" id="ps-cta">1年分の請求書で、正確な金額を確認 →</a></div>
+      <p class="sim-disclaimer">※ここで出る金額は目安です。台数、季節、営業時間、電力会社との契約によって変わります。「必ずこの金額が安くなる」というものではありません。正確に比べるときは、1年分の請求書を使います。</p>
     </div>
   </section>
 
   <div class="toc">
     <b>目次</b>
     <ol>
-      <li><a href="#simulator">電気代・削減インパクトを試算</a></li>
+      <li><a href="#simulator">電気代がどれくらい変わるか計算</a></li>
       <li><a href="#s1">パチンコホールの電気代：規模別の目安</a></li>
       <li><a href="#s2">電気代の内訳——何にいくらかかっているのか</a></li>
       <li><a href="#s3">削減方法3つの比較（LED化・空調更新・契約切替）</a></li>
@@ -224,7 +224,7 @@
   <p>LED化や空調更新は有効ですが「投資して回収する」施策です。一方、<b>電力契約の切替は投資ゼロで、設備も営業もそのままで単価だけ下げる</b>施策なので、順番としては<b>まず切替、その後に設備投資を検討</b>が合理的です。</p>
 
   <h2 id="s4">4. 契約切替で約20%下がる仕組みと安全性</h2>
-  <p>2016年の電力小売全面自由化以降、法人は地域電力会社（東京電力・東北電力など）以外からも電気を買えます。パチンコホールのように<b>使用量が大きく負荷率の高い施設は、新電力にとって好条件の顧客</b>であり、その分安い単価が提示されやすい——これが削減の源泉です。</p>
+  <p>2016年から、会社やお店は地域の大手電力会社以外からも電気を買えるようになりました。パチンコホールのように<b>毎月たくさんの電気を使うお店は、安い料金を出してもらえる可能性があります。</b>これが、電力会社を見直す理由です。</p>
   <p>当社が取り次ぐ供給元は<b>株式会社エナリス</b>（KDDIグループ・J-POWER出資、電力供給実績26,000拠点超）です。ここで多くの経営者様が気にされる安全性について整理します。</p>
   <ul>
     <li><b>停電リスク・電気の品質は変わりません。</b>電線・送配電網は従来どおり地域電力会社の設備を使います。切り替わるのは「契約と請求」だけです</li>
@@ -235,8 +235,8 @@
   <h2 id="s5">5. 切替の流れ——必要なのは請求書12ヶ月分だけ</h2>
   <ol>
     <li><b>直近12ヶ月分の電気料金請求書を用意</b>（1店舗分からでOK。本部一括なら全店分）</li>
-    <li><b>無料試算</b>——実際の使用実績に基づき、切替後の年間削減額を算出（数日〜1週間）</li>
-    <li><b>結果を見て判断</b>——削減額・契約条件をすべて確認してから。義務は一切生じません</li>
+    <li><b>無料で金額を計算</b>——これまで使った電気の量から、電力会社を変えた後の1年間の金額を出します（数日〜1週間）</li>
+    <li><b>結果を見てから決める</b>——いくら安くなるか、途中でやめるとお金がかかるかなどを確認します。見積もりを取っただけで契約する必要はありません</li>
     <li><b>切替手続き</b>——契約後、通常1〜2ヶ月で切替完了。現契約先への解約連絡も原則不要です</li>
   </ol>
   <p>ホール様側の作業は実質「請求書を共有する」だけです。</p>
@@ -256,7 +256,7 @@
       <li><a href="pachinko-denkidai-sakugen.html">パチンコ店の電気代削減方法</a></li>
       <li><a href="pachinko-kouatsu-keiyaku.html">高圧電力契約の見直し方</a></li>
       <li><a href="saiene-fukakin-2026-hojin.html">2026年度の再エネ賦課金を使用量から計算</a></li>
-      <li><a href="youryou-kyoshutsukin-2026.html">容量拠出金を請求書・見積書で確認する方法</a></li>
+      <li><a href="youryou-kyoshutsukin-2026.html">「容量拠出金」ってなに？やさしく解説</a></li>
       <li><a href="pachinko-denkidai-zukai.html">図解で見る：工事なしで約20%オフの仕組み</a></li>
       <li><a href="game-center-denkidai.html">ゲームセンターの電気代はいくら？1日・月の目安</a></li>
       <li><a href="karaoke-denkidai.html">カラオケ店の電気代はいくら？1日・月の目安</a></li>
