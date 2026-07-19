@@ -89,6 +89,8 @@
     .note{font-size:13px;color:var(--mute)}
     .point{background:#fff7e8;border:1px solid #f0d9a8;border-radius:10px;padding:16px 20px;margin:18px 0}
     .point b{color:#9a6b00}
+    .pro-sim{margin:28px 0 34px;padding:26px;border-radius:18px;background:linear-gradient(145deg,#0e1f3d,#173866);color:#fff;box-shadow:0 18px 44px rgba(14,31,61,.2)}
+    .pro-sim *{box-sizing:border-box}.pro-sim h2{margin:0 0 6px;padding:0;border:0;color:#fff;font-size:24px}.pro-sim .sim-kicker{margin:0 0 6px;color:#ffc966;font-size:11px;font-weight:bold;letter-spacing:.14em}.pro-sim .sim-lead{margin:0 0 18px;color:#d7e3f2;font-size:13px}.sim-presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}.sim-presets button,.sim-actions button{border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:8px 13px;color:#fff;background:rgba(255,255,255,.08);font-weight:bold;cursor:pointer}.sim-presets button:hover,.sim-presets button.on{color:var(--navy);background:#fff}.sim-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.sim-field{display:block;color:#eef5ff;font-size:12px;font-weight:bold}.sim-field span{display:block;margin-bottom:5px}.sim-field input{width:100%;min-height:48px;padding:10px 12px;border:1px solid rgba(255,255,255,.35);border-radius:8px;color:var(--navy);background:#fff;font-size:17px}.sim-field small{display:block;margin-top:4px;color:#aebfd5;font-size:10px;font-weight:normal}.sim-advanced{margin:14px 0;border:1px solid rgba(255,255,255,.2);border-radius:10px;background:rgba(255,255,255,.05)}.sim-advanced summary{padding:12px 14px;color:#fff}.sim-advanced>div{padding:0 14px 14px}.sim-range{margin-top:16px;padding:14px;border-radius:10px;background:rgba(255,255,255,.08)}.sim-range-top{display:flex;justify-content:space-between;gap:16px}.sim-range output{color:#ffc966;font-size:20px;font-weight:bold}.sim-range input{width:100%;accent-color:var(--amber)}.sim-run{width:100%;min-height:52px;margin-top:16px;border:0;border-radius:999px;color:var(--navy);background:var(--amber);font-size:16px;font-weight:bold;cursor:pointer}.sim-results{margin-top:22px}.sim-results[hidden]{display:none}.sim-accuracy{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px;color:#d7e3f2;font-size:11px}.sim-accuracy b{color:#fff}.sim-accuracy-meter{flex:1;height:6px;overflow:hidden;border-radius:99px;background:rgba(255,255,255,.15)}.sim-accuracy-meter i{display:block;height:100%;border-radius:99px;background:#55d6a8}.sim-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.sim-stat{min-height:106px;padding:14px;border-radius:10px;color:var(--navy);background:#fff}.sim-stat.accent{background:#fff1d7}.sim-stat span{display:block;color:#64748b;font-size:10px}.sim-stat strong{display:block;margin-top:5px;color:#122b50;font-size:20px;line-height:1.35}.sim-stat.accent strong{color:#a75f00}.sim-stat small{display:block;margin-top:3px;color:#64748b;font-size:9px}.sim-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.sim-panel{padding:16px;border-radius:10px;background:rgba(255,255,255,.08)}.sim-panel h3{margin:0 0 10px;color:#fff;font-size:14px}.sim-panel ul{margin:0 0 0 18px;color:#d7e3f2;font-size:11px}.sim-breakdown-row{display:grid;grid-template-columns:70px 1fr 70px;align-items:center;gap:8px;margin:9px 0;color:#d7e3f2;font-size:10px}.sim-breakdown-row i{display:block;height:8px;border-radius:99px;background:#5fc8ff}.sim-breakdown-row b{text-align:right;color:#fff}.sim-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.sim-actions a{flex:1;min-width:210px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:13px 18px;color:var(--navy);background:#fff;font-weight:bold;text-decoration:none}.sim-disclaimer{margin:12px 0 0;color:#aebfd5;font-size:10px;line-height:1.7}
     .related{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:18px 22px;margin:30px 0}
     .related b{display:block;margin-bottom:8px;color:var(--navy)}
     .related a{color:var(--navy2)}
@@ -102,7 +104,8 @@
     summary{font-weight:bold;color:var(--navy);cursor:pointer}
     details p{margin:10px 0 0}
     .foot{background:var(--bg);border-top:1px solid var(--line);padding:26px 20px;font-size:12.5px;color:var(--mute);text-align:center;line-height:1.8}
-    @media(max-width:600px){ h1{font-size:22px} h2{font-size:19px} table{font-size:13px} th,td{padding:8px} }
+    @media(max-width:600px){ h1{font-size:22px} h2{font-size:19px} table{font-size:13px} th,td{padding:8px}.pro-sim{margin-inline:-6px;padding:20px 15px}.pro-sim h2{font-size:21px}.sim-field-grid,.sim-detail-grid{grid-template-columns:1fr}.sim-stat-grid{grid-template-columns:1fr 1fr}.sim-stat{min-height:94px}.sim-stat strong{font-size:18px}.sim-actions{flex-direction:column}.sim-actions a{min-width:0} }
+    @media print{.head,.toc,.cta,.foot,.sim-run,.sim-presets,.sim-actions{display:none!important}.pro-sim{color:#111;background:#fff;box-shadow:none;border:1px solid #bbb}.pro-sim h2,.sim-panel h3,.sim-field{color:#111}.sim-lead,.sim-panel ul,.sim-disclaimer{color:#444}.sim-advanced{display:none}.sim-panel{background:#f5f5f5}.sim-breakdown-row,.sim-breakdown-row b{color:#222}}
   </style>
 </head>
 <body>
@@ -113,7 +116,7 @@
   <nav class="crumb"><a href="./">TOP（無料診断）</a> ＞ パチンコ屋の電気代はいくら？</nav>
 
   <h1>パチンコ屋（パチンコホール）の電気代はいくら？<br>規模別の目安・内訳と削減方法</h1>
-  <p class="meta">更新日：2026年7月17日｜執筆・監修：株式会社エコクリエイトホールディングス（株式会社エナリス正規代理店・パチンコホール専門の電気代診断を実施）</p>
+  <p class="meta">更新日：2026年7月19日｜執筆・監修：株式会社エコクリエイトホールディングス（株式会社エナリス正規代理店・パチンコホール専門の電気代診断を実施）</p>
 
   <a href="pachinko-denkidai-zukai.html" class="zukai-btn">🖼 文章はニガテ？ <b>図解でサクッと見る版</b> はこちら →</a>
 
@@ -122,9 +125,61 @@
 
   <div class="point"><b>結論：</b>月額の目安は小型店で40万〜80万円、中型店で80万〜150万円、大型店で200万〜400万円です。1日あたりでは約1.3万〜13.3万円が目安ですが、季節・営業時間・設置台数・契約条件によって大きく変動します。</div>
 
+  <section class="pro-sim" id="simulator" aria-labelledby="simulator-title">
+    <p class="sim-kicker">PACHINKO ENERGY IMPACT SIMULATOR 2026</p>
+    <h2 id="simulator-title">パチンコ店の電気代・削減インパクトを詳細試算</h2>
+    <p class="sim-lead">請求書の合計金額だけでも試算できます。使用量・契約電力まで入れると、請求実効単価や負荷率も確認できます。</p>
+    <div class="sim-presets" aria-label="月額電気代の入力例">
+      <button type="button" data-sim-preset="600000">小型店 60万円</button>
+      <button type="button" data-sim-preset="1000000" class="on">中型店 100万円</button>
+      <button type="button" data-sim-preset="2500000">大型店 250万円</button>
+      <button type="button" data-sim-preset="5000000">複数店 500万円</button>
+    </div>
+    <form id="pachinko-sim-form">
+      <div class="sim-field-grid">
+        <label class="sim-field"><span>月額電気代・1店舗あたり（円）</span><input id="ps-monthly" type="number" inputmode="numeric" min="10000" step="10000" value="1000000" required /><small>請求書の税込合計を入力</small></label>
+        <label class="sim-field"><span>試算する店舗数</span><input id="ps-stores" type="number" inputmode="numeric" min="1" max="100" step="1" value="1" /><small>本部一括なら合計店舗数</small></label>
+        <label class="sim-field"><span>月の営業日数</span><input id="ps-days" type="number" inputmode="numeric" min="1" max="31" step="1" value="30" /></label>
+        <label class="sim-field"><span>1店舗あたり設置台数</span><input id="ps-machines" type="number" inputmode="numeric" min="1" max="3000" step="10" value="400" /></label>
+      </div>
+      <details class="sim-advanced">
+        <summary>請求書の詳細を追加して精度を上げる</summary>
+        <div class="sim-field-grid">
+          <label class="sim-field"><span>月間使用量（kWh）</span><input id="ps-kwh" type="number" inputmode="numeric" min="0" step="1000" placeholder="例：30000" /><small>請求書の「使用電力量」</small></label>
+          <label class="sim-field"><span>契約電力（kW）</span><input id="ps-contract" type="number" inputmode="numeric" min="0" step="1" placeholder="例：180" /><small>請求書の「契約電力」</small></label>
+          <label class="sim-field"><span>営業利益率（%）</span><input id="ps-margin" type="number" inputmode="decimal" min="1" max="100" step="0.5" value="10" /><small>削減額と同じ利益を売上で作る場合の換算に使用</small></label>
+        </div>
+      </details>
+      <div class="sim-range">
+        <div class="sim-range-top"><span>比較する削減率（仮定）</span><output id="ps-rate-output">20%</output></div>
+        <input id="ps-rate" type="range" min="5" max="30" step="1" value="20" aria-label="比較する削減率" />
+      </div>
+      <button class="sim-run" type="submit">削減インパクトを計算する</button>
+    </form>
+    <div class="sim-results" id="ps-results" aria-live="polite">
+      <div class="sim-accuracy"><span>試算精度：<b id="ps-accuracy-label">標準</b></span><div class="sim-accuracy-meter"><i id="ps-accuracy-bar" style="width:70%"></i></div><span id="ps-accuracy-score">70 / 100</span></div>
+      <div class="sim-stat-grid">
+        <div class="sim-stat"><span>現在の年間電気代</span><strong id="ps-annual">—</strong><small id="ps-annual-sub">—</small></div>
+        <div class="sim-stat"><span>1日あたり</span><strong id="ps-daily">—</strong><small>1店舗あたり</small></div>
+        <div class="sim-stat accent"><span>年間の改善余地</span><strong id="ps-saving">—</strong><small id="ps-saving-sub">設定した削減率で試算</small></div>
+        <div class="sim-stat"><span>3年間の改善余地</span><strong id="ps-three-year">—</strong><small>同条件が続く仮定</small></div>
+        <div class="sim-stat"><span>同じ利益を作る売上</span><strong id="ps-sales-equivalent">—</strong><small id="ps-margin-sub">営業利益率で換算</small></div>
+        <div class="sim-stat"><span>1台あたり月額</span><strong id="ps-per-machine">—</strong><small>電気代÷設置台数</small></div>
+      </div>
+      <div class="sim-detail-grid">
+        <div class="sim-panel"><h3>請求書から分かる追加指標</h3><ul id="ps-indicators"></ul></div>
+        <div class="sim-panel"><h3>現在の電気代の参考配分</h3><div id="ps-breakdown"></div></div>
+      </div>
+      <div class="sim-panel" style="margin-top:12px"><h3>次に確認したいポイント</h3><ul id="ps-advice"></ul></div>
+      <div class="sim-actions"><button type="button" id="ps-copy">結果をコピー</button><button type="button" id="ps-print">印刷・PDF保存</button><a href="./#form" id="ps-cta">請求書12ヶ月分で正式試算へ →</a></div>
+      <p class="sim-disclaimer">※入力値と設定した削減率による概算です。契約条件・燃料費等調整・市場価格・使用状況により実際の金額は異なり、削減を保証するものではありません。正式な比較は直近12ヶ月分の請求書を用いて行います。</p>
+    </div>
+  </section>
+
   <div class="toc">
     <b>目次</b>
     <ol>
+      <li><a href="#simulator">電気代・削減インパクトを試算</a></li>
       <li><a href="#s1">パチンコホールの電気代：規模別の目安</a></li>
       <li><a href="#s2">電気代の内訳——何にいくらかかっているのか</a></li>
       <li><a href="#s3">削減方法3つの比較（LED化・空調更新・契約切替）</a></li>
@@ -200,6 +255,8 @@
       <li><a href="pachinko-denkidai-takai-riyu.html">パチンコホールの電気代が高い理由</a></li>
       <li><a href="pachinko-denkidai-sakugen.html">パチンコ店の電気代削減方法</a></li>
       <li><a href="pachinko-kouatsu-keiyaku.html">高圧電力契約の見直し方</a></li>
+      <li><a href="saiene-fukakin-2026-hojin.html">2026年度の再エネ賦課金を使用量から計算</a></li>
+      <li><a href="youryou-kyoshutsukin-2026.html">容量拠出金を請求書・見積書で確認する方法</a></li>
       <li><a href="pachinko-denkidai-zukai.html">図解で見る：工事なしで約20%オフの仕組み</a></li>
       <li><a href="game-center-denkidai.html">ゲームセンターの電気代はいくら？1日・月の目安</a></li>
       <li><a href="karaoke-denkidai.html">カラオケ店の電気代はいくら？1日・月の目安</a></li>
@@ -221,5 +278,6 @@
 </div>
 
 <script src="script.js"></script>
+<script src="pachinko-denkidai-simulator.js"></script>
 </body>
 </html>

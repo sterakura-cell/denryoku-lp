@@ -336,6 +336,23 @@
     var rankBox = document.getElementById("formRank");
     if (!input || !rankBox) return;
 
+    try {
+      var savedSimulation = JSON.parse(sessionStorage.getItem("ripuro_simulation") || "null");
+      if (savedSimulation && savedSimulation.monthly) {
+        input.value = savedSimulation.monthly;
+        var handoff = document.createElement("input");
+        handoff.type = "hidden";
+        handoff.name = "simulation_summary";
+        handoff.value = "店舗数:" + (savedSimulation.stores || 1) +
+          " / 想定削減率:" + (savedSimulation.rate || "") + "%" +
+          " / 年間改善余地:" + Math.round(savedSimulation.annualSaving || 0) + "円" +
+          " / 精度:" + (savedSimulation.accuracy || "");
+        var diagnoseForm = document.getElementById("diagnoseForm");
+        if (diagnoseForm) diagnoseForm.appendChild(handoff);
+        sessionStorage.removeItem("ripuro_simulation");
+      }
+    } catch (error) { /* storage unavailable */ }
+
     var frTimer = null;
     input.addEventListener("input", function () {
       clearTimeout(frTimer);
