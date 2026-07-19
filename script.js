@@ -318,8 +318,8 @@
 
       var year = m * 12;
       document.getElementById("simYear").textContent  = yen(year);
-      document.getElementById("simCut15").textContent = yen(year * 0.20);
-      document.getElementById("simCut20").textContent = yen(year * 0.40);
+      document.getElementById("simCut15").textContent = yen(year * 0.10);
+      document.getElementById("simCut20").textContent = yen(year * 0.20);
 
       var r = rankOf(m);
       rankBox.className = "sim-rank-box rank-" + r;
@@ -513,7 +513,7 @@
     function setBusy(b) {
       if (!btn) return;
       btn.disabled = b;
-      btn.textContent = b ? "送信中…" : "無料診断を申し込む（無料）";
+      btn.textContent = b ? "送信中…" : "電気代を無料でチェックする";
     }
     function fail(msg) {
       alert("送信に失敗しました。お手数ですが、お電話でお問い合わせください。\n（" + (msg || "") + "）");
@@ -601,6 +601,19 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
+      var phone = form.querySelector('[name="phone"]');
+      var email = form.querySelector('[name="email"]');
+      if (phone) phone.setCustomValidity("");
+      if (email) email.setCustomValidity("");
+      if ((phone || email) && !(phone && phone.value.trim()) && !(email && email.value.trim())) {
+        var contactField = phone || email;
+        if (contactField) {
+          contactField.setCustomValidity("電話番号かメールアドレスの、どちらか1つを入力してください");
+          contactField.reportValidity();
+        }
+        return;
+      }
+
       // 簡易バリデーション（必須項目）
       if (!form.checkValidity()) {
         form.reportValidity();
@@ -626,6 +639,62 @@
   /* ----------------------------------------------------------
      7. 初期化
      ---------------------------------------------------------- */
+  function injectPlainLanguageGuide() {
+    if (document.querySelector(".plain-language-guide")) return;
+    var text = document.body.innerText || "";
+    var terms = [
+      ["高圧電力", "工場や大きなお店などで使う、法人向けの電気契約"],
+      ["最大デマンド", "1か月の中で、いちばん電気を多く使った時間の値"],
+      ["燃料費調整", "燃料の価格に合わせて、毎月増えたり減ったりするお金"],
+      ["市場価格調整", "電気の仕入れ価格に合わせて、増えたり減ったりするお金"],
+      ["特別高圧", "とても大きな工場などで使う電気契約"],
+      ["負荷率", "1日の中で、電気をどれくらい一定に使っているかを見る数字"],
+      ["実効単価", "請求額を使用量で割った、実際の電気1kWhあたりの金額"]
+    ].filter(function (item) { return text.indexOf(item[0]) >= 0; }).slice(0, 5);
+    var hasEstimate = /(?:20|30|40)[％%]|削減例/.test(text);
+    if (!terms.length && !hasEstimate) return;
+
+    if (!document.getElementById("plain-language-style")) {
+      var style = document.createElement("style");
+      style.id = "plain-language-style";
+      style.textContent =
+        ".plain-language-guide{max-width:1100px;margin:24px auto;padding:18px 20px;border:1px solid #dce6ef;border-radius:12px;background:#f7fbff;color:#334155;font-family:\"Yu Gothic\",Meiryo,sans-serif}" +
+        ".plain-language-guide h2{margin:0 0 10px;color:#0e1f3d;font-size:18px;text-align:left}" +
+        ".plain-language-guide dl{display:grid;gap:7px;margin:0}.plain-language-guide div{display:grid;grid-template-columns:140px 1fr;gap:10px}" +
+        ".plain-language-guide dt{font-weight:800}.plain-language-guide dd{margin:0}.plain-language-guide p{margin:12px 0 0;padding-top:10px;border-top:1px solid #dce6ef;font-size:12px}" +
+        "@media(max-width:640px){.plain-language-guide{margin:16px 14px;padding:16px}.plain-language-guide div{grid-template-columns:1fr;gap:1px}.plain-language-guide dd{font-size:13px}}";
+      document.head.appendChild(style);
+    }
+
+    var guide = document.createElement("aside");
+    guide.className = "plain-language-guide";
+    guide.setAttribute("aria-label", "むずかしい言葉と数字の見方");
+    var html = "<h2>むずかしい言葉を、かんたんに</h2>";
+    if (terms.length) {
+      html += "<dl>" + terms.map(function (item) {
+        return "<div><dt>" + item[0] + "</dt><dd>" + item[1] + "</dd></div>";
+      }).join("") + "</dl>";
+    }
+    if (hasEstimate) html += "<p><b>数字の見方：</b>ページ内の削減率は計算例または過去の一部の例です。実際の金額は、今の請求書と新しい見積書を同じ条件で比べて確認します。</p>";
+    guide.innerHTML = html;
+
+    var main = document.querySelector("main");
+    var hero = main && main.querySelector(".hero");
+    if (hero && hero.parentNode) hero.parentNode.insertBefore(guide, hero.nextSibling);
+    else if (main) main.insertBefore(guide, main.firstChild);
+  }
+
+  function movePriorityForm() {
+    var path = (window.location.pathname || "/").toLowerCase();
+    if (!(path === "/" || path.endsWith("/index.html") || path.endsWith("/business-denkidai.html"))) return;
+    var main = document.querySelector("main");
+    var hero = main && main.querySelector(".hero");
+    var formSection = document.getElementById("form");
+    if (hero && formSection && hero.parentNode === formSection.parentNode) {
+      hero.parentNode.insertBefore(formSection, hero.nextSibling);
+    }
+  }
+
   function injectGroupTrail() {
     if (document.querySelector(".soter-group-trail")) return;
 
@@ -673,6 +742,8 @@
   function init() {
     applyRef();
     trackVisit();
+    injectPlainLanguageGuide();
+    movePriorityForm();
     bindHeroSim();
     bindMainSim();
     bindMoneyReads();

@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="format-detection" content="telephone=no" />
   <title>【2026年7月】パチンコホールの電気代削減｜工事不要・無料診断</title>
-  <meta name="description" content="パチンコホール・運営会社向け。直近12ヶ月の請求書を送るだけで、電力会社の切替による年間削減額を無料試算。工事不要・初期費用0円、安くならなければ切替不要。約20%削減の可能性を確認できます。" />
+  <meta name="description" content="パチンコホール・運営会社向け。直近12ヶ月の請求書と新しい見積書を同じ条件で無料比較。工事不要・初期費用0円、安くならなければ切替不要です。" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="canonical" href="https://ripuro.soter-info.com/" />
   <!-- OGP（SNS・LINEで共有したときの表示） -->
@@ -54,7 +54,7 @@
         "provider": { "@id": "https://ripuro.soter-info.com/#org" },
         "areaServed": "JP",
         "serviceType": "法人向け電力切替コンサルティング",
-        "description": "電力会社の切替のみで電気代を約20%（好条件では30〜40%）削減。工事不要・設備そのまま。直近12ヶ月分の請求書だけで無料試算。安くならなければ切替不要。",
+        "description": "パチンコホールの電気料金明細と新しい見積書を同じ条件で比較します。工事不要・設備そのまま。直近12ヶ月分の請求書で無料試算し、安くならなければ切替不要です。",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY", "description": "診断・試算は無料" }
       },
       {
@@ -115,15 +115,15 @@
     <div class="container header-inner">
       <a href="#top" class="brand">
         <span class="brand-icon"><svg class="ico"><use href="#i-zap"/></svg></span>
-        <span class="brand-text">パチンコ電気代<strong>無料診断</strong></span>
+        <span class="brand-text">パチンコ電気代<strong>無料チェック</strong></span>
       </a>
       <nav class="gnav" aria-label="グローバルナビ">
         <a href="#features">特徴</a>
         <a href="#simulator">シミュレーター</a>
         <a href="columns.html">コラム</a>
-        <a href="#form">診断フォーム</a>
+        <a href="#form">かんたん相談</a>
       </nav>
-      <a href="#form" class="btn btn-cta header-cta">無料診断</a>
+      <a href="#form" class="btn btn-cta header-cta">無料チェック</a>
     </div>
   </header>
 
@@ -150,10 +150,10 @@
           <p class="hero-eyebrow">パチンコホール・運営会社様向け｜1店舗でも、複数店の本部でもOK</p>
           <h1 class="hero-title">
             パチンコホールの電気代、<br />
-            電力会社の切替だけで<span class="hl">約20％削減できる可能性</span>
+            <span class="hl">請求書から安くできるか</span>確認します
           </h1>
           <p class="hero-sub">
-            遊技機の常時稼働と大型空調で電力消費の大きいホールほど、切替の効果は大。好条件では30〜40％の削減例も。
+            まずは、今の請求書と新しい見積書を同じ条件で比べます。
             工事不要・初期費用0円、電気の品質・停電リスクは今のまま。<strong>安くならなければ切替不要</strong>です。
           </p>
 
@@ -164,7 +164,7 @@
           </ul>
 
           <div class="hero-cta">
-            <a href="#form" class="btn btn-cta btn-lg">無料で削減額を確認する</a>
+            <a href="#form" class="btn btn-cta btn-lg">30秒で電気代をチェック</a>
             <p class="hero-tel-note">
               入力が難しい方・お急ぎの方はお電話ください<br />
               <a href="tel:09036987711" class="tel-link" id="heroTel"><svg class="ico tel-ico"><use href="#i-phone"/></svg>090-3698-7711</a>
@@ -174,40 +174,15 @@
           <p class="hero-reassure"><svg class="ico"><use href="#i-check-circle"/></svg>契約は<strong>診断結果を見てから</strong>でOK。無理な営業はありません。</p>
         </div>
 
-        <!-- 簡易シミュレーターカード -->
-        <aside class="hero-sim card" aria-label="かんたん削減シミュレーター">
-          <h2 class="sim-card-title"><svg class="ico"><use href="#i-chart"/></svg>かんたん削減シミュレーター</h2>
-          <label class="sim-field">
-            <span>月額の電気代（円・1店舗あたり）</span>
-            <input type="number" id="heroSimInput" inputmode="numeric" placeholder="例：1000000（100万円）" min="0" step="10000" />
-          </label>
-          <div class="sim-chips" data-target="heroSimInput" aria-label="金額をワンタップで入力">
-            <button type="button" class="chip" data-v="500000">50万</button>
-            <button type="button" class="chip" data-v="1000000">100万</button>
-            <button type="button" class="chip" data-v="2000000">200万</button>
-            <button type="button" class="chip" data-v="3000000">300万</button>
-            <button type="button" class="chip" data-v="5000000">500万</button>
-            <button type="button" class="chip" data-v="10000000">1,000万</button>
-          </div>
-          <div class="sim-result" id="heroSimResult" hidden>
-            <div class="sim-row">
-              <span class="sim-label">年間電気代</span>
-              <span class="sim-value" id="heroYear">—</span>
-            </div>
-            <div class="sim-row accent">
-              <span class="sim-label">20％削減時の年間削減見込み</span>
-              <span class="sim-value" id="heroCut15">—</span>
-            </div>
-            <div class="sim-row accent strong">
-              <span class="sim-label">40％削減時（好条件の場合）</span>
-              <span class="sim-value" id="heroCut20">—</span>
-            </div>
-            <div class="sim-rank" id="heroRank"></div>
-          </div>
-          <p class="sim-note">
-            概算です。実際の削減額は契約内容・使用状況・電気料金明細の確認後に変動します。削減を保証するものではありません。
-          </p>
-          <a href="#form" class="btn btn-outline btn-block">明細を送って正式に診断する</a>
+        <aside class="hero-sim card" aria-label="まず教えていただきたいこと">
+          <h2 class="sim-card-title"><svg class="ico"><use href="#i-clipboard"/></svg>まず分かるのは3つだけ</h2>
+          <ol class="quick-check-list">
+            <li><b>お店の種類</b><span>1店舗・複数店・その他施設</span></li>
+            <li><b>1か月の電気代</b><span>おおよその金額で大丈夫です</span></li>
+            <li><b>連絡先</b><span>電話かメールのどちらか1つ</span></li>
+          </ol>
+          <a href="#form" class="btn btn-cta btn-block">30秒で入力する</a>
+          <a href="#simulator" class="hero-detail-link">自分で詳しく計算したい方はこちら</a>
         </aside>
       </div>
     </section>
@@ -359,11 +334,11 @@
               <span class="stat-num" id="simYear">—</span>
             </div>
             <div class="sim-stat accent-green">
-              <span class="stat-label">20％削減時の年間削減見込み</span>
+              <span class="stat-label">10％安くなると仮定した計算例</span>
               <span class="stat-num" id="simCut15">—</span>
             </div>
             <div class="sim-stat accent-orange">
-              <span class="stat-label">40％削減時（好条件の場合）</span>
+              <span class="stat-label">20％安くなると仮定した計算例</span>
               <span class="stat-num" id="simCut20">—</span>
             </div>
           </div>
@@ -374,9 +349,9 @@
           </div>
 
           <p class="sim-note">
-            ※ 実際の削減額は契約内容・使用状況・電気料金明細の確認後に変動します。削減を保証するものではありません。
+            ※ 10％・20％は計算のための仮の数字です。実際に安くなる金額は、今の請求書と新しい見積書を同じ条件で比べて確認します。
           </p>
-          <a href="#form" class="btn btn-cta btn-block">この内容で無料診断を申し込む</a>
+          <a href="#form" class="btn btn-cta btn-block">この内容で電気代を無料チェック</a>
         </div>
       </div>
     </section>
@@ -384,15 +359,15 @@
     <!-- ============ 6.5 削減イメージ（概算） ============ -->
     <section class="section" id="savings">
       <div class="container">
-        <h2 class="section-title">削減イメージ（概算）</h2>
-        <p class="section-lead">パチンコホールは電気代が大きいぶん、削減額も大きくなりやすいのが特長です。下記は診断前のイメージです。</p>
+        <h2 class="section-title">もし安くなった場合の計算例</h2>
+        <p class="section-lead">下記は10％または20％安くなると仮定した計算です。実際の削減率を示すものではありません。</p>
 
         <div class="savings-wrap">
           <!-- 棒グラフ（月額100万円・年間1,200万円の例） -->
           <div class="card chart-card">
             <p class="chart-caption">月額 100万円（年間 1,200万円）の場合のイメージ</p>
             <svg class="bar-chart" viewBox="0 0 440 270" role="img"
-                 aria-label="年間電気代の削減イメージ。現状1,200万円、20%削減後960万円、40%削減後720万円。">
+                 aria-label="年間電気代の計算例。現状1,200万円、10%安くなると1,080万円、20%安くなると960万円。">
               <line x1="36" y1="222" x2="424" y2="222" class="bar-axis"/>
               <!-- 現状 -->
               <g>
@@ -400,22 +375,22 @@
                 <text x="107" y="50" class="bar-val">¥12,000,000</text>
                 <text x="107" y="244" class="bar-lab">現状</text>
               </g>
-              <!-- 20%削減後 -->
+              <!-- 10%安くなると仮定 -->
               <g>
-                <rect x="190" y="94" width="74" height="128" rx="6" class="bar-cut15"/>
-                <text x="227" y="82" class="bar-val">¥9,600,000</text>
-                <text x="227" y="244" class="bar-lab">20%削減後</text>
-                <text x="227" y="118" class="bar-save">−240万/年</text>
+                <rect x="190" y="78" width="74" height="144" rx="6" class="bar-cut15"/>
+                <text x="227" y="66" class="bar-val">¥10,800,000</text>
+                <text x="227" y="244" class="bar-lab">10%の計算例</text>
+                <text x="227" y="102" class="bar-save">−120万/年</text>
               </g>
-              <!-- 40%削減後（好条件） -->
+              <!-- 20%安くなると仮定 -->
               <g>
-                <rect x="310" y="126" width="74" height="96" rx="6" class="bar-cut20"/>
-                <text x="347" y="114" class="bar-val">¥7,200,000</text>
-                <text x="347" y="244" class="bar-lab">40%削減後</text>
-                <text x="347" y="150" class="bar-save">−480万/年</text>
+                <rect x="310" y="94" width="74" height="128" rx="6" class="bar-cut20"/>
+                <text x="347" y="82" class="bar-val">¥9,600,000</text>
+                <text x="347" y="244" class="bar-lab">20%の計算例</text>
+                <text x="347" y="118" class="bar-save">−240万/年</text>
               </g>
             </svg>
-            <p class="chart-note">※ 概算イメージです。削減を保証するものではありません。40%は好条件の場合の一例です。</p>
+            <p class="chart-note">※ 仮の数字を使った計算例です。削減を保証するものではありません。</p>
           </div>
 
           <!-- 概算テーブル -->
@@ -425,20 +400,20 @@
                 <tr>
                   <th>月額電気代</th>
                   <th>年間電気代</th>
-                  <th class="th-green">20%削減</th>
-                  <th class="th-orange">40%削減<small>（好条件）</small></th>
+                  <th class="th-green">10%の計算例</th>
+                  <th class="th-orange">20%の計算例</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td>50万円<small>（小型店）</small></td><td>600万円</td><td class="td-green">120万円/年</td><td class="td-orange">240万円/年</td></tr>
-                <tr><td>100万円<small>（中型店）</small></td><td>1,200万円</td><td class="td-green">240万円/年</td><td class="td-orange">480万円/年</td></tr>
-                <tr><td>200万円<small>（大型店）</small></td><td>2,400万円</td><td class="td-green">480万円/年</td><td class="td-orange">960万円/年</td></tr>
-                <tr><td>300万円<small>（超大型・複数店）</small></td><td>3,600万円</td><td class="td-green">720万円/年</td><td class="td-orange">1,440万円/年</td></tr>
-                <tr><td>1,000万円<small>（本部・全店合算）</small></td><td>1.2億円</td><td class="td-green">2,400万円/年</td><td class="td-orange">4,800万円/年</td></tr>
+                <tr><td>50万円<small>（小型店）</small></td><td>600万円</td><td class="td-green">60万円/年</td><td class="td-orange">120万円/年</td></tr>
+                <tr><td>100万円<small>（中型店）</small></td><td>1,200万円</td><td class="td-green">120万円/年</td><td class="td-orange">240万円/年</td></tr>
+                <tr><td>200万円<small>（大型店）</small></td><td>2,400万円</td><td class="td-green">240万円/年</td><td class="td-orange">480万円/年</td></tr>
+                <tr><td>300万円<small>（超大型・複数店）</small></td><td>3,600万円</td><td class="td-green">360万円/年</td><td class="td-orange">720万円/年</td></tr>
+                <tr><td>1,000万円<small>（本部・全店合算）</small></td><td>1.2億円</td><td class="td-green">1,200万円/年</td><td class="td-orange">2,400万円/年</td></tr>
               </tbody>
             </table>
-            <p class="chart-note">※ 実際の削減額は契約内容・使用状況・エリア等により異なります。</p>
-            <a href="#form" class="btn btn-cta btn-block">自社の削減見込みを無料診断する</a>
+            <p class="chart-note">※ 実際の金額は契約内容・使用状況・地域などにより異なります。</p>
+            <a href="#form" class="btn btn-cta btn-block">実際に安くなるか無料で確認する</a>
           </div>
         </div>
       </div>
@@ -462,9 +437,9 @@
     <section class="section section-form" id="form">
       <div class="container container-narrow">
         <div class="form-card card">
-          <h2 class="form-title"><svg class="ico"><use href="#i-clipboard"/></svg>無料診断のお申し込み</h2>
+          <h2 class="form-title"><svg class="ico"><use href="#i-clipboard"/></svg>30秒で電気代を無料チェック</h2>
           <p class="form-desc">
-            正確な診断には、電気料金明細（写真・PDF）があるとスムーズです。<strong>直近12ヶ月分</strong>あるとより正確に診断できます。今すぐのご用意が難しい場合は、お申し込み後にお送りいただいても構いません。複数店舗・複数物件をお持ちの場合は、代表1件の明細からでもOKです。
+            まずは店舗の種類・月の電気代・連絡先だけで大丈夫です。請求書や会社情報は、あとから送れます。
           </p>
 
           <div class="form-trust-strip" aria-label="無料診断の安心材料">
@@ -504,25 +479,13 @@
             <input type="hidden" name="_subject" value="【電気代無料診断】新規お申し込み" />
 
             <div class="form-grid">
-              <label class="field required">
-                <span class="field-label">会社名</span>
-                <input type="text" name="company" autocomplete="organization" required />
-              </label>
-              <label class="field required">
-                <span class="field-label">担当者名</span>
-                <input type="text" name="contact_name" autocomplete="name" required />
-              </label>
-              <label class="field required">
+              <label class="field">
                 <span class="field-label">電話番号</span>
-                <input type="tel" name="phone" autocomplete="tel" inputmode="tel" required />
+                <input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="電話かメールのどちらか1つ" />
               </label>
-              <label class="field required">
+              <label class="field">
                 <span class="field-label">メールアドレス</span>
-                <input type="email" name="email" autocomplete="email" inputmode="email" required />
-              </label>
-              <label class="field required">
-                <span class="field-label">所在地</span>
-                <input type="text" name="address" autocomplete="address-level1" placeholder="例：東京都〇〇区" required />
+                <input type="email" name="email" autocomplete="email" inputmode="email" placeholder="電話かメールのどちらか1つ" />
               </label>
               <label class="field required">
                 <span class="field-label">店舗・物件の種類</span>
@@ -542,6 +505,7 @@
                 </select>
               </label>
             </div>
+            <p class="contact-choice-note">電話番号かメールアドレスの、どちらか1つを入力してください。</p>
 
             <!-- 月額電気代（入力で即ランク判定） -->
             <label class="field required full">
@@ -576,9 +540,9 @@
               <p class="upload-state" id="uploadState">未選択（お申し込み後の送付でもOKです）</p>
             </div>
 
-            <label class="field required full">
+            <label class="field full">
               <span class="field-label">無料診断後のご希望</span>
-              <select name="after_diagnosis" required>
+              <select name="after_diagnosis">
                 <option value="">選択してください</option>
                 <option value="打合せ希望">打合せを希望する</option>
                 <option value="結果だけ">まず診断結果だけ見たい</option>
@@ -590,6 +554,18 @@
             <details class="optional-block">
               <summary>任意項目（分かる範囲でご記入ください）</summary>
               <div class="form-grid">
+                <label class="field">
+                  <span class="field-label">会社名</span>
+                  <input type="text" name="company" autocomplete="organization" />
+                </label>
+                <label class="field">
+                  <span class="field-label">担当者名</span>
+                  <input type="text" name="contact_name" autocomplete="name" />
+                </label>
+                <label class="field">
+                  <span class="field-label">所在地</span>
+                  <input type="text" name="address" autocomplete="address-level1" placeholder="例：東京都〇〇区" />
+                </label>
                 <label class="field">
                   <span class="field-label">受電種別（分かれば）</span>
                   <select name="uses_power">
@@ -626,7 +602,7 @@
             </p>
 
             <button type="submit" class="btn btn-cta btn-block btn-xl" id="submitBtn">
-              無料診断を申し込む（無料）
+              電気代を無料でチェックする
             </button>
             <p class="form-tel-note">
               入力が難しい方・お急ぎの方はお電話ください：
@@ -749,8 +725,8 @@
 
   <!-- ============ スマホ下部固定CTA ============ -->
   <div class="sticky-cta" id="stickyCta">
-    <a href="#form" class="sticky-btn sticky-form"><svg class="ico"><use href="#i-clipboard"/></svg>無料診断</a>
-    <a href="tel:09036987711" class="sticky-btn sticky-tel" id="stickyTel"><svg class="ico"><use href="#i-phone"/></svg>電話相談</a>
+    <a href="#form" class="sticky-btn sticky-form"><svg class="ico"><use href="#i-clipboard"/></svg>無料チェック</a>
+    <a href="tel:09036987711" class="sticky-btn sticky-tel" id="stickyTel" aria-label="電話で相談"><svg class="ico"><use href="#i-phone"/></svg><span>電話</span></a>
   </div>
 
   <script src="script.js"></script>

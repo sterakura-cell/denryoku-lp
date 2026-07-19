@@ -240,6 +240,12 @@ img { max-width: 100%; }
   display: flex; align-items: center; gap: 8px;
 }
 .sim-card-title .ico { width: 1.2rem; height: 1.2rem; color: var(--blue); }
+.quick-check-list { margin: 0 0 18px; padding: 0; list-style: none; display: grid; gap: 10px; }
+.quick-check-list li { padding: 11px 12px; border-radius: 10px; background: var(--bg-soft); }
+.quick-check-list b, .quick-check-list span { display: block; }
+.quick-check-list b { color: var(--navy); font-size: .92rem; }
+.quick-check-list span { margin-top: 2px; color: var(--gray-700); font-size: .78rem; }
+.hero-detail-link { display: block; margin-top: 12px; color: var(--blue-dark); font-size: .8rem; font-weight: 700; text-align: center; text-decoration: underline; text-underline-offset: 3px; }
 .sim-field { display: block; margin-bottom: 14px; }
 .sim-field > span { display: block; font-size: .85rem; font-weight: 700; color: var(--gray-700); margin-bottom: 6px; }
 .sim-field input {
@@ -553,6 +559,7 @@ img { max-width: 100%; }
 }
 
 .form-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+.contact-choice-note { margin: 4px 0 0; color: var(--gray-700); font-size: .78rem; }
 .field { display: block; }
 .field.full { grid-column: 1 / -1; }
 .field-label { display: block; font-size: .85rem; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
@@ -667,19 +674,19 @@ img { max-width: 100%; }
 /* ============ スマホ下部固定CTA ============ */
 .sticky-cta {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
-  display: flex; gap: 8px; padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  display: flex; gap: 6px; padding: 6px 10px calc(6px + env(safe-area-inset-bottom));
   background: rgba(255,255,255,.96); backdrop-filter: blur(8px);
   border-top: 1px solid var(--gray-100); box-shadow: 0 -4px 18px rgba(15,44,84,.12);
 }
 .sticky-btn {
   display: flex; align-items: center; justify-content: center; gap: 7px;
-  border-radius: 12px; font-weight: 800; padding: 14px 0; font-size: 1rem;
+  border-radius: 10px; font-weight: 800; min-height: 46px; padding: 9px 0; font-size: .9rem;
   transition: transform .12s;
 }
 .sticky-btn .ico { width: 1.15rem; height: 1.15rem; }
 .sticky-btn:active { transform: scale(.97); }
 .sticky-form { flex: 2; background: var(--grad-cta); color: #fff; box-shadow: 0 6px 16px rgba(31,111,224,.4); }
-.sticky-tel  { flex: 1; background: #fff; color: var(--navy); border: 1.5px solid var(--gray-300); white-space: nowrap; font-size: .88rem; }
+.sticky-tel  { flex: 0 0 72px; background: #fff; color: var(--navy); border: 1.5px solid var(--gray-300); white-space: nowrap; font-size: .78rem; }
 
 /* ============ レスポンシブ（タブレット〜PC） ============ */
 @media (min-width: 720px) {

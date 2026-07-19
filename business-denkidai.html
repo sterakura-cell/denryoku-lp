@@ -56,7 +56,7 @@
     .faq{max-width:860px;margin:0 auto}.faq details{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:10px}.faq summary{cursor:pointer;font-weight:900;color:var(--navy)}.faq div{color:var(--mute);margin-top:8px}
     .cta{background:linear-gradient(135deg,var(--navy),#061326);color:#fff;text-align:center;padding:34px 20px;border-radius:8px}.cta h2{color:#fff}.cta p{color:#dbeafe;max-width:720px;margin:0 auto 18px}
     .foot{background:var(--bg);border-top:1px solid var(--line);padding:24px 16px;text-align:center;color:var(--mute);font-size:12px;line-height:1.8}.foot a{color:var(--blue)}
-    .sticky{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.96);border-top:1px solid var(--line);padding:8px 12px;display:flex;gap:8px}.sticky .btn{flex:1;padding:13px 8px;font-size:15px}.spacer{height:62px}
+    .sticky{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.96);border-top:1px solid var(--line);padding:6px 10px;display:flex;gap:6px}.sticky .btn{flex:1;padding:10px 8px;font-size:14px}.sticky .btn-outline{flex:0 0 72px}.spacer{height:54px}
     @media(min-width:760px){.nav{display:flex}h1{font-size:42px}.hero{padding:58px 0}.hero-grid{grid-template-columns:1.08fr .92fr}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}.actions{flex-direction:row}.actions .btn{min-width:230px}.form-grid{grid-template-columns:repeat(2,1fr)}.field-full{grid-column:1/-1}.sticky{display:none}.spacer{display:none}}
   </style>
 </head>
@@ -70,7 +70,7 @@
         <a href="#flow">流れ</a>
         <a href="#form">診断フォーム</a>
       </nav>
-      <a href="#form" class="btn btn-primary">無料診断</a>
+      <a href="#form" class="btn btn-primary">無料チェック</a>
     </div>
   </header>
 
@@ -80,7 +80,7 @@
         <div>
           <span class="eyebrow">高圧電力を使う法人施設向け｜工事不要・初期費用なし</span>
           <h1>法人の電気代、<br>電力契約の見直しだけで固定費を下げられる可能性があります</h1>
-          <p>パチンコホール、工場、ホテル、食品工場、冷蔵倉庫、ビルなど、電気代が大きい施設では、<strong>基本料金・ピーク電力（最大デマンド）・電力量単価</strong>の見直し余地が残っている場合があります。</p>
+          <p>パチンコホール、工場、ホテル、食品工場、冷蔵倉庫、ビルなど、電気代が大きい施設では、<strong>毎月の固定料金・いちばん電気を多く使った時間の値・電気1kWhあたりの金額</strong>を見直せる場合があります。</p>
           <div class="badges">
             <span class="badge">請求書だけで診断</span>
             <span class="badge">安くならなければ切替不要</span>
@@ -88,7 +88,7 @@
             <span class="badge">銀行相談の固定費改善材料にも</span>
           </div>
           <div class="actions">
-            <a class="btn btn-primary" href="#form">無料で削減余地を確認する</a>
+          <a class="btn btn-primary" href="#form">30秒で電気代をチェック</a>
             <a class="btn btn-outline" href="tel:09036987711">電話で相談する</a>
           </div>
           <div class="trust">
@@ -128,10 +128,10 @@
 
     <section class="section">
       <div class="container">
-        <h2>削減イメージ</h2>
-        <p class="lead">下記は診断前の概算です。正式な削減見込みは請求書を確認してから提示します。</p>
+        <h2>金額の計算例</h2>
+        <p class="lead">下記は「20%安くなる」と仮定した計算例で、実際の削減率ではありません。正式な金額は請求書を確認してから提示します。</p>
         <table class="savings">
-          <tr><th>月額電気代</th><th>年間電気代</th><th>20%削減時の年間効果</th><th>見直し優先度</th></tr>
+          <tr><th>月額電気代</th><th>年間電気代</th><th>20%を仮定した計算例</th><th>見直し優先度</th></tr>
           <tr><td>50万円</td><td>600万円</td><td><strong>約120万円</strong></td><td>高い</td></tr>
           <tr><td>100万円</td><td>1,200万円</td><td><strong>約240万円</strong></td><td>かなり高い</td></tr>
           <tr><td>200万円</td><td>2,400万円</td><td><strong>約480万円</strong></td><td>本部・複数拠点で要確認</td></tr>
@@ -200,8 +200,8 @@
     <section class="section alt" id="form">
       <div class="container">
         <div class="card form-card">
-          <h2>法人電気代の無料診断フォーム</h2>
-          <p class="form-desc">まずは分かる範囲で大丈夫です。請求書は後送でも構いません。</p>
+          <h2>30秒で法人の電気代を無料チェック</h2>
+          <p class="form-desc">まずは業種・月の電気代・連絡先だけで大丈夫です。請求書や会社情報はあとから送れます。</p>
           <div class="form-success" id="formSuccess" hidden>送信ありがとうございます。内容を確認してご連絡します。</div>
           <form id="diagnoseForm" class="diag-form" novalidate action="#" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="lp_type" value="法人向け総合LP" />
@@ -211,20 +211,20 @@
             <input type="hidden" id="calcCut15" name="calc_cut_20pct" />
             <input type="hidden" id="calcCut40" name="calc_cut_40pct" />
             <div class="form-grid">
-              <label class="field required"><span>会社名・屋号</span><input name="company" autocomplete="organization" required placeholder="例：株式会社〇〇" /></label>
-              <label class="field required"><span>ご担当者名</span><input name="name" autocomplete="name" required placeholder="例：寺倉" /></label>
-              <label class="field required"><span>メールアドレス</span><input type="email" name="email" autocomplete="email" required placeholder="例：denki@soter-info.com" /></label>
-              <label class="field"><span>電話番号</span><input type="tel" name="phone" autocomplete="tel" placeholder="例：090-3698-7711" /></label>
+              <label class="field"><span>メールアドレス</span><input type="email" name="email" autocomplete="email" placeholder="電話かメールのどちらか1つ" /></label>
+              <label class="field"><span>電話番号</span><input type="tel" name="phone" autocomplete="tel" placeholder="電話かメールのどちらか1つ" /></label>
               <label class="field required"><span>業種</span><select name="industry" required><option value="">選択してください</option><option>パチンコホール</option><option>工場・製造業</option><option>ホテル・旅館</option><option>食品工場・冷蔵倉庫</option><option>ビルオーナー・不動産管理</option><option>その他法人施設</option></select></label>
               <label class="field required"><span>月額電気代</span><input type="number" id="formAmount" name="monthly_cost" inputmode="numeric" min="0" step="10000" required placeholder="例：1000000（100万円）" /><div class="money-read" data-money-for="formAmount"><span>未入力</span><small>月額</small></div><div class="chips sim-chips" data-target="formAmount"><button type="button" class="chip" data-v="500000">50万</button><button type="button" class="chip" data-v="1000000">100万</button><button type="button" class="chip" data-v="2000000">200万</button></div></label>
+              <p class="hint field-full">電話番号かメールアドレスの、どちらか1つを入力してください。</p>
               <div class="field field-full">
                 <div class="form-rank" id="formRank" hidden><div class="form-rank-badge" id="formRankBadge">-</div><p class="form-rank-advice" id="formRankAdvice"></p></div>
               </div>
               <label class="field field-full"><span>電気料金明細（任意）</span><input type="file" id="billFile" name="bill_file" accept=".pdf,.jpg,.jpeg,.png,.heic" multiple /><div class="upload-state" id="uploadState">請求書は後送でもOKです。</div></label>
               <label class="field field-full"><span>相談内容</span><textarea name="message" placeholder="例：Xを見ました。月額100万円くらいで、工場の電気代を見直したいです。"></textarea></label>
+              <details class="field field-full"><summary>会社情報も入力する（任意）</summary><div class="form-grid" style="margin-top:12px"><label class="field"><span>会社名・屋号</span><input name="company" autocomplete="organization" placeholder="例：株式会社〇〇" /></label><label class="field"><span>ご担当者名</span><input name="name" autocomplete="name" placeholder="例：寺倉" /></label></div></details>
             </div>
             <p class="privacy">ご入力いただいた情報は無料診断およびご連絡のみに使用します。削減額は契約内容・使用状況により異なり、削減を保証するものではありません。</p>
-            <button type="submit" class="btn btn-primary btn-xl" id="submitBtn">無料診断を申し込む</button>
+            <button type="submit" class="btn btn-primary btn-xl" id="submitBtn">電気代を無料でチェックする</button>
           </form>
         </div>
       </div>
@@ -256,7 +256,7 @@
     正規代理店：株式会社エコクリエイトホールディングス｜担当：寺倉　TEL：<a href="tel:09036987711">090-3698-7711</a><br>
     関連：<a href="columns.html">コラム一覧</a> ／ <a href="kouatsu-bill-checklist.html">請求書チェックリスト</a> ／ <a href="./">パチンコホール向けLP</a> ／ <a href="factory-denkidai.html">工場向けLP</a> ／ <a href="hotel-denkidai.html">ホテル向けLP</a>
   </footer>
-  <div class="sticky"><a class="btn btn-primary" href="#form">無料診断</a><a class="btn btn-outline" href="tel:09036987711">電話相談</a></div>
+  <div class="sticky"><a class="btn btn-primary" href="#form">無料チェック</a><a class="btn btn-outline" href="tel:09036987711">電話</a></div>
   <div class="spacer"></div>
   <script src="script.js"></script>
 </body>

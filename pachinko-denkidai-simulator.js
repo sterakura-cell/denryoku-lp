@@ -48,36 +48,23 @@
     var machines = number("machines", 0);
     var kwh = number("kwh", 0);
     var contract = number("contract", 0);
-    var margin = Math.min(100, number("margin", 10));
-    var rate = Math.min(30, number("rate", 20));
+    var rate = Math.min(30, number("rate", 10));
     var groupMonthly = monthly * stores;
     var annual = groupMonthly * 12;
     var monthlySaving = groupMonthly * rate / 100;
     var annualSaving = monthlySaving * 12;
     var threeYear = annualSaving * 3;
-    var salesEquivalent = monthlySaving / (margin / 100);
     var perMachine = machines ? monthly / machines : 0;
     var effectiveRate = kwh ? monthly / kwh : 0;
     var loadFactor = kwh && contract ? kwh / (contract * 24 * 30) * 100 : 0;
     var renewableLevy = kwh ? kwh * 4.18 : 0;
 
-    var accuracy = 55;
-    if (kwh) accuracy += 25;
-    if (contract) accuracy += 20;
-    accuracy = Math.min(100, accuracy);
-    var accuracyLabel = accuracy >= 90 ? "とても詳しい" : accuracy >= 70 ? "ふつう" : "かんたん";
-
-    put("ps-accuracy-label", accuracyLabel);
-    put("ps-accuracy-score", accuracy + " / 100");
-    document.getElementById("ps-accuracy-bar").style.width = accuracy + "%";
     put("ps-annual", compactYen(annual));
     put("ps-annual-sub", stores > 1 ? stores + "店舗合計・月" + compactYen(groupMonthly) : "月" + compactYen(monthly));
     put("ps-daily", compactYen(monthly / days));
     put("ps-saving", compactYen(annualSaving));
     put("ps-saving-sub", rate + "%安くなるとした場合・1か月" + compactYen(monthlySaving));
     put("ps-three-year", compactYen(threeYear));
-    put("ps-sales-equivalent", compactYen(salesEquivalent));
-    put("ps-margin-sub", "1か月分・利益の割合" + margin + "%で計算");
     put("ps-per-machine", perMachine ? yen(perMachine) : "台数を入れると表示");
 
     var indicators = [
@@ -119,19 +106,17 @@
       kwh: kwh,
       contract: contract,
       rate: rate,
-      margin: margin,
       annual: annual,
       annualSaving: annualSaving,
       threeYear: threeYear,
-      salesEquivalent: salesEquivalent,
-      accuracy: accuracy
+      detailFields: Number(Boolean(machines)) + Number(Boolean(kwh)) + Number(Boolean(contract))
     };
 
     if (shouldTrack) track("pachinko_simulator_used", {
       monthly_cost_band: monthly >= 2000000 ? "200万以上" : monthly >= 1000000 ? "100-199万" : "100万未満",
       store_count: stores,
       assumed_saving_rate: rate,
-      input_accuracy: accuracyLabel,
+      detail_fields: Number(Boolean(machines)) + Number(Boolean(kwh)) + Number(Boolean(contract)),
       has_kwh: Boolean(kwh),
       has_contract_kw: Boolean(contract)
     });
