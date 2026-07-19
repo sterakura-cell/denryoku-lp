@@ -134,11 +134,11 @@ img { max-width: 100%; }
   background: var(--grad-cta); color: #fff;
 }
 .brand-icon .ico { width: 18px; height: 18px; fill: #fff; stroke: none; }
-.brand-text { font-size: .96rem; color: var(--navy); line-height: 1.2; letter-spacing: .01em; }
+.brand-text { font-size: .9rem; color: var(--navy); line-height: 1.2; letter-spacing: .01em; white-space: nowrap; }
 .brand-text strong { color: var(--blue); margin-left: 2px; }
 .gnav { display: none; gap: 22px; font-size: .92rem; font-weight: 600; color: var(--gray-700); }
 .gnav a:hover { color: var(--blue); }
-.header-cta { padding: 9px 18px; font-size: .9rem; }
+.header-cta { padding: 9px 14px; font-size: .82rem; white-space: nowrap; }
 
 /* ============ 2. ファーストビュー ============ */
 .hero {
@@ -686,7 +686,22 @@ img { max-width: 100%; }
 .sticky-btn .ico { width: 1.15rem; height: 1.15rem; }
 .sticky-btn:active { transform: scale(.97); }
 .sticky-form { flex: 2; background: var(--grad-cta); color: #fff; box-shadow: 0 6px 16px rgba(31,111,224,.4); }
-.sticky-tel  { flex: 0 0 72px; background: #fff; color: var(--navy); border: 1.5px solid var(--gray-300); white-space: nowrap; font-size: .78rem; }
+.sticky-tel  { flex: 0 0 68px; background: #fff; color: var(--navy); border: 1.5px solid var(--gray-300); white-space: nowrap; font-size: .78rem; }
+
+@media (max-width: 420px) {
+  .site-header .container { gap: 8px; }
+  .brand { gap: 6px; }
+  .brand-icon { width: 29px; height: 29px; }
+  .brand-text { font-size: .8rem; }
+  .header-cta { padding: 8px 11px; font-size: .76rem; }
+}
+
+@media (max-width: 719px) {
+  #fixed-cost,
+  #target,
+  #savings,
+  #other-industries { display: none; }
+}
 
 /* ============ レスポンシブ（タブレット〜PC） ============ */
 @media (min-width: 720px) {
