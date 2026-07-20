@@ -822,6 +822,21 @@
     });
   }
 
+  function bindJourneyTracking() {
+    document.addEventListener("click", function (event) {
+      var target = event.target;
+      if (!target || typeof target.closest !== "function") return;
+      var link = target.closest("a[data-journey]");
+      if (!link) return;
+      trackGaEvent("journey_click", {
+        journey_step: link.getAttribute("data-journey") || "unknown",
+        content_group: link.getAttribute("data-content-group") || "general",
+        destination: link.getAttribute("href") || "",
+        page_path: window.location.pathname
+      });
+    });
+  }
+
   function init() {
     applyRef();
     trackVisit();
@@ -836,6 +851,7 @@
     bindUpload();
     bindFormSubmit();
     bindContactTracking();
+    bindJourneyTracking();
     injectGroupTrail();
   }
 

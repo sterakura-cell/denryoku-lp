@@ -26,3 +26,14 @@ test("offers a printable simulator report without presenting calculations as res
   assert.match(cases, /実際の導入実績ではありません/);
   assert.match(cases, /20%を仮定した計算例/);
 });
+
+test("tracks industry-page journeys and labels examples as calculations", async () => {
+  const script = await readFile(new URL("../script.js", import.meta.url), "utf8");
+  const pages = await Promise.all(["beauty-salon-denkidai.html", "restaurant-denkidai.html", "care-facility-denkidai.html"].map((name) => readFile(new URL(`../${name}`, import.meta.url), "utf8")));
+  assert.match(script, /journey_click/);
+  assert.match(script, /data-journey/);
+  for (const html of pages) {
+    assert.match(html, /data-journey="industry_to_simulator"/);
+    assert.match(html, /実際の導入実績ではなく/);
+  }
+});
