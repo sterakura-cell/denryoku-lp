@@ -317,6 +317,21 @@
     var rankBox  = document.getElementById("simRankBox");
     if (!input) return;
 
+    // GA4: 計算結果が初めて表示された時だけ1回送信（入力のたびの重複送信を防ぐ）
+    var simCompleteTracked = false;
+    function trackSimulatorComplete(m) {
+      if (simCompleteTracked) return;
+      simCompleteTracked = true;
+      if (typeof window.gtag !== "function") return;
+      var params = {
+        monthly_cost: m,
+        source_page: window.location.pathname
+      };
+      var industry = document.querySelector('#diagnoseForm [name="industry"]');
+      if (industry && industry.value) params.facility_type = industry.value;
+      window.gtag("event", "simulator_complete", params);
+    }
+
     var simTimer = null;
     input.addEventListener("input", function () {
       clearTimeout(simTimer);
@@ -326,6 +341,7 @@
       var m = parseFloat(input.value);
       if (!m || m < 10000) { grid.hidden = true; rankBox.hidden = true; return; }
       grid.hidden = false; rankBox.hidden = false;
+      trackSimulatorComplete(m);
 
       var year = m * 12;
       document.getElementById("simYear").textContent  = yen(year);
@@ -507,6 +523,31 @@
       } else {
         state.textContent = "未選択（お申し込み後の送付でもOKです）";
       }
+    });
+  }
+
+  /* ----------------------------------------------------------
+     5.5 電話リンククリック計測（GA4: phone_click）
+     ----------------------------------------------------------
+     tel:09036987711 へのクリック／タップをGA4へ送信する。
+     documentへの委譲リスナーなので、applyRef()でhrefが書き換わった
+     リンクも判定時のhrefで対象になる。preventDefaultしないため
+     発信動作（リンク遷移）には影響しない。 */
+  function bindPhoneClickTracking() {
+    var TARGET_TEL = "09036987711";
+    document.addEventListener("click", function (event) {
+      var target = event.target;
+      if (!target || typeof target.closest !== "function") return;
+      var link = target.closest('a[href^="tel:"]');
+      if (!link) return;
+      var digits = (link.getAttribute("href") || "").replace(/[^0-9]/g, "");
+      if (digits !== TARGET_TEL) return;
+      if (typeof window.gtag !== "function") return;
+      window.gtag("event", "phone_click", {
+        phone_number: TARGET_TEL,
+        link_id: link.id || "",
+        source_page: window.location.pathname
+      });
     });
   }
 
@@ -849,6 +890,7 @@
     bindImpactSim();
     bindChips();
     bindUpload();
+    bindPhoneClickTracking();
     bindFormSubmit();
     bindContactTracking();
     bindJourneyTracking();
