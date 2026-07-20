@@ -401,6 +401,8 @@
     var profit = document.getElementById("impactProfit");
     var btn = document.getElementById("impactBtn");
     var result = document.getElementById("impactResult");
+    var printBtn = document.getElementById("impactPrintBtn");
+    var printReport = document.getElementById("impactPrintReport");
     if (!sales || !electric || !btn || !result) return;
 
     function render() {
@@ -409,6 +411,7 @@
       var p = parseFloat((profit && profit.value) || "") || 0;
       if (!e) {
         result.innerHTML = '<p class="headline">まず「月額電気代」を入れると、年間でどれくらい効くか表示します。</p><div class="big">-</div><ul class="impact-list"><li>請求書の合計金額をそのまま入れてください。</li><li>月商や利益は分かる範囲で大丈夫です。</li><li>50万・100万などのボタンでも入力できます。</li></ul>';
+        if (printBtn) printBtn.hidden = true;
         return;
       }
       var annual = e * 12;
@@ -425,6 +428,20 @@
       if (salesRate) items.unshift("月商に対する電気代比率は約" + salesRate + "%です。");
       if (profitBoost) items.unshift("20%削減時の月間効果は、現在利益の約" + profitBoost + "%に相当します。");
       result.innerHTML = '<p class="headline">' + headline + '</p><div class="big">' + yenMan(cut20) + '<small>' + yen(cut20) + '</small></div><ul class="impact-list">' + items.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>";
+      if (printBtn) printBtn.hidden = false;
+      if (printReport) {
+        var values = {
+          "[data-report-date]": new Date().toLocaleDateString("ja-JP"),
+          "[data-report-monthly]": yen(e),
+          "[data-report-annual]": yen(annual),
+          "[data-report-cut20]": yen(cut20),
+          "[data-report-cut40]": yen(cut40)
+        };
+        Object.keys(values).forEach(function (selector) {
+          var node = printReport.querySelector(selector);
+          if (node) node.textContent = values[selector];
+        });
+      }
     }
 
     btn.addEventListener("click", function () {
@@ -439,6 +456,16 @@
         });
       }
     });
+    if (printBtn) {
+      printBtn.addEventListener("click", function () {
+        if (!parseFloat(electric.value || "")) return;
+        render();
+        document.body.classList.add("printing-report");
+        trackGaEvent("simulator_report_print", { calculator_type: "business_impact", page_path: window.location.pathname });
+        window.print();
+      });
+      window.addEventListener("afterprint", function () { document.body.classList.remove("printing-report"); });
+    }
     [sales, electric, profit].forEach(function (el) {
       if (!el) return;
       el.addEventListener("input", function () {
