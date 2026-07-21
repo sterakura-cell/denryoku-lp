@@ -85,3 +85,28 @@ X投稿用:
 https://ripuro.soter-info.com/business-denkidai.html?utm_source=x&utm_medium=social&utm_campaign=denki_post&utm_content=post_001
 ```
 
+
+## 2026-07-21 Claude Code実施分（CODEX向け引き継ぎ）
+
+CODEXの容量不足のため、Claude Code（別AI）が以下を直接実施した。作り直し不要。
+
+### 変更ファイル
+- `pachinko-denkidai.html`
+  1. 導入部（h1直下2段落目）に「パチ屋」表記を追加 — Search Consoleで「パチ屋 電気代」系クエリが週12回表示されていたが本文に「パチ屋」が0回だったため
+  2. FAQ1問目の回答冒頭にも「パチ屋（パチンコホール）」を追加
+  3. JSON-LDのFAQPageに6問目「燃料費調整額や市場価格の影響は？」を追加（ページ内FAQには元からあったがJSON-LDに漏れていた）
+  4. Article schemaのdateModifiedと画面上の更新日を2026-07-21に更新
+- `sitemap.xml`: pachinko-denkidai.htmlのlastmodを2026-07-21に更新
+
+### 背景データ（Search Console 7/13-7/19）
+- pachinko-denkidai.html: 表示137回・クリック1（CTR0.7%）・平均順位9.8
+- 表示クエリは全て「パチンコ×電気代」系11種（最多「パチンコ屋 電気代」43回）
+- タイトルは7/19に改善済みのため今回は変更していない（効果測定を混ぜないため）
+
+### 次にやること（8/4頃）
+- Search Consoleでpachinko-denkidai.htmlのCTR（0.7%→3%目標）と順位（9.8→6〜8位目標）を確認
+- 新規記事を書く場合の推奨テーマ（既存記事と検索意図が被らないもの）:
+  1. パチンコ店の電気代の内訳深掘り（空調・遊技機・照明どれが重いか）
+  2. 削減方法の比較記事（切替・LED・空調更新の順番）
+  3. パチンコ店の固定費全般の見直し
+- 注意: 「業種名＋電気代」テンプレページの大量追加は一旦停止中（7/14-20に50本公開済み。スパム判定リスク回避のため、表示が付いたクラスタの強化を優先する方針）
