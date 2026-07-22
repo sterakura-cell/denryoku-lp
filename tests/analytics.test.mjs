@@ -4,7 +4,7 @@ import test from "node:test";
 
 test("tracks the complete electricity lead funnel", async () => {
   const source = await readFile(new URL("../script.js", import.meta.url), "utf8");
-  for (const event of ["simulator_complete", "form_start", "phone_click", "lead_submit", "generate_lead"]) {
+  for (const event of ["simulator_complete", "form_start", "phone_click", "qualify_lead", "lead_submit", "generate_lead"]) {
     assert.match(source, new RegExp(`["']${event}["']`), event);
   }
   assert.match(source, /lastTrackedAmount/);
