@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function read(name) {
@@ -18,6 +18,23 @@ test("keeps the winning title while strengthening the answer and diagnosis journ
   assert.match(html, /data-journey="article_to_diagnosis"/);
   assert.match(html, /data-journey="simulator_to_diagnosis"/);
   assert.doesNotMatch(html, /href="\.\/#form"/);
+});
+
+test("adds traceable high-voltage case studies without presenting them as pachinko guarantees", async () => {
+  const html = await read("pachinko-denkidai.html");
+
+  assert.match(html, /パチンコホールの実績ではなく、他業種の参考事例/);
+  assert.match(html, /2025年4月30日現在/);
+  for (const amount of ["3,100万円", "506万円", "12,666万円", "14,858万円", "12,750万円"]) {
+    assert.ok(html.includes(amount), amount);
+  }
+  for (const rate of ["29%減", "38%減", "20%減", "23%減", "24%減"]) {
+    assert.match(html, new RegExp(rate), rate);
+  }
+  assert.match(html, /一律の保証値ではありません/);
+  assert.match(html, /career\.eneres\.co\.jp\/data/);
+  assert.match(html, /eneres-high-voltage-case-studies-20250430\.png/);
+  await access(new URL("../eneres-high-voltage-case-studies-20250430.png", import.meta.url));
 });
 
 test("routes supporting pages and hubs into the pachinko pillar", async () => {
