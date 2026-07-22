@@ -16,6 +16,20 @@ test("loads the production GA4 measurement id", async () => {
   assert.match(html, /G-M3PZ94WB0H/);
 });
 
+test("tracks successful partner referrals without sending personal data to GA4", async () => {
+  const source = await readFile(new URL("../partner-submit.html", import.meta.url), "utf8");
+  assert.match(source, /<script src="analytics\.js" defer><\/script>/);
+  for (const event of ["partner_form_start", "partner_submit", "partner_lead", "generate_lead", "qualify_lead", "partner_submit_error"]) {
+    assert.match(source, new RegExp(`trackEvent\\(["']${event}["']`), event);
+  }
+  assert.match(source, /lead_type: "electricity_partner_referral"/);
+  assert.match(source, /has_files: fileInput\.files\.length > 0/);
+  assert.doesNotMatch(source, /trackEvent\([^\n]+partner_name/);
+  assert.doesNotMatch(source, /trackEvent\([^\n]+contact_person/);
+  assert.doesNotMatch(source, /trackEvent\([^\n]+phone/);
+  assert.doesNotMatch(source, /trackEvent\([^\n]+email/);
+});
+
 test("offers a printable simulator report without presenting calculations as results", async () => {
   const script = await readFile(new URL("../script.js", import.meta.url), "utf8");
   const html = await readFile(new URL("../business-denkidai.html", import.meta.url), "utf8");
