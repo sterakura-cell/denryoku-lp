@@ -48,6 +48,7 @@
   .success p{color:var(--g700); font-size:14px; margin-top:10px;}
   .reward{background:var(--green-l); border:1px solid #bfe8da; border-radius:12px; padding:12px 14px; margin-top:14px; font-size:12.5px; color:#137a59;}
 </style>
+<script src="analytics.js" defer></script>
 </head>
 <body>
 <div class="wrap">
@@ -135,6 +136,18 @@
   var amount = document.getElementById("amount");
   var calcBox = document.getElementById("calcBox");
 
+  function trackEvent(name, params){
+    if(typeof window.gtag !== "function") return;
+    window.gtag("event", name, Object.assign({
+      page_path: window.location.pathname,
+      lead_type: "electricity_partner_referral"
+    }, params || {}));
+  }
+
+  form.addEventListener("input", function(){
+    trackEvent("partner_form_start", { cta_location: "partner_form" });
+  }, { once: true });
+
   function yen(n){ return "¥" + Math.round(n).toLocaleString("ja-JP"); }
   function rankOf(m){ return m>=500000?"S":m>=200000?"A":m>=100000?"B":"C"; }
 
@@ -200,6 +213,12 @@
       alert("「紹介者」と「顧問先・施設名」は必須です。");
       return;
     }
+    var leadParams = {
+      cta_location: "partner_form",
+      industry: form.industry.value || "unknown",
+      has_files: fileInput.files.length > 0
+    };
+    trackEvent("partner_submit", leadParams);
     btn.disabled=true; btn.textContent="送信中…";
     readFilesB64().then(function(files){
       return fetch(GAS_ENDPOINT, {
@@ -207,8 +226,14 @@
         headers:{ "Content-Type":"text/plain;charset=utf-8" },
         body: JSON.stringify({ fields: collectFields(), files: files })
       });
-    }).then(function(){ showSuccess(); })
+    }).then(function(){
+      trackEvent("partner_lead", leadParams);
+      trackEvent("generate_lead", leadParams);
+      trackEvent("qualify_lead", leadParams);
+      showSuccess();
+    })
       .catch(function(err){
+        trackEvent("partner_submit_error", leadParams);
         alert("送信に失敗しました。お手数ですが contact@soter-info.com へ請求書をメール送付ください。\n("+err.message+")");
         btn.disabled=false; btn.textContent="この内容で送信する";
       });
