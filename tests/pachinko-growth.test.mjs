@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { access, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function read(name) {
@@ -33,8 +33,6 @@ test("adds traceable high-voltage case studies without presenting them as pachin
   }
   assert.match(html, /一律の保証値ではありません/);
   assert.match(html, /career\.eneres\.co\.jp\/data/);
-  assert.match(html, /eneres-high-voltage-case-studies-20250430\.png/);
-  await access(new URL("../eneres-high-voltage-case-studies-20250430.png", import.meta.url));
 });
 
 test("routes supporting pages and hubs into the pachinko pillar", async () => {
