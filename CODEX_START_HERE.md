@@ -110,3 +110,26 @@ CODEXの容量不足のため、Claude Code（別AI）が以下を直接実施�
   2. 削減方法の比較記事（切替・LED・空調更新の順番）
   3. パチンコ店の固定費全般の見直し
 - 注意: 「業種名＋電気代」テンプレページの大量追加は一旦停止中（7/14-20に50本公開済み。スパム判定リスク回避のため、表示が付いたクラスタの強化を優先する方針）
+
+---
+
+## 2026-07-26 検索表示急減への品質整理
+
+Search Console実測では、7/15〜17の1日36〜47表示から、7/21〜24は0表示へ急減した。手動対策・セキュリティ問題・HTTP・robots・canonicalに異常がないため、7/14〜20に量産したページ群を棚卸しした。
+
+実施内容:
+
+- ルート直下のHTML 57本を、title・実質文字数・独自情報・本文重複率で一覧化
+- 実質本文334〜949文字で、業種固有の実績・根拠付き数値・事例・写真がない17本を `noindex,follow` に変更
+- 同17本を `sitemap.xml` から除外
+- 保護対象の `pachinko-denkidai.html`、`index.html`、`business-denkidai.html`、`columns.html`、`kouatsu-bill-checklist.html`、`pachinko-denkidai-zukai.html` は変更なし
+
+監査表と17URLの一覧は `SEO_CONTENT_AUDIT_2026-07-26.md` を参照。
+
+GitHub Pagesではサーバー側301を設定できないため、今回は削除・疑似リダイレクトではなく `noindex` を採用した。将来CDN側の301が使える場合は、対象URLを `business-denkidai.html` へ統合する。
+
+公開後:
+
+1. Search Consoleで `https://ripuro.soter-info.com/sitemap.xml` を再送信する。
+2. 2026-07-27以降、「クロール済み - インデックス未登録」「重複しています」「noindex タグによって除外されました」を確認する。
+3. 7〜14日後に日別表示回数とパチンコ系クエリを再確認する。
