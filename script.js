@@ -4,7 +4,7 @@
    ・削減シミュレーター（ファーストビュー / 専用セクション）
    ・フォーム入力中の見込み度ランク表示
    ・明細アップロードの状態表示
-   ・フォーム送信は仮実装（Googleフォーム/Formspree/HubSpot/GASに差し替え可）
+   ・フォーム送信はGAS接続済み（受付確認は自動返信メールで行う）
    ============================================================ */
 
 (function () {
@@ -552,7 +552,7 @@
   }
 
   /* ----------------------------------------------------------
-     6. フォーム送信（仮実装）
+     6. フォーム送信
      ----------------------------------------------------------
      ▼本番接続時の差し替えポイント
        - Googleフォーム / GAS / HubSpot: <form> の action と method を設定し、
@@ -561,9 +561,10 @@
      詳しくは README.md を参照。
      ---------------------------------------------------------- */
   function bindFormSubmit() {
-    var form    = document.getElementById("diagnoseForm");
-    var success = document.getElementById("formSuccess");
-    var btn     = document.getElementById("submitBtn");
+    var form           = document.getElementById("diagnoseForm");
+    var success        = document.getElementById("formSuccess");
+    var successMessage = document.getElementById("formSuccessMessage");
+    var btn            = document.getElementById("submitBtn");
     if (!form) return;
     fillAttributionFields(form);
 
@@ -590,9 +591,10 @@
     }
     function setVal(id, v) { var el = document.getElementById(id); if (el) el.value = v; }
 
-    function trackLeadEvent() {
-      if (form.dataset.leadTracked === "1") return;
-      form.dataset.leadTracked = "1";
+    function trackLeadEvent(confirmed) {
+      var trackingKey = confirmed ? "confirmed" : "unconfirmed";
+      if (form.dataset.leadTracked === trackingKey) return;
+      form.dataset.leadTracked = trackingKey;
       if (typeof window.gtag !== "function") return;
       var attr = ATTRIBUTION || readAttribution();
       var amount = parseFloat((form.monthly_cost && form.monthly_cost.value) || "") || 0;
@@ -609,13 +611,21 @@
         utm_campaign: attr.utm_campaign || "",
         utm_content: attr.utm_content || ""
       };
-      window.gtag("event", "qualify_lead", leadParams);
-      window.gtag("event", "lead_submit", leadParams);
-      window.gtag("event", "generate_lead", leadParams);
+      leadParams.submission_status = trackingKey;
+      window.gtag("event", confirmed ? "lead_submit" : "lead_submit_unconfirmed", leadParams);
+      if (confirmed) {
+        window.gtag("event", "qualify_lead", leadParams);
+        window.gtag("event", "generate_lead", leadParams);
+      }
     }
 
-    function showSuccess() {
-      trackLeadEvent();
+    function showSubmissionResult(confirmed) {
+      trackLeadEvent(confirmed);
+      if (successMessage) {
+        successMessage.textContent = confirmed
+          ? "無料診断のお申し込みを受け付けました。入力内容と電気料金明細を確認し、削減可能性がある場合は担当よりご連絡いたします。"
+          : "送信処理を行いました。自動返信メールが届いた時点で受付完了です。2分ほど待っても届かない場合は、お手数ですが電話でお問い合わせください。";
+      }
       success.hidden = false;
       form.style.display = "none";
       success.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -666,7 +676,7 @@
       setBusy(true);
       readFilesB64().then(function (files) {
         var payload = JSON.stringify({ fields: collectFields(), files: files });
-        // no-cors + text/plain：プリフライト無しで確実に届く（応答は読まない＝楽観的に成功表示）
+        // no-cors + text/plain：プリフライトを避ける代わりに受付成否は判定できない。
         return fetch(GAS_ENDPOINT, {
           method: "POST",
           mode: "no-cors",
@@ -674,7 +684,7 @@
           body: payload
         });
       }).then(function () {
-        showSuccess();
+        showSubmissionResult(false);
       }).catch(function (err) {
         fail(err.message);
       });
@@ -699,7 +709,7 @@
         headers: { "Accept": "application/json" }
       })
         .then(function (res) {
-          if (res.ok) { showSuccess(); }
+          if (res.ok) { showSubmissionResult(true); }
           else {
             return res.json().then(function (j) {
               throw new Error((j && j.errors && j.errors[0] && j.errors[0].message) || "送信に失敗しました");
@@ -737,13 +747,8 @@
       if (GAS_ENDPOINT)       { submitToGAS();       return; }
       if (FORMSPREE_ENDPOINT) { submitToFormspree(); return; }
 
-      // --- 仮実装モード：送信せず完了画面のみ ---
-      var preview = {};
-      new FormData(form).forEach(function (v, k) {
-        preview[k] = (v instanceof File) ? v.name : v;
-      });
-      console.log("[無料診断フォーム/仮実装] 送信予定データ:", preview);
-      showSuccess();
+      // 受付先が無い状態を成功表示にしない。
+      fail("受付先が設定されていません");
     });
   }
 

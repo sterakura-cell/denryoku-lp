@@ -450,16 +450,12 @@
           <!-- 送信完了メッセージ -->
           <div class="form-success" id="formSuccess" hidden>
             <span class="success-ico"><svg class="ico"><use href="#i-check"/></svg></span>
-            <p>
-              無料診断のお申し込みありがとうございます。入力内容と電気料金明細を確認し、削減可能性がある場合は担当よりご連絡いたします。正確な診断には電気料金明細の確認が必要です。
+            <p id="formSuccessMessage">
+              送信処理を行いました。自動返信メールが届いた時点で受付完了です。届かない場合は、お手数ですが電話でお問い合わせください。
             </p>
           </div>
 
-          <!--
-            フォーム送信は仮実装です。
-            Googleフォーム / Formspree / HubSpot / GAS への接続方法は README.md を参照してください。
-            接続時は <form> の action / method を差し替えるだけで動くよう、name属性を整えています。
-          -->
+          <!-- 送信先と受付確認の仕様は script.js を参照してください。 -->
           <!-- action は script.js の FORMSPREE_ENDPOINT から自動設定されます -->
           <form id="diagnoseForm" class="diag-form" novalidate
                 action="#" method="POST" enctype="multipart/form-data">

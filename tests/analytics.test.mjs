@@ -7,6 +7,9 @@ test("tracks the complete electricity lead funnel", async () => {
   for (const event of ["simulator_complete", "form_start", "phone_click", "qualify_lead", "lead_submit", "generate_lead"]) {
     assert.match(source, new RegExp(`["']${event}["']`), event);
   }
+  assert.match(source, /lead_submit_unconfirmed/);
+  assert.match(source, /showSubmissionResult\(false\)/);
+  assert.doesNotMatch(source, /仮実装モード：送信せず完了画面のみ/);
   assert.match(source, /lastTrackedAmount/);
   assert.match(source, /dataset\.formStarted/);
 });
