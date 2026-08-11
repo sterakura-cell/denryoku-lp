@@ -11,6 +11,12 @@ test("keeps the winning title while strengthening the answer and diagnosis journ
 
   assert.match(html, /<title>【2026年】パチンコ屋の電気代はいくら？月額目安・内訳・削減方法<\/title>/);
   assert.match(html, /先に結論：/);
+  assert.match(html, /dateModified": "2026-08-12"/);
+  assert.match(html, /更新日：2026年8月12日/);
+  assert.match(html, /自店の電気代を確認する次の3ページ/);
+  assert.match(html, /href="pachinko-denkidai-checklist\.html"/);
+  assert.match(html, /href="pachinko-denkidai-takai-riyu\.html"/);
+  assert.match(html, /href="pachinko-kouatsu-keiyaku\.html"/);
   assert.match(html, /空調約40〜50%/);
   for (const location of ["article_top", "simulator_result", "article_bottom"]) {
     assert.match(html, new RegExp(`utm_content=${location}`), location);
@@ -59,6 +65,7 @@ test("updates sitemap dates only for pages changed in this pass", async () => {
     "pachinko-denkidai-sakugen.html",
   ]) {
     const escaped = path.replaceAll(".", "\\.");
-    assert.match(sitemap, new RegExp(`${escaped}</loc>\\s*<lastmod>2026-07-22</lastmod>`));
+    const expected = path === "pachinko-denkidai.html" ? "2026-08-12" : "2026-07-22";
+    assert.match(sitemap, new RegExp(`${escaped}</loc>\\s*<lastmod>${expected}</lastmod>`));
   }
 });
