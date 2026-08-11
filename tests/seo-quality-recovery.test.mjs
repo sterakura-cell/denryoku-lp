@@ -78,3 +78,14 @@ test("documents the complete 57-page inventory and the recovery decision", async
   assert.match(audit, /GitHub Pagesではサーバー側301を設定できない/);
   assert.match(audit, /17本を `noindex,follow`/);
 });
+
+test("keeps the 2026 summer support guide current and routes readers to practical checks", async () => {
+  const html = await read("denki-gas-shien-2026-summer.html");
+  assert.match(html, /dateModified":"2026-08-11"/);
+  assert.match(html, /最終確認：2026年8月11日/);
+  assert.match(html, /2026年8月に確認すること/);
+  assert.match(html, /高圧の8月使用分は2\.3円\/kWh/);
+  assert.match(html, /href="kouatsu-bill-checklist\.html"/);
+  assert.match(html, /href="natsu-demand-peak-2026\.html"/);
+  assert.match(html, /enecho\.meti\.go\.jp\/category\/gekihen_lp\//);
+});
