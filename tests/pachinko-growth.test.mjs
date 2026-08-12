@@ -57,6 +57,23 @@ test("routes supporting pages and hubs into the pachinko pillar", async () => {
   assert.match(columns, /data-journey="columns_to_pillar"/);
 });
 
+test("turns the checklist into a same-condition 12-month comparison worksheet", async () => {
+  const html = await read("pachinko-denkidai-checklist.html");
+
+  assert.match(html, /dateModified":"2026-08-13"/);
+  assert.match(html, /更新日：2026年8月13日/);
+  assert.match(html, /12ヶ月を同じ項目で転記する/);
+  for (const label of ["使用量（kWh）", "契約電力（kW）", "最大需要電力（kW）", "燃料費等調整額"]) {
+    assert.ok(html.includes(label), label);
+  }
+  assert.match(html, /不明な項目は推測で埋めず/);
+  assert.match(html, /同じ店舗の同じ月同士/);
+  assert.match(html, /enecho\.meti\.go\.jp\/category\/electricity_and_gas\/electric\/measure\/faq\/001\.html/);
+  assert.match(html, /href="pachinko-denkidai\.html"/);
+  assert.match(html, /href="pachinko-denkidai-sakugen\.html"/);
+  assert.match(html, /href="pachinko-kouatsu-keiyaku\.html"/);
+});
+
 test("updates sitemap dates only for pages changed in this pass", async () => {
   const sitemap = await read("sitemap.xml");
   for (const path of [
@@ -68,4 +85,5 @@ test("updates sitemap dates only for pages changed in this pass", async () => {
     const expected = path === "pachinko-denkidai.html" ? "2026-08-12" : "2026-07-22";
     assert.match(sitemap, new RegExp(`${escaped}</loc>\\s*<lastmod>${expected}</lastmod>`));
   }
+  assert.match(sitemap, /pachinko-denkidai-checklist\.html<\/loc>\s*<lastmod>2026-08-13<\/lastmod>/);
 });
