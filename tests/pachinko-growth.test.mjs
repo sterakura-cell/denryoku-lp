@@ -74,6 +74,19 @@ test("turns the checklist into a same-condition 12-month comparison worksheet", 
   assert.match(html, /href="pachinko-kouatsu-keiyaku\.html"/);
 });
 
+test("explains the four electricity bill components with a current primary source", async () => {
+  const html = await read("pachinko-denkidai-takai-riyu.html");
+  assert.match(html, /dateModified":"2026-08-14"/);
+  assert.match(html, /更新日：2026年8月14日/);
+  for (const label of ["基本料金", "電力量料金", "燃料費等調整額", "再生可能エネルギー発電促進賦課金"]) {
+    assert.ok(html.includes(label), label);
+  }
+  assert.match(html, /資源エネルギー庁「月々の電気料金の内訳」/);
+  assert.match(html, /pachinko-denkidai-checklist\.html/);
+  assert.match(html, /高圧契約のホールでは/);
+  assert.doesNotMatch(html, /ホールの多くは高圧受電|工事不要・設備そのまま/);
+});
+
 test("updates sitemap dates only for pages changed in this pass", async () => {
   const sitemap = await read("sitemap.xml");
   for (const path of [
@@ -82,7 +95,7 @@ test("updates sitemap dates only for pages changed in this pass", async () => {
     "pachinko-denkidai-sakugen.html",
   ]) {
     const escaped = path.replaceAll(".", "\\.");
-    const expected = path === "pachinko-denkidai.html" ? "2026-08-12" : "2026-07-22";
+    const expected = path === "pachinko-denkidai.html" ? "2026-08-12" : path === "pachinko-denkidai-takai-riyu.html" ? "2026-08-14" : "2026-07-22";
     assert.match(sitemap, new RegExp(`${escaped}</loc>\\s*<lastmod>${expected}</lastmod>`));
   }
   assert.match(sitemap, /pachinko-denkidai-checklist\.html<\/loc>\s*<lastmod>2026-08-13<\/lastmod>/);
