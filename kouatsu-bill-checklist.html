@@ -24,7 +24,7 @@
   <meta name="twitter:image" content="https://ripuro.soter-info.com/ogp-business.png" />
   <meta name="robots" content="index, follow" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Article","headline":"高圧電力 請求書チェックリスト｜基本料金・ピーク電力（最大デマンド）・電気代削減","datePublished":"2026-07-16","dateModified":"2026-07-16","author":{"@type":"Organization","name":"株式会社エコクリエイトホールディングス"},"publisher":{"@type":"Organization","name":"株式会社エコクリエイトホールディングス"},"mainEntityOfPage":"https://ripuro.soter-info.com/kouatsu-bill-checklist.html"}
+  {"@context":"https://schema.org","@type":"Article","headline":"高圧電力 請求書チェックリスト｜基本料金・ピーク電力（最大デマンド）・電気代削減","datePublished":"2026-07-16","dateModified":"2026-08-20","author":{"@type":"Organization","name":"株式会社エコクリエイトホールディングス"},"publisher":{"@type":"Organization","name":"株式会社エコクリエイトホールディングス"},"mainEntityOfPage":"https://ripuro.soter-info.com/kouatsu-bill-checklist.html"}
   </script>
   <style>
     :root{--navy:#0e1f3d;--blue:#1f6fe0;--amber:#f5a623;--green:#14804a;--ink:#22303f;--mute:#5b6b7c;--bg:#f6f8fa;--line:#dfe6ec}
@@ -36,7 +36,7 @@
   <header class="head"><div class="head-inner"><a class="brand" href="business-denkidai.html">法人電気代<span>無料診断</span></a><a class="btn" href="business-denkidai.html#form">無料診断</a></div></header>
   <section class="hero"><div class="hero-inner"><span class="eyebrow">高圧電力を使う法人施設向け</span><h1>高圧電力の請求書で見るべき項目チェックリスト</h1><p class="lead">電気代が高いかどうかは、月額だけでは判断しにくいです。毎月の固定費、契約内容、一番電気を使ったタイミング、単価、調整費を確認すると、削減余地があるか見えやすくなります。</p></div></section>
   <main class="wrap">
-    <div class="print"><strong>使い方：</strong>請求書を見ながら当てはまる項目にチェックしてください。3つ以上当てはまる場合は、請求書ベースで無料診断する価値があります。</div>
+    <div class="print"><strong>使い方：</strong>請求書を見ながら当てはまる項目にチェックしてください。該当した項目を確認候補として整理します。項目数だけで削減可否は判断しません。</div>
 
     <h2>請求書チェック 8項目</h2>
     <div class="check">
@@ -73,9 +73,14 @@
       <p class="note">※ 削減額は契約内容・使用状況・地域・施設規模により異なります。削減を保証するものではありません。</p>
     </div>
 
+    <div class="card">
+      <h2>基本料金が高いと感じる場合</h2>
+      <p>契約電力とピーク電力の関係は、<a href="kouatsu-kihonryokin-takai.html">高圧電力の基本料金を確認する手順</a>で詳しく整理しています。請求書の項目名と契約条件を照合してから比較してください。</p>
+    </div>
+
     <div class="cta">
       <h2>請求書を見ながら、削減余地を無料診断できます</h2>
-      <p>工事不要・初期費用なし。安くならなければ切り替え不要です。</p>
+      <p>契約変更や設備対応の有無、費用条件は契約内容によって異なります。確認できた条件をもとに比較します。</p>
       <a class="btn" href="business-denkidai.html#form">請求書を添付して無料診断</a>
       <a class="btn sub" href="business-denkidai.html#impact">収支への影響を概算する</a>
     </div>
@@ -111,17 +116,14 @@
           tags[i].forEach(function (tag) { counts[tag] = (counts[tag] || 0) + 1; });
         });
         var main = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; })[0] || "";
-        var type = score === 0 ? "まだチェックされていません" :
-          score >= 5 ? "優先度高：請求書ベースで精査したい状態" :
-          score >= 3 ? "確認推奨：削減余地があるか見たい状態" :
-          "軽めの確認：まず年間総額を見たい状態";
+        var type = score === 0 ? "まだチェックされていません" : "確認候補：" + score + "項目";
         var lines = [];
         if (main && advice[main]) lines.push(advice[main]);
         Object.keys(counts).forEach(function (tag) {
           if (tag !== main && advice[tag]) lines.push(advice[tag]);
         });
         if (!lines.length) lines.push("まずは気になる項目をクリックしてください。");
-        if (score >= 3) lines.push("3項目以上当てはまるため、直近12ヶ月分の請求書で無料診断する価値があります。");
+        if (score > 0) lines.push("該当数だけでは削減可否を判断できません。直近12ヶ月分の請求書と契約条件を合わせて確認してください。");
         var cta = score ? '<p><a class="btn" href="business-denkidai.html#impact">収支への影響を概算する</a> <a class="btn sub" href="business-denkidai.html#form">請求書を添付して精査する</a></p>' : "";
         result.innerHTML = '<div class="score">' + score + ' / 8</div><div class="type">' + type + '</div><p>' + (score ? "選択内容に合わせた確認ポイントです。" : "当てはまる項目を選ぶと、請求書のどこを優先して見るべきか表示します。") + '</p><ul>' + lines.map(function (line) { return "<li>" + line + "</li>"; }).join("") + "</ul>" + cta;
       }

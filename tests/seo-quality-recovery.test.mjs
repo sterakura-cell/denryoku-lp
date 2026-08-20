@@ -79,6 +79,18 @@ test("documents the complete 57-page inventory and the recovery decision", async
   assert.match(audit, /17本を `noindex,follow`/);
 });
 
+test("keeps the high-voltage bill checklist evidence-led and connected", async () => {
+  const html = await read("kouatsu-bill-checklist.html");
+  const sitemap = await read("sitemap.xml");
+  assert.match(html, /dateModified":"2026-08-20"/);
+  assert.match(html, /項目数だけで削減可否は判断しません/);
+  assert.match(html, /href="kouatsu-kihonryokin-takai\.html"/);
+  assert.match(html, /契約変更や設備対応の有無、費用条件は契約内容によって異なります/);
+  assert.doesNotMatch(html, /3つ以上当てはまる場合は、請求書ベースで無料診断する価値があります/);
+  assert.doesNotMatch(html, /工事不要・初期費用なし/);
+  assert.match(sitemap, /kouatsu-bill-checklist\.html<\/loc>\s*<lastmod>2026-08-20<\/lastmod>/);
+});
+
 test("keeps the 2026 summer support guide current and routes readers to practical checks", async () => {
   const html = await read("denki-gas-shien-2026-summer.html");
   assert.match(html, /dateModified":"2026-08-11"/);
