@@ -91,6 +91,15 @@ test("keeps the high-voltage bill checklist evidence-led and connected", async (
   assert.match(sitemap, /kouatsu-bill-checklist\.html<\/loc>\s*<lastmod>2026-08-20<\/lastmod>/);
 });
 
+test("connects the basic-fee guide back to the bill checklist", async () => {
+  const html = await read("kouatsu-kihonryokin-takai.html");
+  const sitemap = await read("sitemap.xml");
+  assert.match(html, /dateModified":"2026-08-21"/);
+  assert.match(html, /更新日：2026年8月21日/);
+  assert.match(html, /href="kouatsu-bill-checklist\.html"/);
+  assert.match(sitemap, /kouatsu-kihonryokin-takai\.html<\/loc>\s*<lastmod>2026-08-21<\/lastmod>/);
+});
+
 test("keeps the 2026 summer support guide current and routes readers to practical checks", async () => {
   const html = await read("denki-gas-shien-2026-summer.html");
   assert.match(html, /dateModified":"2026-08-11"/);
