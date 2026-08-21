@@ -100,6 +100,17 @@ test("connects the basic-fee guide back to the bill checklist", async () => {
   assert.match(sitemap, /kouatsu-kihonryokin-takai\.html<\/loc>\s*<lastmod>2026-08-21<\/lastmod>/);
 });
 
+test("routes the corporate LP through the current high-voltage guides", async () => {
+  const html = await read("business-denkidai.html");
+  const sitemap = await read("sitemap.xml");
+  assert.match(html, /高圧電力の請求書は、この順番で確認/);
+  assert.match(html, /href="kouatsu-bill-checklist\.html"/);
+  assert.match(html, /href="kouatsu-kihonryokin-takai\.html"/);
+  assert.match(html, /href="kouatsu-denki-ryokin-2026-kaitei\.html"/);
+  assert.match(html, /削減率を先に決めず/);
+  assert.match(sitemap, /business-denkidai\.html<\/loc>\s*<lastmod>2026-08-22<\/lastmod>/);
+});
+
 test("keeps the 2026 summer support guide current and routes readers to practical checks", async () => {
   const html = await read("denki-gas-shien-2026-summer.html");
   assert.match(html, /dateModified":"2026-08-11"/);
