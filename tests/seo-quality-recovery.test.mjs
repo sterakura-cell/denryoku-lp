@@ -108,7 +108,9 @@ test("routes the corporate LP through the current high-voltage guides", async ()
   assert.match(html, /href="kouatsu-kihonryokin-takai\.html"/);
   assert.match(html, /href="kouatsu-denki-ryokin-2026-kaitei\.html"/);
   assert.match(html, /削減率を先に決めず/);
-  assert.match(sitemap, /business-denkidai\.html<\/loc>\s*<lastmod>2026-08-22<\/lastmod>/);
+  assert.match(sitemap, /business-denkidai\.html<\/loc>\s*<lastmod>2026-08-23<\/lastmod>/);
+  assert.equal((html.match(/<h1\b/g) || []).length, 1);
+  assert.match(html, /<h2 class="report-title">電気代見直し 概算レポート<\/h2>/);
 });
 
 test("keeps the 2026 summer support guide current and routes readers to practical checks", async () => {
