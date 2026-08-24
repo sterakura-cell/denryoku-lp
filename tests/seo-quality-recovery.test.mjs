@@ -113,6 +113,16 @@ test("routes the corporate LP through the current high-voltage guides", async ()
   assert.match(html, /<h2 class="report-title">電気代見直し 概算レポート<\/h2>/);
 });
 
+test("publishes machine-readable context for industry calculation examples", async () => {
+  const html = await read("denkidai-minaoshi-cases.html");
+  const sitemap = await read("sitemap.xml");
+  assert.match(html, /"@type":"WebPage"/);
+  assert.match(html, /"@type":"BreadcrumbList"/);
+  assert.match(html, /"dateModified":"2026-08-24"/);
+  assert.match(html, /実際の導入実績や削減保証ではありません/);
+  assert.match(sitemap, /denkidai-minaoshi-cases\.html<\/loc>\s*<lastmod>2026-08-24<\/lastmod>/);
+});
+
 test("keeps the 2026 summer support guide current and routes readers to practical checks", async () => {
   const html = await read("denki-gas-shien-2026-summer.html");
   assert.match(html, /dateModified":"2026-08-11"/);
