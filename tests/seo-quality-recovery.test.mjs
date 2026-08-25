@@ -118,11 +118,14 @@ test("publishes machine-readable context for industry calculation examples", asy
   const sitemap = await read("sitemap.xml");
   assert.match(html, /"@type":"WebPage"/);
   assert.match(html, /"@type":"BreadcrumbList"/);
-  assert.match(html, /"dateModified":"2026-08-24"/);
+  assert.match(html, /"dateModified":"2026-08-25"/);
   assert.match(html, /実際の導入実績や削減保証ではありません/);
   assert.match(html, /property="og:image" content="https:\/\/ripuro\.soter-info\.com\/ogp-business\.png"/);
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
-  assert.match(sitemap, /denkidai-minaoshi-cases\.html<\/loc>\s*<lastmod>2026-08-24<\/lastmod>/);
+  assert.match(html, /href="kouatsu-bill-checklist\.html"/);
+  assert.match(html, /href="kouatsu-kihonryokin-takai\.html"/);
+  assert.match(html, /href="kouatsu-denki-ryokin-2026-kaitei\.html"/);
+  assert.match(sitemap, /denkidai-minaoshi-cases\.html<\/loc>\s*<lastmod>2026-08-25<\/lastmod>/);
 });
 
 test("keeps the 2026 summer support guide current and routes readers to practical checks", async () => {
