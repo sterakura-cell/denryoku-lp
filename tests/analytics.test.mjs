@@ -10,8 +10,16 @@ test("tracks the complete electricity lead funnel", async () => {
   assert.match(source, /lead_submit_unconfirmed/);
   assert.match(source, /showSubmissionResult\(false\)/);
   assert.doesNotMatch(source, /仮実装モード：送信せず完了画面のみ/);
-  assert.match(source, /lastTrackedAmount/);
+  assert.match(source, /simCompleteTracked/);
   assert.match(source, /dataset\.formStarted/);
+});
+
+test("does not double count simulator completions or phone clicks", async () => {
+  const source = await readFile(new URL("../script.js", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /window\.gtag\("event", "simulator_complete"/);
+  assert.doesNotMatch(source, /function bindPhoneClickTracking\(/);
+  assert.doesNotMatch(source, /bindPhoneClickTracking\(\)/);
+  assert.equal((source.match(/function bindContactTracking\(/g) || []).length, 1);
 });
 
 test("loads the production GA4 measurement id", async () => {
